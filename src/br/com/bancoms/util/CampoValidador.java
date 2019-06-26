@@ -16,7 +16,7 @@ public class CampoValidador
 	{
 	    try
 	    {
-		int numero = Integer.parseInt(numeroCampo);
+		Integer.parseInt(numeroCampo);
 	    } catch (Exception e)
 	    {
 		return CAMPO_NUMERAL_COM_PALAVRAS;

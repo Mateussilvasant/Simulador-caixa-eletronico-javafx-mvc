@@ -2,6 +2,7 @@ package br.com.bancoms.service;
 
 import br.com.bancoms.dao.ClienteDAO;
 import br.com.bancoms.model.Cliente;
+import br.com.bancoms.vo.ClienteVO;
 
 public class ClienteService
 {
@@ -28,9 +29,9 @@ public class ClienteService
 
     }
 
-    public Cliente realizarLogin(int numeroConta, String senhaConta)
+    public Cliente realizarLogin(ClienteVO clienteVO)
     {
-	return clienteDAO.realizarLogin(numeroConta, senhaConta);
+	return clienteDAO.realizarLogin(clienteVO);
     }
 
 }

@@ -3,7 +3,6 @@ package br.com.bancoms.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DatabaseConnect
@@ -109,20 +108,16 @@ public class DatabaseConnect
 	}
     }
 
-    public void closeConnection(PreparedStatement ps, ResultSet result) throws Exception
+    public void closeConnection(QueryControl query) throws Exception
     {
 	try
 	{
-	    if (result != null)
+	    if (query != null)
 	    {
-		result.close();
+		query.closePS();
+		query.closeRS();
+		conexao.close();
 	    }
-	    if (ps != null)
-	    {
-		ps.close();
-	    }
-
-	    conexao.close();
 
 	} catch (SQLException e)
 	{

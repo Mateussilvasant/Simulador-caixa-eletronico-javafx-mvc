@@ -4,47 +4,120 @@ import br.com.bancoms.view.TecladoView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 
 public class TecladoController implements EventHandler<ActionEvent>
 {
 
-    public TecladoView tecladoView;
-    private double valorOperacao;
-
-    public TecladoController()
+    enum Tipo
     {
+	INTEGER, DOUBLE;
+    }
+
+    public TecladoView tecladoView;
+    private Object valorOperacao;
+    private TextField field;
+    private int limiteCaracter;
+    private Tipo tipoTeclado;
+
+    public TecladoController(int limiteCaracter, Tipo tipoTeclado)
+    {
+	this.limiteCaracter = limiteCaracter;
+	this.tipoTeclado = tipoTeclado;
+
 	tecladoView = new TecladoView(this);
+	addFieldInterno();
+    }
+
+    public TecladoController(Tipo tipoTeclado)
+    {
+	this.tipoTeclado = tipoTeclado;
+	tecladoView = new TecladoView(this);
+	addFieldInterno();
     }
 
     @Override
     public void handle(ActionEvent event)
     {
 
+	if (tipoTeclado == Tipo.DOUBLE)
+	{
+	    onDoubleEvent(event);
+	} else if (tipoTeclado == Tipo.INTEGER)
+	{
+	    onIntegerEvent(event);
+	}
+
+    }
+
+    private void onIntegerEvent(ActionEvent event)
+    {
+
 	Button botao = (Button) event.getSource();
 
-	if (botao.getText().equals("Confirmar"))
+	if (botao.getText().equals("Entrar"))
 	{
-	    if (tecladoView.numeroField.getText().length() > 3)
+	    setValorOperacao(Integer.parseInt(field.getText()));
+	}
+	if (botao.getText().equals("Limpar"))
+	{
+	    field.setText("");
+	} else if (botao.getText().length() == 1)
+	{
+
+	    if (field.getText().length() < limiteCaracter)
 	    {
-		setValorOperacao(Double.parseDouble(tecladoView.numeroField.getText().replace(',', '.')));
+		inserirValorInteiro(botao.getText(), field.getText());
+	    }
+
+	}
+    }
+
+    private void onDoubleEvent(ActionEvent event)
+    {
+	Button botao = (Button) event.getSource();
+
+	if (botao.getText().equals("Entrar"))
+	{
+	    if (field.getText().length() > 3)
+	    {
+		setValorOperacao(Double.parseDouble(field.getText().replace(',', '.')));
 	    }
 	}
 	if (botao.getText().equals("Limpar"))
 	{
-	    tecladoView.numeroField.setText("0,00");
+	    field.setText("0,00");
 	} else if (botao.getText().length() == 1)
 	{
 
-	    if (tecladoView.numeroField.getText().length() < 7)
+	    if (field.getText().length() < 7)
 	    {
-		inserirValor(botao.getText(), tecladoView.numeroField.getText());
+		inserirValorDouble(botao.getText(), field.getText());
 	    }
 
 	}
 
     }
 
-    private void inserirValor(String valorBotao, String valorField)
+    public boolean verificarConfirmacao()
+    {
+
+	if (valorOperacao != null)
+	{
+	    return true;
+
+	} else
+	{
+	    return false;
+	}
+    }
+
+    private void inserirValorInteiro(String valorBotao, String valorField)
+    {
+	field.setText(valorField + valorBotao);
+    }
+
+    private void inserirValorDouble(String valorBotao, String valorField)
     {
 
 	if (valorField.charAt(0) == '0')
@@ -63,17 +136,50 @@ public class TecladoController implements EventHandler<ActionEvent>
 	    }
 	}
 
-	tecladoView.numeroField.setText(novoValorField);
+	field.setText(novoValorField);
     }
 
-    public double getValorOperacao()
+    public Object getValorOperacao()
     {
 	return valorOperacao;
     }
 
-    public void setValorOperacao(double valor)
+    public void setValorOperacao(Object valor)
     {
-	this.valorOperacao = valor;
+	valorOperacao = valor;
     }
 
+    public void addFieldExterno(TextField fieldExterno)
+    {
+	field = fieldExterno;
+	tecladoView.vboxView.getChildren().remove(tecladoView.numeroField);
+    }
+
+    public void addFieldInterno()
+    {
+
+	if (!tecladoView.vboxView.getChildren().contains(tecladoView.numeroField))
+	{
+	    tecladoView.vboxView.getChildren().add(0, tecladoView.numeroField);
+	}
+
+	field = tecladoView.numeroField;
+    }
+
+    public void mudarParaInteiro(int limiteCaracter)
+    {
+	if (tipoTeclado == Tipo.DOUBLE)
+	{
+	    this.limiteCaracter = limiteCaracter;
+	    tipoTeclado = Tipo.INTEGER;
+	}
+    }
+
+    public void mudarParaDouble()
+    {
+	if (tipoTeclado == Tipo.INTEGER)
+	{
+	    tipoTeclado = Tipo.DOUBLE;
+	}
+    }
 }

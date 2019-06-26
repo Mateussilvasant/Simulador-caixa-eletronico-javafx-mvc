@@ -1,12 +1,7 @@
 package br.com.bancoms.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
 import br.com.bancoms.model.Cliente;
-import br.com.bancoms.model.Conta;
-import br.com.bancoms.model.ContaCorrente;
-import br.com.bancoms.model.ContaPoupanca;
+import br.com.bancoms.vo.ClienteVO;
 
 public class ClienteDAO
 {
@@ -14,43 +9,26 @@ public class ClienteDAO
     {
     }
 
-    public Cliente realizarLogin(int numeroConta, String senhaConta)
+    public Cliente realizarLogin(ClienteVO clienteVO)
     {
+	QueryControl query = null;
 	Cliente cliente = null;
-	Conta conta = null;
-	PreparedStatement ps = null;
-	ResultSet rs = null;
 
 	try
 	{
-	    String sql = "SELECT CONTA.ID_CONTA,CONTA.TIPO_CONTA,CONTA.DESCRICAO_CONTA, "
-		    + "CONTA.SALDO_TOTAL, CLIENTE.NOME, CLIENTE.SOBRENOME "
+	    String sql = "SELECT CLIENTE.NOME, CLIENTE.SOBRENOME "
 		    + "from CONTA JOIN CLIENTE ON CONTA.ID_CLIENTE = CLIENTE.ID_CLIENTE "
 		    + "WHERE NUMERO_CONTA = (?) and SENHA = (?)";
-	    ps = DatabaseConnect.getInstance().getPreparedSQL(sql);
-	    ps.setInt(1, numeroConta);
-	    ps.setString(2, senhaConta);
-	    rs = ps.executeQuery();
 
-	    if (rs.next())
+	    query = new QueryControl();
+	    query.setSQL(sql);
+	    query.setInt(1, clienteVO.getNumeroConta());
+	    query.setString(2, clienteVO.getSenha());
+	    query.executeQuery();
+
+	    if (query.next())
 	    {
-		int idConta = rs.getInt("CONTA.ID_CONTA");
-		int tipoConta = rs.getInt("CONTA.TIPO_CONTA");
-		String descricao = rs.getString("CONTA.DESCRICAO_CONTA");
-		double saldo = rs.getDouble("CONTA.SALDO_TOTAL");
-		String nome = rs.getString("CLIENTE.NOME");
-		String sobrenome = rs.getString("CLIENTE.SOBRENOME");
-
-		if (tipoConta == Conta.POUPANCA)
-		{
-		    conta = new ContaPoupanca(idConta, descricao, tipoConta, numeroConta, saldo);
-		}
-		if (tipoConta == Conta.CORRENTE)
-		{
-		    conta = new ContaCorrente(idConta, descricao, tipoConta, numeroConta, saldo);
-		}
-
-		cliente = new Cliente(nome, sobrenome, conta);
+		cliente = new Cliente(query.getString("CLIENTE.NOME"), query.getString("CLIENTE.SOBRENOME"));
 	    }
 
 	} catch (Exception e)
@@ -70,7 +48,12 @@ public class ClienteDAO
 	{
 	    try
 	    {
-		DatabaseConnect.getInstance().closeConnection(ps, rs);
+
+		if (query != null)
+		{
+		    DatabaseConnect.getInstance().closeConnection(query);
+		}
+
 	    } catch (Exception closeException)
 	    {
 		System.out.println(closeException.toString());

@@ -10,6 +10,11 @@ public class ContaCorrente extends Conta
 	this.despesas = 15.30;
     }
 
+    public ContaCorrente()
+    {
+	super(0, "", 0, 0, 0);
+    }
+
     @Override
     public void gerarTaxas()
     {

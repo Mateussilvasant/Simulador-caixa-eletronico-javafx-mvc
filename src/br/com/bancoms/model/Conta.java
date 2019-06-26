@@ -22,29 +22,14 @@ public abstract class Conta
 	this.saldo = saldo;
     }
 
-    public Conta()
+    public void depositar(double valor)
     {
-    }
-
-    public abstract void gerarTaxas();
-
-    public boolean depositar(double valor)
-    {
-
-	if (valor > 0.0)
-	{
-	    saldo = saldo + valor;
-	    return true;
-	}
-
-	return false;
-
+	saldo = saldo + valor;
     }
 
     public boolean sacar(double valor)
     {
-
-	if (valor > 0.0)
+	if (valor < saldo)
 	{
 	    saldo = saldo - valor;
 	    return true;
@@ -52,17 +37,19 @@ public abstract class Conta
 	return false;
     }
 
-    public boolean transferir(double valor, Conta contaDestino)
+    public boolean transferir(double valor, Conta contaBeneficiada)
     {
 	boolean retirou = sacar(valor);
 
 	if (retirou)
 	{
-	    contaDestino.setSaldo(contaDestino.getSaldo() + valor);
+	    contaBeneficiada.setSaldo(contaBeneficiada.getSaldo() + valor);
 	    return true;
 	}
 	return false;
     }
+
+    public abstract void gerarTaxas();
 
     public String getDescricao()
     {

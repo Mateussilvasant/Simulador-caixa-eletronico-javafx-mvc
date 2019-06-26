@@ -1,10 +1,10 @@
 package br.com.bancoms.view;
 
 import br.com.bancoms.controller.ClienteController;
-import br.com.bancoms.model.Cliente;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
@@ -33,9 +33,8 @@ public class ClienteView extends StackPane
 	grupo = new Group();
 
 	hboxView = new HBox();
-	hboxView.setBorder(new Border(
-		new BorderStroke(Color.SLATEGRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 	hboxView.setAlignment(Pos.CENTER);
+	hboxView.setSpacing(CaixaView.METRICS.getPX(0.0008));
 
 	grupo.getChildren().add(hboxView);
 	getChildren().add(grupo);
@@ -45,23 +44,34 @@ public class ClienteView extends StackPane
 
     public void iniciarCorrenteView(ClienteController controller)
     {
-	botaoDepositar = new Button("Depósito");
-	botaoDepositar.setOnAction(controller.getMenuDepositoAction());
+	botaoDepositar = new Button();
+	botaoDepositar.getStyleClass().add("buttonBanco");
+	botaoDepositar.setOnAction(controller.menuDepositoAction());
+	botaoDepositar.setGraphic(new ImageView("depositar.png"));
 
-	botaoSacar = new Button("Saque");
-	botaoTransferencia = new Button("Transferência");
-	botaoEmprestimo = new Button("Empréstimo");
-	botaoExtrato = new Button("Extratos");
-	botaoEncerrar = new Button("Encerrar");
+	botaoSacar = new Button();
+	botaoSacar.getStyleClass().add("buttonBanco");
+	botaoSacar.setGraphic(new ImageView("sacar.png"));
 
-	hboxView.getChildren().addAll(botaoDepositar, botaoSacar, botaoTransferencia, botaoExtrato, botaoEncerrar);
+	botaoTransferencia = new Button();
+	botaoTransferencia.getStyleClass().add("buttonBanco");
+	botaoTransferencia.setGraphic(new ImageView("transferencia.png"));
 
+	botaoEmprestimo = new Button();
+	botaoEmprestimo.getStyleClass().add("buttonBanco");
+	botaoEmprestimo.setGraphic(new ImageView("emprestimo.png"));
+
+	botaoExtrato = new Button();
+	botaoExtrato.getStyleClass().add("buttonBanco");
+	botaoExtrato.setGraphic(new ImageView("saldos.png"));
+
+	hboxView.getChildren().addAll(botaoDepositar, botaoSacar, botaoTransferencia, botaoExtrato);
     }
 
     public void iniciarPoupancaView(ClienteController controller)
     {
 	botaoDepositar = new Button("Depósito");
-	botaoDepositar.setOnAction(controller.getMenuDepositoAction());
+	botaoDepositar.setOnAction(controller.menuDepositoAction());
 	botaoSacar = new Button("Saque");
 	botaoTransferencia = new Button("Transferência");
 	botaoExtrato = new Button("Extratos");

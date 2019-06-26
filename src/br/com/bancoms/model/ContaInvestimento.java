@@ -10,15 +10,21 @@ public class ContaInvestimento extends Conta
 	super(id, descricao, tipo, numero, saldo);
     }
 
-    public void gerarTaxas()
+    public ContaInvestimento()
     {
-	rendimento = super.saldo + (super.saldo * 0.08);
-	saldo = saldo + rendimento;
+	super(0, "", 0, 0, 0);
     }
 
     public double getRendimento()
     {
 	return rendimento;
+    }
+
+    @Override
+    public void gerarTaxas()
+    {
+	rendimento = super.saldo + (super.saldo * 0.08);
+	saldo = saldo + rendimento;
     }
 
 }

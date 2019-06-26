@@ -1,9 +1,9 @@
 package br.com.bancoms.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
+import br.com.bancoms.dao.QueryControl.RESULT;
 import br.com.bancoms.model.Conta;
+import br.com.bancoms.model.ContaFactory;
+import br.com.bancoms.vo.ClienteVO;
 
 public class ContaDAO
 {
@@ -12,71 +12,25 @@ public class ContaDAO
     {
     }
 
-    public double consultarSaldo(Conta conta)
-    {
-
-	PreparedStatement ps = null;
-	ResultSet rs = null;
-
-	try
-	{
-
-	    ps = DatabaseConnect.getInstance().getPreparedSQL("SELECT SALDO_TOTAL FROM CONTA WHERE NUMERO_CONTA = (?)");
-	    ps.setInt(1, conta.getNumero());
-	    rs = ps.executeQuery();
-
-	    if (rs.next())
-	    {
-		return rs.getDouble("SALDO_TOTAL");
-	    }
-
-	} catch (Exception e)
-	{
-	    e.printStackTrace();
-
-	    try
-	    {
-		DatabaseConnect.getInstance().rollBack();
-	    } catch (Exception e1)
-	    {
-		e1.printStackTrace();
-	    }
-
-	} finally
-	{
-	    try
-	    {
-		DatabaseConnect.getInstance().closeConnection(ps, rs);
-	    } catch (Exception e)
-	    {
-		e.printStackTrace();
-	    }
-	}
-
-	return 0;
-    }
-
     public boolean atualizarSaldo(Conta conta)
     {
-	PreparedStatement ps = null;
+	String sql = "UPDATE CONTA SET SALDO_TOTAL = (?) WHERE NUMERO_CONTA = (?)";
+	QueryControl control = new QueryControl();
 
 	try
 	{
 
-	    ps = DatabaseConnect.getInstance()
-		    .getPreparedSQL("UPDATE CONTA SET SALDO_TOTAL = (?) WHERE NUMERO_CONTA = (?)");
-	    ps.setDouble(1, conta.getSaldo());
-	    ps.setInt(2, conta.getNumero());
+	    control.setSQL(sql);
+	    control.setDouble(1, conta.getSaldo());
+	    control.setInt(2, conta.getNumero());
 
-	    if (ps.executeUpdate() != 0)
+	    if (control.executeUpdate() == RESULT.SUCCESS)
 	    {
 		return true;
 	    }
 
 	} catch (Exception e)
 	{
-	    e.printStackTrace();
-
 	    try
 	    {
 		DatabaseConnect.getInstance().rollBack();
@@ -84,19 +38,65 @@ public class ContaDAO
 	    {
 		e1.printStackTrace();
 	    }
-
 	} finally
 	{
 	    try
 	    {
-		DatabaseConnect.getInstance().closeConnection(ps);
+		DatabaseConnect.getInstance().closeConnection(control);
+	    } catch (Exception e)
+	    {
+		e.printStackTrace();
+	    }
+	}
+	return false;
+    }
+
+    public Conta consultarConta(ClienteVO clienteVO)
+    {
+	Conta conta = null;
+	QueryControl control = new QueryControl();
+	String sql = "SELECT ID_CONTA,TIPO_CONTA,DESCRICAO_CONTA,SALDO_TOTAL FROM CONTA WHERE NUMERO_CONTA = (?)";
+
+	try
+	{
+	    control.setSQL(sql);
+	    control.setInt(1, clienteVO.getNumeroConta());
+	    control.executeQuery();
+
+	    if (control.next())
+	    {
+
+		int tipo = control.getInt("TIPO_CONTA");
+		conta = ContaFactory.values()[tipo].getConta();
+		System.out.println("Conta: " + conta);
+		conta.setTipo(tipo);
+		conta.setId(control.getInt("ID_CONTA"));
+		conta.setNumero(clienteVO.getNumeroConta());
+		conta.setSaldo(control.getDouble("SALDO_TOTAL"));
+		conta.setDescricao(control.getString("DESCRICAO_CONTA"));
+	    }
+
+	} catch (Exception e)
+	{
+	    try
+	    {
+		DatabaseConnect.getInstance().rollBack();
+	    } catch (Exception e1)
+	    {
+		e1.printStackTrace();
+	    }
+	} finally
+	{
+	    try
+	    {
+		DatabaseConnect.getInstance().closeConnection(control);
 	    } catch (Exception e)
 	    {
 		e.printStackTrace();
 	    }
 	}
 
-	return false;
+	return conta;
     }
 
 }

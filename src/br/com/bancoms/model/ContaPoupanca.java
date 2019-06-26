@@ -10,6 +10,11 @@ public class ContaPoupanca extends Conta
 	super(id, descricao, tipo, numero, saldo);
     }
 
+    public ContaPoupanca()
+    {
+	super(0, "", 0, 0, 0);
+    }
+
     public double getRendimentos()
     {
 	return rendimentos;

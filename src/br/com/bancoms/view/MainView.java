@@ -23,12 +23,15 @@ public class MainView extends StackPane
     private void initBar()
     {
 
+	this.getStyleClass().add("background");
+	
 	Rectangle rectangle = new Rectangle(CaixaView.METRICS.getPX(CaixaView.METRICS.getWidth()),
 		CaixaView.METRICS.getPX(0.02));
-	rectangle.setFill(Color.BLACK);
+	rectangle.getStyleClass().add("barBackground");
+	
 	topBar = new StackPane();
 	topBar.getChildren().add(rectangle);
-	topBar.setTranslateY(CaixaView.METRICS.getX(-0.16));
+	topBar.setTranslateY(CaixaView.METRICS.getX(-0.18));
 
 	labelTituloBar = new Label("Teste");
 	labelTituloBar.setTextFill(Color.WHITE);

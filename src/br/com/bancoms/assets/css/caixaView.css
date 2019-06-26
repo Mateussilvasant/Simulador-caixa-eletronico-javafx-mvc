@@ -1,0 +1,160 @@
+.fieldStyle{
+	-fx-background-radius: 10.0 10.0 10.0 10.0 ;
+	-fx-background-color: #ffffff;	
+	-fx-border-width: 1.0;
+	-fx-border-color: #e6e6e6;
+	-fx-border-radius: 10.0 10.0 10.0 10.0;
+}
+
+.fieldStyle:focused{
+	-fx-border-width: 2.0;
+}
+
+.loginBox{
+	-fx-border-width: 1.0;
+	-fx-border-color: #e6e6e6;
+	-fx-background-color: #333333;
+	-fx-border-radius: 30.0 30.0 30.0 30.0;
+	-fx-background-radius: 30.0 30.0 30.0 30.0;
+	-fx-effect: dropshadow(gaussian, #1a1a1a, 30.0, 0.0, 0.0, 0.0);	
+}
+
+.labelStyle{
+	-fx-text-fill:  #f2f2f2;
+	-fx-font-family: "sans-serif";
+}
+
+.buttonStyle{
+	-fx-background-color: #e6e6e6;
+	-fx-background-radius: 30.0 30.0 30.0 30.0;
+	-fx-effect: innershadow(gaussian,#f2f2f2 , 10.0, 0.0, 0.0, 0.0);	
+	-fx-font-weight: bolder;
+}
+
+.buttonStyle:focused{
+	-fx-effect: innershadow(gaussian,#b3b3b3 , 20.0, 0.0, 0.0, 0.0);	
+}
+
+.buttonStyle:hover{
+	-fx-background-color: #bfbfbf;
+}
+
+.buttonDark{
+	-fx-background-color: #1a1a1a;
+	-fx-background-radius: 30.0 30.0 30.0 30.0;
+	-fx-effect: innershadow(gaussian,#404040 , 30.0, 0.0, 0.0, 0.0);	
+	-fx-font-weight: bolder;
+	-fx-text-fill:  #f2f2f2;
+}
+
+.buttonDark:hover{
+	-fx-background-color: #333333;
+}
+
+.buttonDark:focused{
+	-fx-effect: innershadow(gaussian,#b3b3b3 , 20.0, 0.0, 0.0, 0.0);		
+}
+
+.barBackground{
+	-fx-background-color: #333333;
+	-fx-stroke-width: 2.0;
+	-fx-stroke: #f2f2f2;
+	-fx-effect: dropshadow(gaussian,#1a1a1a , 20.0, 0.0, 0.0, 0.0);	
+}
+
+.background{
+	-fx-background-color: #d9d9d9;
+	-fx-effect: innershadow(gaussian,#b3b3b3 , 90.0, 0.0, 0.0, 0.0);	
+}
+
+.buttonBanco{
+	-fx-background-color: #0d0d0d ;
+	-fx-effect: innershadow(gaussian,#404040 , 60.0, 0.0, 0.0, 0.0);	
+}
+
+.buttonBanco:hover{
+	-fx-effect: innershadow(gaussian,#b3b3b3 , 20.0, 0.0, 0.0, 0.0);	
+}
+
+.buttonTeclado{
+	-fx-text-fill:  #f2f2f2;
+	-fx-background-color: #1a1a1a;
+	-fx-border-color: #e6e6e6;
+	-fx-border-radius: 10.0 10.0 10.0 10.0;
+	-fx-background-radius: 10.0 10.0 10.0 10.0;
+}
+
+.buttonTeclado:hover{
+	-fx-background-color: #404040;
+}
+
+.buttonTeclado:focused{
+	-fx-border-width: 2.0;
+}
+
+.buttonLimpar{
+	-fx-background-color: #ff1a1a;
+	-fx-text-fill:  #800000;
+	-fx-background-radius: 10.0 10.0 10.0 10.0;
+	-fx-border-color: #b30000;
+	-fx-border-radius: 10.0 10.0 10.0 10.0;
+}
+
+.buttonLimpar:hover{
+	-fx-background-color: #ff4d4d;
+}
+
+.buttonLimpar:focused{
+	-fx-border-color: #800000;
+	-fx-border-radius: 10.0 10.0 10.0 10.0;
+	-fx-border-width: 2.0;
+}
+
+
+.buttonConfirmar{
+	-fx-background-color: #2db300;
+	-fx-background-radius: 10.0 10.0 10.0 10.0;
+	-fx-text-fill:  #194d00;
+	-fx-border-color: #1a6600;
+	-fx-border-radius: 10.0 10.0 10.0 10.0;
+}
+
+.buttonConfirmar:hover{
+	-fx-background-color: #39e600;
+}
+
+.buttonConfirmar:focused{
+	-fx-border-color: #194d00;
+	-fx-border-radius: 10.0 10.0 10.0 10.0;
+	-fx-border-width: 2.0;
+}
+
+.numeroField{
+	-fx-background-radius: 10.0 10.0 10.0 10.0 ;
+	-fx-background-color: #ffffff;	
+	-fx-border-width: 1.0;
+	-fx-border-color: #e6e6e6;
+	-fx-border-radius: 10.0 10.0 10.0 10.0;
+}
+
+.boxView{
+	-fx-background-radius: 10.0 10.0 10.0 10.0 ;
+	-fx-background-color: #e6e6e6;
+	-fx-effect: dropshadow(gaussian,#b3b3b3 , 30.0, 0.0, 0.0, 0.0);	
+}
+
+.boxViewDark{
+	-fx-background-radius: 10.0 10.0 10.0 10.0 ;
+	-fx-background-color: #333333;
+	-fx-padding: 20.0 20.0 20.0 20.0;
+	-fx-effect: dropshadow(gaussian,#808080, 30.0, 0.0, 0.0, 0.0);	
+}
+
+.labelStyleDark{
+	-fx-text-fill:  #1a1a1a;
+	-fx-font-family: "sans-serif";
+}
+
+
+
+

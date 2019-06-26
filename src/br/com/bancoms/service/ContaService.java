@@ -2,6 +2,7 @@ package br.com.bancoms.service;
 
 import br.com.bancoms.dao.ContaDAO;
 import br.com.bancoms.model.Conta;
+import br.com.bancoms.vo.ClienteVO;
 
 public class ContaService
 {
@@ -27,14 +28,24 @@ public class ContaService
 
     }
 
-    public double consultarSaldo(Conta conta)
+    public Conta consultarConta(ClienteVO clienteVO)
     {
-	return contaDAO.consultarSaldo(conta);
+	return contaDAO.consultarConta(clienteVO);
     }
 
     public boolean atualizarSaldo(Conta conta)
     {
 	return contaDAO.atualizarSaldo(conta);
+    }
+
+    public void depositar(Conta conta, double valorOperacao)
+    {
+	conta.depositar(valorOperacao);
+    }
+
+    public boolean sacar(Conta contaSessao, double valorOperacao)
+    {
+	return contaSessao.sacar(valorOperacao);
     }
 
 }

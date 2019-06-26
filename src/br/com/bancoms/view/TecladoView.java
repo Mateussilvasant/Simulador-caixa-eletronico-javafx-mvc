@@ -13,7 +13,7 @@ import javafx.scene.text.Font;
 public class TecladoView extends Group
 {
     private GridPane gridBotoes;
-    private VBox vboxView;
+    public VBox vboxView;
     public TextField numeroField;
     private Button botaoEntrar;
     private Button botaoApagar;
@@ -21,10 +21,14 @@ public class TecladoView extends Group
     public TecladoView(TecladoController tecladoController)
     {
 	vboxView = new VBox();
+	vboxView.setSpacing(CaixaView.METRICS.getPX(0.008));
+	vboxView.getStyleClass().add("boxView");
+
 	numeroField = new TextField();
 	numeroField.setText("0,00");
 	numeroField.setEditable(false);
 	numeroField.setFont(Font.font(CaixaView.METRICS.getPX(0.008)));
+	numeroField.getStyleClass().add("numeroField");
 
 	gridBotoes = new GridPane();
 	gridBotoes.setAlignment(Pos.CENTER);
@@ -32,12 +36,14 @@ public class TecladoView extends Group
 	HBox hboxButton = new HBox();
 	hboxButton.setAlignment(Pos.CENTER_RIGHT);
 
-	botaoEntrar = new Button("Confirmar");
+	botaoEntrar = new Button("Entrar");
 	botaoEntrar.setFont(Font.font(CaixaView.METRICS.getPX(0.008)));
+	botaoEntrar.getStyleClass().add("buttonConfirmar");
 	botaoEntrar.setOnAction(tecladoController);
 
 	botaoApagar = new Button("Limpar");
 	botaoApagar.setFont(Font.font(CaixaView.METRICS.getPX(0.008)));
+	botaoApagar.getStyleClass().add("buttonLimpar");
 	botaoApagar.setOnAction(tecladoController);
 
 	hboxButton.getChildren().addAll(botaoApagar, botaoEntrar);
@@ -63,6 +69,7 @@ public class TecladoView extends Group
     {
 	Button botao = new Button(indice + "");
 	botao.setFont(Font.font(CaixaView.METRICS.getPX(0.012)));
+	botao.getStyleClass().add("buttonTeclado");
 	botao.setOnAction(tecladoController);
 	gridBotoes.add(botao, c, l);
     }
