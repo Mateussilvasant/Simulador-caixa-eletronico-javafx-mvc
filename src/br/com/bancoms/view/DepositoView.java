@@ -1,6 +1,6 @@
 package br.com.bancoms.view;
 
-import br.com.bancoms.controller.ClienteController;
+import br.com.bancoms.controller.DepositoController;
 import br.com.bancoms.controller.TecladoController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -12,106 +12,119 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
-public class DepositoView extends VBox
-{
 
-    private Label labelDeposito;
+public class DepositoView extends VBox {
+
+    private  HBox botoesInserirValor;
+    private  HBox botoesOutraConta;
     private Button botaoInserirValor;
-    private Button botaoContaPropria;
-    private Button botaoOutraConta;
-    private Label labelDepositoTipo;
-    private HBox opcoesConta;
-    private Label labelNumerConta;
     private Button botaoNumeroConta;
+    private Button botaoCancelar;
+    private Label labelDepositoTipo;
     public TextField fieldNumeroConta;
+    private HBox opcoesConta;
     private HBox formNumeroConta;
     private HBox formValorDeposito;
 
-    public DepositoView(ClienteController clienteController)
-    {
+    public DepositoView(DepositoController controller) {
 
-	double paddingBox = CaixaView.METRICS.getPX(0.0050);
+        double paddingBox = CaixaView.METRICS.getPX(0.0050);
 
-	setSpacing(CaixaView.METRICS.getPX(0.010));
-	setAlignment(Pos.CENTER);
-	setPadding(new Insets(paddingBox, paddingBox, paddingBox, paddingBox));
-	getStyleClass().add("boxView");
+        setSpacing(CaixaView.METRICS.getPX(0.010));
+        setAlignment(Pos.CENTER);
+        setPadding(new Insets(paddingBox, paddingBox, paddingBox, paddingBox));
+        getStyleClass().add("boxView");
 
-	labelDeposito = new Label("Insira o valor a ser depositado:");
-	labelDeposito.getStyleClass().add("labelStyle");
-	labelDeposito.setFont(Font.font(CaixaView.METRICS.getPX(0.006)));
+        Label labelDeposito = new Label("Insira o valor a ser depositado:");
+        labelDeposito.getStyleClass().add("labelStyle");
+        labelDeposito.setFont(Font.font(CaixaView.METRICS.getPX(0.006)));
 
-	botaoInserirValor = new Button("Próximo");
-	botaoInserirValor.setOnAction(clienteController.realizarDepositoAction());
-	botaoInserirValor.getStyleClass().add("buttonDark");
+        botaoInserirValor = new Button("AvanÃ§ar");
+        botaoInserirValor.setOnAction(controller.realizarDepositoAction());
+        botaoInserirValor.getStyleClass().add("buttonDark");
+        botaoInserirValor.setFont(Font.font(CaixaView.METRICS.getPX(0.0045)));
 
-	labelDepositoTipo = new Label("Deseja realizar depósito em qual conta?");
-	labelDepositoTipo.setFont(Font.font(CaixaView.METRICS.getPX(0.006)));
-	labelDepositoTipo.getStyleClass().add("labelStyleDark");
+        botaoCancelar =  new Button("Cancelar");
+        botaoCancelar.setOnAction(controller.cancelarOperacao());
+        botaoCancelar.getStyleClass().add("buttonDark");
+        botaoCancelar.setFont(Font.font(CaixaView.METRICS.getPX(0.0045)));
 
-	botaoContaPropria = new Button("Conta Própria");
-	botaoContaPropria.getStyleClass().add("buttonStyle");
-	botaoContaPropria.setOnAction(clienteController.contaPropriaAction());
+        labelDepositoTipo = new Label("Deseja realizar depÃ³sito em qual conta?");
+        labelDepositoTipo.setFont(Font.font(CaixaView.METRICS.getPX(0.006)));
+        labelDepositoTipo.getStyleClass().add("labelStyleDark");
 
-	botaoOutraConta = new Button("Outra Conta");
-	botaoOutraConta.getStyleClass().add("buttonStyle");
-	botaoOutraConta.setOnAction(clienteController.outraContaAction());
+        Button botaoContaPropria = new Button("Conta PrÃ³pria");
+        botaoContaPropria.getStyleClass().add("buttonStyle");
+        botaoContaPropria.setOnAction(controller.contaPropriaAction());
 
-	labelNumerConta = new Label("Informe número da Conta beneficiada: ");
-	labelNumerConta.getStyleClass().add("labelStyle");
-	labelNumerConta.setFont(Font.font(CaixaView.METRICS.getPX(0.006)));
+        Button botaoOutraConta = new Button("Outra Conta");
+        botaoOutraConta.getStyleClass().add("buttonStyle");
+        botaoOutraConta.setOnAction(controller.outraContaAction());
 
-	fieldNumeroConta = new TextField();
-	fieldNumeroConta.setEditable(false);
-	fieldNumeroConta.getStyleClass().add("numeroField");
+        Label labelNumerConta = new Label("Informe nÃºmero da Conta beneficiada: ");
+        labelNumerConta.getStyleClass().add("labelStyle");
+        labelNumerConta.setFont(Font.font(CaixaView.METRICS.getPX(0.006)));
 
-	botaoNumeroConta = new Button("Próximo");
-	botaoNumeroConta.setOnAction(clienteController.numeroContaAction());
-	botaoNumeroConta.getStyleClass().add("buttonDark");
+        fieldNumeroConta = new TextField();
+        fieldNumeroConta.setEditable(false);
+        fieldNumeroConta.getStyleClass().add("numeroField");
 
-	formNumeroConta = new HBox();
-	formNumeroConta.setSpacing(CaixaView.METRICS.getPX(0.004));
-	formNumeroConta.getStyleClass().add("boxViewDark");
-	formNumeroConta.setAlignment(Pos.CENTER);
-	formNumeroConta.getChildren().add(labelNumerConta);
-	formNumeroConta.getChildren().add(fieldNumeroConta);
+        botaoNumeroConta = new Button("AvanÃ§ar");
+        botaoNumeroConta.setOnAction(controller.numeroContaAction());
+        botaoNumeroConta.getStyleClass().add("buttonDark");
+        botaoNumeroConta.setFont(Font.font(CaixaView.METRICS.getPX(0.0045)));
 
-	formValorDeposito = new HBox();
-	formValorDeposito.setSpacing(CaixaView.METRICS.getPX(0.004));
-	formValorDeposito.getStyleClass().add("boxViewDark");
-	formValorDeposito.setAlignment(Pos.CENTER);
-	formValorDeposito.getChildren().add(labelDeposito);
+        formNumeroConta = new HBox();
+        formNumeroConta.setSpacing(CaixaView.METRICS.getPX(0.004));
+        formNumeroConta.getStyleClass().add("boxViewDark");
+        formNumeroConta.setAlignment(Pos.CENTER);
+        formNumeroConta.getChildren().add(labelNumerConta);
+        formNumeroConta.getChildren().add(fieldNumeroConta);
 
-	opcoesConta = new HBox();
-	opcoesConta.setSpacing(CaixaView.METRICS.getPX(0.004));
-	opcoesConta.getStyleClass().add("boxViewDark");
-	opcoesConta.setAlignment(Pos.CENTER);
-	opcoesConta.getChildren().add(botaoContaPropria);
-	opcoesConta.getChildren().add(botaoOutraConta);
+        formValorDeposito = new HBox();
+        formValorDeposito.setSpacing(CaixaView.METRICS.getPX(0.004));
+        formValorDeposito.getStyleClass().add("boxViewDark");
+        formValorDeposito.setAlignment(Pos.CENTER);
+        formValorDeposito.getChildren().add(labelDeposito);
 
+        opcoesConta = new HBox();
+        opcoesConta.setSpacing(CaixaView.METRICS.getPX(0.004));
+        opcoesConta.getStyleClass().add("boxViewDark");
+        opcoesConta.setAlignment(Pos.CENTER);
+        opcoesConta.getChildren().add(botaoContaPropria);
+        opcoesConta.getChildren().add(botaoOutraConta);
+
+        botoesOutraConta = new HBox();
+        botoesOutraConta.setSpacing(CaixaView.METRICS.getPX(0.005));
+        botoesOutraConta.setAlignment(Pos.CENTER);
+        botoesOutraConta.getChildren().add(botaoNumeroConta);
+        botoesOutraConta.getChildren().add(botaoCancelar);
+
+        botoesInserirValor = new HBox();
+        botoesInserirValor.setSpacing(CaixaView.METRICS.getPX(0.005));
+        botoesInserirValor.setAlignment(Pos.CENTER);
+        botoesInserirValor.getChildren().add(botaoInserirValor);
+        botoesInserirValor.getChildren().add(botaoCancelar);
     }
 
-    public void iniciarFormTipoDeposito(TecladoController tecladoController, MainView view)
-    {
-	getChildren().add(labelDepositoTipo);
-	getChildren().add(opcoesConta);
-	view.getChildren().add(new Group(this));
+    public void iniciarFormTipoDeposito(TecladoController tecladoController, MainView view) {
+        getChildren().add(labelDepositoTipo);
+        getChildren().add(opcoesConta);
+        view.getChildren().add(new Group(this));
     }
 
-    public void iniciarFormOutraConta(TecladoController tecladoController)
-    {
-	getChildren().clear();
-	getChildren().add(formNumeroConta);
-	getChildren().add(tecladoController.tecladoView);
-	getChildren().add(botaoNumeroConta);
+    public void iniciarFormOutraConta(TecladoController tecladoController) {
+        getChildren().clear();
+        getChildren().add(formNumeroConta);
+        getChildren().add(tecladoController.tecladoView);
+        getChildren().add(botoesOutraConta);
     }
 
-    public void iniciarFormValor(TecladoController tecladoController)
-    {
-	getChildren().clear();
-	getChildren().add(formValorDeposito);
-	getChildren().add(tecladoController.tecladoView);
-	getChildren().add(botaoInserirValor);
+    public void iniciarFormValor(TecladoController tecladoController) {
+        getChildren().clear();
+        getChildren().add(formValorDeposito);
+        getChildren().add(tecladoController.tecladoView);
+        getChildren().add(botoesInserirValor);
     }
 
 }

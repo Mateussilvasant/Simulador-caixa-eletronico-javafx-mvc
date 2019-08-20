@@ -13,62 +13,56 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
-public class LoginView extends StackPane
-{
-    private VBox loginBox;
-    private Label labelLoginTitulo;
-    private Label labelNumeroConta;
-    public TextField fieldNumeroConta;
-    private Label labelSenhaConta;
-    public PasswordField fieldSenha;
-    private Button botaoEntrar;
 
-    public LoginView(MainView mainView)
-    {
-	Group group = new Group();
-	loginBox = new VBox();
-	loginBox.setSpacing(CaixaView.METRICS.getPX(0.008));
-	loginBox.setAlignment(Pos.CENTER);
+public class LoginView extends StackPane {
+    private TextField fieldNumeroConta;
+    private PasswordField fieldSenha;
 
-	loginBox.getStyleClass().add("loginBox");
+    public LoginView(MainView mainView) {
+        Group group = new Group();
+        VBox loginBox = new VBox();
+        loginBox.setSpacing(CaixaView.METRICS.getPX(0.008));
+        loginBox.setAlignment(Pos.CENTER);
 
-	double insets = CaixaView.METRICS.getPX(0.025);
-	loginBox.setPadding(new Insets(insets, insets, insets, insets));
+        loginBox.getStyleClass().add("loginBox");
 
-	labelLoginTitulo = new Label("Acesse sua Conta");
-	labelLoginTitulo.setFont(Font.font(CaixaView.METRICS.getPX(0.0090)));
-	labelLoginTitulo.getStyleClass().add("labelStyle");
+        double insets = CaixaView.METRICS.getPX(0.025);
+        loginBox.setPadding(new Insets(insets, insets, insets, insets));
 
-	VBox hbox1 = new VBox();
-	labelNumeroConta = new Label("Número da Conta: ");
-	labelNumeroConta.getStyleClass().add("labelStyle");
-	labelNumeroConta.setFont(Font.font(CaixaView.METRICS.getPX(0.0055)));
-	fieldNumeroConta = new TextField();
-	fieldNumeroConta.getStyleClass().add("fieldStyle");
+        Label labelLoginTitulo = new Label("Acesse sua Conta");
+        labelLoginTitulo.setFont(Font.font(CaixaView.METRICS.getPX(0.0090)));
+        labelLoginTitulo.getStyleClass().add("labelStyle");
 
-	hbox1.getChildren().addAll(labelNumeroConta, fieldNumeroConta);
+        VBox hbox1 = new VBox();
+        Label labelNumeroConta = new Label("NÃºmero da Conta: ");
+        labelNumeroConta.getStyleClass().add("labelStyle");
+        labelNumeroConta.setFont(Font.font(CaixaView.METRICS.getPX(0.0055)));
+        fieldNumeroConta = new TextField();
+        fieldNumeroConta.getStyleClass().add("fieldStyle");
 
-	VBox hbox2 = new VBox();
-	labelSenhaConta = new Label("Senha: ");
-	labelSenhaConta.getStyleClass().add("labelStyle");
-	labelSenhaConta.setFont(Font.font(CaixaView.METRICS.getPX(0.0055)));
-	fieldSenha = new PasswordField();
-	fieldSenha.getStyleClass().add("fieldStyle");
-	hbox2.getChildren().addAll(labelSenhaConta, fieldSenha);
+        hbox1.getChildren().addAll(labelNumeroConta, fieldNumeroConta);
 
-	botaoEntrar = new Button("Acessar");
-	botaoEntrar.getStyleClass().add("buttonStyle");
-	botaoEntrar.setCursor(Cursor.CLOSED_HAND);
+        VBox hbox2 = new VBox();
+        Label labelSenhaConta = new Label("Senha: ");
+        labelSenhaConta.getStyleClass().add("labelStyle");
+        labelSenhaConta.setFont(Font.font(CaixaView.METRICS.getPX(0.0055)));
+        fieldSenha = new PasswordField();
+        fieldSenha.getStyleClass().add("fieldStyle");
+        hbox2.getChildren().addAll(labelSenhaConta, fieldSenha);
 
-	mainView.labelTituloBar.setText("Sistema Banco MS - Login");
+        Button botaoEntrar = new Button("Acessar");
+        botaoEntrar.getStyleClass().add("buttonStyle");
+        botaoEntrar.setCursor(Cursor.CLOSED_HAND);
 
-	loginBox.getChildren().addAll(labelLoginTitulo, hbox1, hbox2, botaoEntrar);
+        mainView.labelTituloBar.setText("Sistema Banco MS - Login");
 
-	botaoEntrar.setOnAction(new LoginController(mainView, this));
+        loginBox.getChildren().addAll(labelLoginTitulo, hbox1, hbox2, botaoEntrar);
 
-	group.getChildren().add(loginBox);
-	getChildren().add(group);
-	mainView.getChildren().add(this);
+        botaoEntrar.setOnAction(new LoginController(mainView, this));
+
+        group.getChildren().add(loginBox);
+        getChildren().add(group);
+        mainView.getChildren().add(this);
 
     }
 

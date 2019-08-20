@@ -1,38 +1,28 @@
 package br.com.bancoms.model;
 
-public enum ContaFactory
-{
+public enum ContaFactory {
 
-    POUPANCA
-    {
-
-	@Override
-	public Conta getConta()
-	{
-	    return new ContaPoupanca();
-	}
+    CORRENTE {
+        @Override
+        public Conta getConta() {
+            return new ContaCorrente();
+        }
 
     },
 
-    CORRENTE
-    {
-
-	@Override
-	public Conta getConta()
-	{
-	    return new ContaCorrente();
-	}
+    POUPANCA {
+        @Override
+        public Conta getConta() {
+            return new ContaPoupanca();
+        }
 
     },
 
-    INVESTIMENTO
-    {
-
-	@Override
-	public Conta getConta()
-	{
-	    return new ContaInvestimento();
-	}
+    INVESTIMENTO {
+        @Override
+        public Conta getConta() {
+            return new ContaInvestimento();
+        }
 
     };
 

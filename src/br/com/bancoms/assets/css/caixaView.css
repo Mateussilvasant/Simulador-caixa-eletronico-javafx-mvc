@@ -37,22 +37,14 @@
 
 .buttonStyle:hover{
 	-fx-background-color: #bfbfbf;
+	-fx-font-weight: bolder;
 }
 
 .buttonDark{
 	-fx-background-color: #1a1a1a;
-	-fx-background-radius: 30.0 30.0 30.0 30.0;
-	-fx-effect: innershadow(gaussian,#404040 , 30.0, 0.0, 0.0, 0.0);	
+	-fx-effect: innershadow(gaussian,#404040 , 30.0, 0.0, 0.0, 0.0);
 	-fx-font-weight: bolder;
 	-fx-text-fill:  #f2f2f2;
-}
-
-.buttonDark:hover{
-	-fx-background-color: #333333;
-}
-
-.buttonDark:focused{
-	-fx-effect: innershadow(gaussian,#b3b3b3 , 20.0, 0.0, 0.0, 0.0);		
 }
 
 .barBackground{
