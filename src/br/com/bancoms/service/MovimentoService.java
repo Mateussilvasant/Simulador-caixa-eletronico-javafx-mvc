@@ -32,7 +32,13 @@ public class MovimentoService {
         return movimentoDAO.listarMovimentos(conta);
     }
 
-    public int registrarMovimento(MovimentoTO movimentoTO) {
-        return movimentoDAO.registrarMovimento(movimentoTO);
+    public void registrarMovimento(MovimentoTO movimentoTO) {
+        movimentoDAO.registrarMovimento(movimentoTO);
+    }
+
+    public void registrarMovimentos(ArrayList<MovimentoTO> movimentos) {
+
+        movimentos.forEach(movimentoTO -> movimentoDAO.registrarMovimento(movimentoTO));
+
     }
 }

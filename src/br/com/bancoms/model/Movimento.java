@@ -7,25 +7,22 @@ public class Movimento {
     public static int TRANSFERENCIA = 3;
     public static int EMPRESTIMO = 4;
 
+    private int idMovimento;
     private double valor;
     private int tipo;
     private String descricao;
     private String data;
+    private int numeroContaOrigem;
+    private int numeroContaDestino;
 
-    public Movimento(double valor, int tipo, String descricao, String data) {
+    public Movimento(int idMovimento, double valor, String descricao, int tipo, String data, int numeroContaOrigem, int numeroContaDestino) {
+        this.idMovimento = idMovimento;
         this.valor = valor;
         this.tipo = tipo;
         this.descricao = descricao;
         this.data = data;
-    }
-
-    public Movimento(double valor, String descricao, String data) {
-        this.valor = valor;
-        this.descricao = descricao;
-        this.data = data;
-    }
-
-    public Movimento() {
+        this.numeroContaOrigem = numeroContaOrigem;
+        this.numeroContaDestino = numeroContaDestino;
     }
 
     public int getTipo() {
@@ -60,4 +57,27 @@ public class Movimento {
         this.data = data;
     }
 
+    public int getNumeroContaOrigem() {
+        return numeroContaOrigem;
+    }
+
+    public void setNumeroContaOrigem(int numeroContaOrigem) {
+        this.numeroContaOrigem = numeroContaOrigem;
+    }
+
+    public int getNumeroContaDestino() {
+        return numeroContaDestino;
+    }
+
+    public void setNumeroContaDestino(int numeroContaDestino) {
+        this.numeroContaDestino = numeroContaDestino;
+    }
+
+    public int getIdMovimento() {
+        return idMovimento;
+    }
+
+    public void setIdMovimento(int idMovimento) {
+        this.idMovimento = idMovimento;
+    }
 }

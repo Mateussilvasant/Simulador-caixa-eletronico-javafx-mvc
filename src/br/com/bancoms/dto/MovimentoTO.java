@@ -1,7 +1,5 @@
 package br.com.bancoms.dto;
 
-import br.com.bancoms.model.Conta;
-
 public class MovimentoTO {
     public static int SAQUE = 1;
     public static int DEPOSITO = 2;
@@ -13,12 +11,16 @@ public class MovimentoTO {
     private int tipo;
     private String descricao;
     private String data;
+    private int numeroContaOrigem;
+    private int numeroContaDestino;
 
-    public MovimentoTO(double valor, int tipo, String descricao, Conta conta) {
+    public MovimentoTO(int idConta, double valor, int tipo, String descricao, int numeroContaOrigem, int numeroContaDestino) {
         this.valor = valor;
         this.tipo = tipo;
         this.descricao = descricao;
-        this.idConta = conta.getId();
+        this.numeroContaOrigem = numeroContaOrigem;
+        this.numeroContaDestino = numeroContaDestino;
+        this.idConta = idConta;
     }
 
     public int getTipo() {
@@ -51,6 +53,22 @@ public class MovimentoTO {
 
     public void setData(String data) {
         this.data = data;
+    }
+
+    public int getNumeroContaOrigem() {
+        return numeroContaOrigem;
+    }
+
+    public void setNumeroContaOrigem(int numeroContaOrigem) {
+        this.numeroContaOrigem = numeroContaOrigem;
+    }
+
+    public int getNumeroContaDestino() {
+        return numeroContaDestino;
+    }
+
+    public void setNumeroContaDestino(int numeroContaDestino) {
+        this.numeroContaDestino = numeroContaDestino;
     }
 
     public int getIdConta() {

@@ -29,7 +29,7 @@ public class LoginController implements EventHandler<ActionEvent> {
         String numero = "123456"; // loginView.fieldNumeroConta.getText();
         String senha = "123a"; // loginView.fieldSenha.getText();
 
-        Validador.Valor<Integer> valor = Validador.validarCampoNumero(numero);
+        Validador.Valor<Integer> valor = Validador.validar(numero);
 
         if (valor.resposta == Validador.CAMPO_VALIDO
                 && Validador.validarCampoTexto(senha) == Validador.CAMPO_VALIDO) {

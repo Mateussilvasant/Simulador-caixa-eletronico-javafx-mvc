@@ -45,7 +45,7 @@ public class DepositoView extends VBox {
         botaoInserirValor.setFont(Font.font(CaixaView.METRICS.getPX(0.0045)));
 
         botaoCancelar =  new Button("Cancelar");
-        botaoCancelar.setOnAction(controller.cancelarOperacao());
+        botaoCancelar.setOnAction(controller.retornarMenu());
         botaoCancelar.getStyleClass().add("buttonDark");
         botaoCancelar.setFont(Font.font(CaixaView.METRICS.getPX(0.0045)));
 

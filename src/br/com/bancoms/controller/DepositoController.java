@@ -4,21 +4,35 @@ import br.com.bancoms.components.DoubleTeclado;
 import br.com.bancoms.components.Teclado;
 import br.com.bancoms.dto.MovimentoTO;
 import br.com.bancoms.model.Conta;
-import br.com.bancoms.model.Movimento;
 import br.com.bancoms.service.ContaService;
 import br.com.bancoms.service.MovimentoService;
-import br.com.bancoms.util.Validador;
 import br.com.bancoms.view.DepositoView;
 import br.com.bancoms.view.MainView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 
+import java.util.ArrayList;
+
 
 public class DepositoController {
+
+    enum EDepositoController {
+
+        OUTRA_CONTA(2), CONTA_PROPRIA(1);
+
+        private int value;
+
+        EDepositoController(int value) {
+            this.value = value;
+        }
+
+    }
+
     private DepositoView depositoView;
     private TecladoController tecladoController;
     private ClienteController clienteController;
+    private EDepositoController opcaoTipoDepositoEscolhido;
 
     public DepositoController(ClienteController clienteController) {
         this.tecladoController = new TecladoController();
@@ -34,6 +48,7 @@ public class DepositoController {
         return (event) ->
         {
             tecladoController.anexarTeclado(Teclado.Tipo.DOUBLE, null);
+            opcaoTipoDepositoEscolhido = EDepositoController.CONTA_PROPRIA;
             depositoView.iniciarFormValor(tecladoController);
         };
     }
@@ -42,6 +57,7 @@ public class DepositoController {
         return (event) ->
         {
             tecladoController.anexarTeclado(Teclado.Tipo.INTEGER, depositoView.fieldNumeroConta);
+            opcaoTipoDepositoEscolhido = EDepositoController.OUTRA_CONTA;
             depositoView.iniciarFormOutraConta(tecladoController);
         };
     }
@@ -56,7 +72,6 @@ public class DepositoController {
         };
     }
 
-    @SuppressWarnings("unchecked")
     public EventHandler<ActionEvent> realizarDepositoAction() {
         return (event) ->
         {
@@ -64,19 +79,11 @@ public class DepositoController {
 
                 double valor = ((DoubleTeclado) tecladoController.getTeclado()).getValor();
 
-                if (depositoView.getChildren().contains(depositoView.fieldNumeroConta)) {
-
-                    Validador.Valor<Integer> valorResposta = Validador.validarCampoNumero(depositoView.fieldNumeroConta.getText());
-
-                    if (valorResposta.resposta == Validador.CAMPO_VALIDO) {
-                        realizarDeposito(valor, valorResposta.valor);
-                    } else if (valorResposta.resposta == Validador.CAMPO_NUMERAL_COM_PALAVRAS) {
-                        MainView.getAlert("Validação",
-                                "Número da conta inválido", Alert.AlertType.INFORMATION).show();
-                    }
+                if (opcaoTipoDepositoEscolhido.equals(EDepositoController.CONTA_PROPRIA)) {
+                    realizarDeposito(clienteController.getContaSessao(), valor);
 
                 } else {
-                    realizarDeposito(valor, 0);
+                    realizarDeposito(clienteController.getContaSessao(), depositoView.fieldNumeroConta.getText(), valor);
                 }
 
             } else {
@@ -87,56 +94,55 @@ public class DepositoController {
         };
     }
 
-    private void realizarDeposito(double valor, int numeroContaBeneficiada) {
-        ContaService contaService = ContaService.getInstance();
-        Conta conta = clienteController.getContaSessao();
-        Conta contaBeneficiada;
-        boolean transacaoFeita = false;
 
-        if (numeroContaBeneficiada == 0) {
+    /*Realiza depósito em outra conta */
+    private void realizarDeposito(Conta contaOrigem, String numeroConta, double valor) {
+        try {
 
-            if (contaService.realizarDeposito(conta, valor)) {
-                transacaoFeita = true;
-                registrarMovimento("DEPÓSITO Conta-Própria", valor, conta);
+            MovimentoService movimentoService = MovimentoService.getInstance();
+            ArrayList<MovimentoTO> movimentosRealizado;
+
+            if (!((movimentosRealizado = ContaService.getInstance().realizarDeposito(contaOrigem, numeroConta, valor)).isEmpty())) {
+                movimentoService.registrarMovimentos(movimentosRealizado);
+                depositoRealizado();
+            } else {
+                depositoNaoRealizado();
             }
 
-        } else {
-
-            contaBeneficiada = contaService.consultarConta(numeroContaBeneficiada);
-
-            if (contaService.realizarDeposito(conta, valor)) {
-                transacaoFeita = true;
-
-                registrarMovimento("DEPÓSITO Conta-Creditada: " + contaBeneficiada.getNumero(), valor,
-                        contaBeneficiada);
-                registrarMovimento("DEPÓSITO Conta-Beneficiada: " + conta.getNumero(),
-                        valor, conta);
-            }
-
+        } catch (Exception e) {
+            depositoNaoRealizado();
         }
+    }
 
-        if (transacaoFeita) {
-            MainView.getAlert("DEPÓSITO REALIZADO", "Depósito realizado com sucesso!", Alert.AlertType.INFORMATION)
-                    .show();
+    /*Realiza depósito na conta Própria */
+    private void realizarDeposito(Conta conta, double valor) {
+
+        MovimentoService movimentoService = MovimentoService.getInstance();
+        MovimentoTO movimento;
+
+        if ((movimento = ContaService.getInstance().realizarDeposito(conta, valor)) != null) {
+            movimentoService.registrarMovimento(movimento);
+            depositoRealizado();
         } else {
-            MainView.getAlert("DEPÓSITO NÃO REALIZADO",
-                    "Ocorreu um erro, não foi possível realizar o depósito!", Alert.AlertType.INFORMATION).show();
+            depositoNaoRealizado();
         }
-
-        clienteController.view.retornarMenuPrincipal(depositoView, clienteController.viewClient);
     }
 
-    private boolean registrarMovimento(String titulo, double valor, Conta conta) {
-
-        MovimentoTO movimentoTO = new MovimentoTO(valor, Movimento.DEPOSITO, titulo, conta);
-
-        // registrar o movimento
-        return MovimentoService.getInstance().registrarMovimento(movimentoTO) > 0;
+    private void depositoRealizado() {
+        MainView.getAlert("Depósito Informação",
+                "Depósito realizado com sucesso!", Alert.AlertType.INFORMATION).show();
+        retornarMenu().handle(null);
     }
 
-    public EventHandler<ActionEvent> cancelarOperacao() {
-        return (event) ->{
-            clienteController.view.retornarMenuPrincipal(depositoView, clienteController.viewClient);
-        };
+    private void depositoNaoRealizado() {
+        MainView.getAlert("Erro",
+                "Não foi possível realizar o depósito.", Alert.AlertType.INFORMATION).show();
+        retornarMenu().handle(null);
     }
+
+
+    public EventHandler<ActionEvent> retornarMenu() {
+        return (event) -> clienteController.view.retornarMenuPrincipal(depositoView, clienteController.viewClient);
+    }
+
 }

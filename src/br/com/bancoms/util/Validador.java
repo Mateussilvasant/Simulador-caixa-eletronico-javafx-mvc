@@ -15,7 +15,7 @@ public class Validador {
         }
     }
 
-    public static Valor validarCampoNumero(String numeroCampo) {
+    public static Valor validar(String numeroCampo) {
 
         int valor;
 

@@ -14,9 +14,9 @@ public class MovimentoDAO {
     public MovimentoDAO() {
     }
 
-    public int registrarMovimento(MovimentoTO movimentoTO) {
+    public void registrarMovimento(MovimentoTO movimentoTO) {
         QueryControl control = new QueryControl();
-        String sql = "INSERT INTO MOVIMENTO (ID_CONTA,TIPO_MOVIMENTO,DESCRICAO_TIPO,VALOR_MOVIMENTO,DATA_MOVIMENTO) VALUES((?),(?),(?),(?),(?))";
+        String sql = "INSERT INTO MOVIMENTO (ID_CONTA,TIPO_MOVIMENTO,DESCRICAO_TIPO,VALOR_MOVIMENTO,DATA_MOVIMENTO,NUMERO_CONTA_ORIGEM,NUMERO_CONTA_DESTINO) VALUES((?),(?),(?),(?),(?),(?),(?))";
 
         try {
 
@@ -27,12 +27,14 @@ public class MovimentoDAO {
             control.setString(3, movimentoTO.getDescricao());
             control.setDouble(4, movimentoTO.getValor());
             control.setString(5, BancoUtil.getDataAtual());
+            control.setInt(6, movimentoTO.getNumeroContaOrigem());
+            control.setInt(7, movimentoTO.getNumeroContaDestino());
 
             if (control.executeUpdate() == RESULT.SUCCESS) {
                 control.setGeneratedKeys();
 
                 if (control.next()) {
-                    return control.getInt(1);
+                    control.getInt(1);
                 }
 
             }
@@ -55,14 +57,13 @@ public class MovimentoDAO {
             }
         }
 
-        return 0;
     }
 
     public ArrayList<Movimento> listarMovimentos(Conta conta) {
 
         QueryControl control = new QueryControl();
         ArrayList<Movimento> listaMovimentos = new ArrayList<>();
-        String sql = "SELECT DATA_MOVIMENTO,DESCRICAO_TIPO,VALOR_MOVIMENTO\r\n"
+        String sql = "SELECT ID_MOVIMENTO, DATA_MOVIMENTO,DESCRICAO_TIPO, TIPO_MOVIMENTO, VALOR_MOVIMENTO,NUMERO_CONTA_ORIGEM, NUMERO_CONTA_DESTINO\r\n"
                 + "FROM MOVIMENTO WHERE TIPO_MOVIMENTO in (1,2,3) AND ID_CONTA = (?) order by  DATA_MOVIMENTO desc limit 7";
 
         try {
@@ -72,10 +73,15 @@ public class MovimentoDAO {
             control.executeQuery();
 
             while (control.next()) {
+                int idMovimento = control.getInt("ID_MOVIMENTO");
                 String data = control.getString("DATA_MOVIMENTO");
                 String descricao = control.getString("DESCRICAO_TIPO");
+                int tipo = control.getInt("TIPO_MOVIMENTO");
                 double valor = control.getDouble("VALOR_MOVIMENTO");
-                listaMovimentos.add(new Movimento(valor, descricao, data));
+                int numeroContaOrigem = control.getInt("NUMERO_CONTA_ORIGEM");
+                int numeroContaDestino = control.getInt("NUMERO_CONTA_DESTINO");
+
+                listaMovimentos.add(new Movimento(idMovimento,valor,descricao,tipo,data,numeroContaOrigem,numeroContaDestino));
             }
 
         } catch (Exception e) {

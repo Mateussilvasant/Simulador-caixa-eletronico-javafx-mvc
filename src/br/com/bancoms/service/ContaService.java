@@ -1,7 +1,11 @@
 package br.com.bancoms.service;
 
 import br.com.bancoms.dao.ContaDAO;
+import br.com.bancoms.dto.MovimentoTO;
 import br.com.bancoms.model.Conta;
+import br.com.bancoms.util.Validador;
+
+import java.util.ArrayList;
 
 public class ContaService {
     private static ContaService contaService;
@@ -35,21 +39,55 @@ public class ContaService {
         return contaSessao.sacar(valorOperacao);
     }
 
-    /*
-      Realiza deposito na conta passada por parametro.
-     */
-    public boolean realizarDeposito(Conta conta, double valor) {
+    /*Realiza o depósito na conta informada e retorna com resultado o Movimento realizado*/
+    public MovimentoTO realizarDeposito(Conta conta, double valor) {
 
-        if (conta != null) {
-            conta.depositar(valor);
-            if (atualizarSaldo(conta)) {
-                return true;
-            } else {
-                sacar(conta, valor);
-                return false;
-            }
+        conta.depositar(valor);
+
+        if (atualizarSaldo(conta)) {
+            return new MovimentoTO(conta.getId(), valor, MovimentoTO.DEPOSITO, "DEPÓSITO CONTA-PRÓPRIA", conta.getNumero(), conta.getNumero());
+        } else {
+            conta.sacar(valor);
         }
-        return false;
+
+        return null;
+    }
+
+    /*Realiza o depósito na conta do número informado e retorna como resultado os movimentos realizado.*/
+    public ArrayList<MovimentoTO> realizarDeposito(Conta contaOrigem, String numeroContaDestino, double valor) throws Exception {
+
+        ArrayList<MovimentoTO> listaMovimentosRealizado = new ArrayList<>();
+
+        Conta contaDestino = consultarConta(validarDadosDeposito(numeroContaDestino));
+
+        if (contaDestino != null) {
+
+            contaDestino.depositar(valor);
+
+            if (atualizarSaldo(contaDestino)) {
+                listaMovimentosRealizado.add(new MovimentoTO(contaOrigem.getId(), valor, MovimentoTO.DEPOSITO, "DEPÓSITO OUTRA-CONTA", contaOrigem.getNumero(), contaDestino.getNumero()));
+                listaMovimentosRealizado.add(new MovimentoTO(contaDestino.getId(), valor, MovimentoTO.DEPOSITO, "DEPÓSITO OUTRA-CONTA", contaOrigem.getNumero(), contaDestino.getNumero()));
+            } else {
+                contaDestino.sacar(valor);
+            }
+
+        } else {
+            throw new Exception("Conta informada inválida");
+        }
+
+        return listaMovimentosRealizado;
+
+    }
+
+    private int validarDadosDeposito(String numeroConta) throws Exception {
+
+        Validador.Valor<Integer> valor;
+
+        if ((valor = Validador.validar(numeroConta)).resposta == Validador.CAMPO_VALIDO) {
+            return valor.valor;
+        } else {
+            throw new Exception("Número da Conta inválido");
+        }
     }
 
 }
