@@ -32,7 +32,7 @@ public class MainView extends StackPane {
 
         labelTituloBar = new Label("Teste");
         labelTituloBar.setTextFill(Color.WHITE);
-        labelTituloBar.setFont(Font.font(20));
+        labelTituloBar.setFont(Font.font(17));
 
         topBar.getChildren().add(labelTituloBar);
         super.getChildren().add(topBar);

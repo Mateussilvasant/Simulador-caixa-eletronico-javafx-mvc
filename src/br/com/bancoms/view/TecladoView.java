@@ -11,6 +11,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class TecladoView extends Group {
     private GridPane gridBotoes;
@@ -18,6 +21,7 @@ public class TecladoView extends Group {
     public TextField numeroField;
     private Button botaoEntrar;
     private Button botaoApagar;
+    private List<Button> botoesNumericos;
 
     public TecladoView(TecladoController tecladoController) {
         vboxView = new VBox();
@@ -46,6 +50,8 @@ public class TecladoView extends Group {
 
         hboxButton.getChildren().addAll(botaoApagar, botaoEntrar);
 
+        botoesNumericos = new ArrayList<>();
+
         int numero = 0;
 
         for (int linha = 0; linha <= 1; linha++) {
@@ -64,6 +70,7 @@ public class TecladoView extends Group {
         Button botao = new Button(indice + "");
         botao.setFont(Font.font(CaixaView.METRICS.getPX(0.012)));
         botao.getStyleClass().add("buttonTeclado");
+        botoesNumericos.add(botao);
         gridBotoes.add(botao, c, l);
     }
 
@@ -71,9 +78,8 @@ public class TecladoView extends Group {
         controller.getTeclado().anexarEvento(botaoEntrar);
         controller.getTeclado().anexarEvento(botaoApagar);
 
-        for (Node node : gridBotoes.getChildren()) {
-
-            controller.getTeclado().anexarEvento(((Button) node));
+        for (Button button : botoesNumericos) {
+            controller.getTeclado().anexarEvento(button);
         }
 
     }

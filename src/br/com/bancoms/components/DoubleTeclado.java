@@ -13,17 +13,7 @@ public class DoubleTeclado extends Teclado {
     private static DoubleTeclado instance;
     private double valor;
 
-    public static DoubleTeclado getInstance(TextField field) {
-
-        field.setText("0,00");
-
-        if (instance == null) {
-            return instance = new DoubleTeclado(field);
-        }
-        return instance;
-    }
-
-    private DoubleTeclado(TextField fieldAlvo) {
+    public DoubleTeclado(TextField fieldAlvo) {
         setLimiteCaracteres(7);
         setFieldVinculado(fieldAlvo);
     }

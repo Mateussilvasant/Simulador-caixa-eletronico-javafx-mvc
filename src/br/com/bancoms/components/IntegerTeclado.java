@@ -14,17 +14,7 @@ public class IntegerTeclado extends Teclado {
 
     private int valor;
 
-    public static IntegerTeclado getInstance(TextField field) {
-
-        field.setText("0");
-
-        if (instance == null) {
-            return instance = new IntegerTeclado(field);
-        }
-        return instance;
-    }
-
-    private IntegerTeclado(TextField fieldAlvo) {
+    public IntegerTeclado(TextField fieldAlvo) {
         setLimiteCaracteres(10);
         setFieldVinculado(fieldAlvo);
     }

@@ -43,6 +43,7 @@ public class ClienteView extends StackPane {
         botaoSacar = new Button();
         botaoSacar.getStyleClass().add("buttonBanco");
         botaoSacar.setGraphic(new ImageView("sacar.png"));
+        botaoSacar.setOnAction(controller.menuSaqueAction());
 
         botaoTransferencia = new Button();
         botaoTransferencia.getStyleClass().add("buttonBanco");
@@ -60,10 +61,10 @@ public class ClienteView extends StackPane {
     }
 
     public void iniciarPoupancaView(ClienteController controller) {
-        botaoDepositar = new Button("Depósito");
+        botaoDepositar = new Button("DepÃ³sito");
         botaoDepositar.setOnAction(controller.menuDepositoAction());
         botaoSacar = new Button("Saque");
-        botaoTransferencia = new Button("Transferência");
+        botaoTransferencia = new Button("TransferÃªncia");
         botaoExtrato = new Button("Extratos");
         botaoEncerrar = new Button("Encerrar");
 

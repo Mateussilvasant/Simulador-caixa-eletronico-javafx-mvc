@@ -13,6 +13,7 @@ public class ClienteController {
     public MainView view;
     public ClienteView viewClient;
     private DepositoController depositoController;
+    private SaqueController saqueController;
     public Cliente clienteSessao;
     private Conta contaSessao;
 
@@ -22,12 +23,12 @@ public class ClienteController {
         this.contaSessao = contaSessao;
         this.viewClient = new ClienteView(this);
         this.depositoController = new DepositoController(this);
+        this.saqueController = new SaqueController(this);
     }
 
     public EventHandler<ActionEvent> menuDepositoAction() {
         return (event) ->
         {
-
             view.getChildren().remove(viewClient);
             depositoController.iniciarDeposito(view);
         };
@@ -37,4 +38,10 @@ public class ClienteController {
         return contaSessao;
     }
 
+    public EventHandler<ActionEvent> menuSaqueAction() {
+        return event ->{
+            view.getChildren().remove(viewClient);
+            saqueController.iniciarSaque(view);
+        };
+    }
 }

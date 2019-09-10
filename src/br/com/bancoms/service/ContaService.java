@@ -3,6 +3,7 @@ package br.com.bancoms.service;
 import br.com.bancoms.dao.ContaDAO;
 import br.com.bancoms.dto.MovimentoTO;
 import br.com.bancoms.model.Conta;
+import br.com.bancoms.model.Movimento;
 import br.com.bancoms.util.Validador;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class ContaService {
     }
 
     /*Realiza o depósito na conta informada e retorna com resultado o Movimento realizado*/
-    public MovimentoTO realizarDeposito(Conta conta, double valor) {
+    public MovimentoTO realizarDeposito(Conta conta, double valor) throws Exception {
 
         conta.depositar(valor);
 
@@ -48,9 +49,9 @@ public class ContaService {
             return new MovimentoTO(conta.getId(), valor, MovimentoTO.DEPOSITO, "DEPÓSITO CONTA-PRÓPRIA", conta.getNumero(), conta.getNumero());
         } else {
             conta.sacar(valor);
+            throw new Exception("Não foi possível realizar o depósito");
         }
 
-        return null;
     }
 
     /*Realiza o depósito na conta do número informado e retorna como resultado os movimentos realizado.*/
@@ -68,7 +69,8 @@ public class ContaService {
                 listaMovimentosRealizado.add(new MovimentoTO(contaOrigem.getId(), valor, MovimentoTO.DEPOSITO, "DEPÓSITO OUTRA-CONTA", contaOrigem.getNumero(), contaDestino.getNumero()));
                 listaMovimentosRealizado.add(new MovimentoTO(contaDestino.getId(), valor, MovimentoTO.DEPOSITO, "DEPÓSITO OUTRA-CONTA", contaOrigem.getNumero(), contaDestino.getNumero()));
             } else {
-                contaDestino.sacar(valor);
+                contaDestino.sacar(valor); //Retira o dinheiro da conta
+                throw new Exception("Não foi possível realizar o depósito.");
             }
 
         } else {
@@ -79,6 +81,7 @@ public class ContaService {
 
     }
 
+    /* realiza a validação do numero da conta */
     private int validarDadosDeposito(String numeroConta) throws Exception {
 
         Validador.Valor<Integer> valor;
@@ -90,4 +93,21 @@ public class ContaService {
         }
     }
 
+    /*Realiza o saque de dinheiro na Conta e retorna o movimento realizado. */
+    public MovimentoTO realizarSaque(Conta conta, double valor) throws Exception {
+
+        if (conta.sacar(valor)) {
+
+            if (atualizarSaldo(conta)) {
+                return new MovimentoTO(conta.getId(), valor, Movimento.SAQUE, "SAQUE-NORMAL", conta.getNumero(), conta.getNumero());
+            } else {
+                conta.depositar(valor); //devolve o dinheiro para conta
+                throw new Exception("Não foi possível realizar o saque.");
+            }
+
+        } else {
+            throw new Exception("Valor maior que o saldo.");
+        }
+
+    }
 }

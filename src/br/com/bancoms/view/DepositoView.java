@@ -15,8 +15,8 @@ import javafx.scene.text.Font;
 
 public class DepositoView extends VBox {
 
-    private  HBox botoesInserirValor;
-    private  HBox botoesOutraConta;
+    private HBox botoesInserirValor;
+    private HBox botoesOutraConta;
     private Button botaoInserirValor;
     private Button botaoNumeroConta;
     private Button botaoCancelar;
@@ -42,12 +42,10 @@ public class DepositoView extends VBox {
         botaoInserirValor = new Button("Avançar");
         botaoInserirValor.setOnAction(controller.realizarDepositoAction());
         botaoInserirValor.getStyleClass().add("buttonDark");
-        botaoInserirValor.setFont(Font.font(CaixaView.METRICS.getPX(0.0045)));
 
-        botaoCancelar =  new Button("Cancelar");
+        botaoCancelar = new Button("Cancelar");
         botaoCancelar.setOnAction(controller.retornarMenu());
         botaoCancelar.getStyleClass().add("buttonDark");
-        botaoCancelar.setFont(Font.font(CaixaView.METRICS.getPX(0.0045)));
 
         labelDepositoTipo = new Label("Deseja realizar depósito em qual conta?");
         labelDepositoTipo.setFont(Font.font(CaixaView.METRICS.getPX(0.006)));
@@ -72,7 +70,6 @@ public class DepositoView extends VBox {
         botaoNumeroConta = new Button("Avançar");
         botaoNumeroConta.setOnAction(controller.numeroContaAction());
         botaoNumeroConta.getStyleClass().add("buttonDark");
-        botaoNumeroConta.setFont(Font.font(CaixaView.METRICS.getPX(0.0045)));
 
         formNumeroConta = new HBox();
         formNumeroConta.setSpacing(CaixaView.METRICS.getPX(0.004));

@@ -105,26 +105,27 @@ public class DepositoController {
             if (!((movimentosRealizado = ContaService.getInstance().realizarDeposito(contaOrigem, numeroConta, valor)).isEmpty())) {
                 movimentoService.registrarMovimentos(movimentosRealizado);
                 depositoRealizado();
-            } else {
-                depositoNaoRealizado();
             }
 
         } catch (Exception e) {
-            depositoNaoRealizado();
+            depositoNaoRealizado(e.getMessage());
         }
     }
 
     /*Realiza depósito na conta Própria */
     private void realizarDeposito(Conta conta, double valor) {
+        try {
 
-        MovimentoService movimentoService = MovimentoService.getInstance();
-        MovimentoTO movimento;
+            MovimentoService movimentoService = MovimentoService.getInstance();
+            MovimentoTO movimento;
 
-        if ((movimento = ContaService.getInstance().realizarDeposito(conta, valor)) != null) {
-            movimentoService.registrarMovimento(movimento);
-            depositoRealizado();
-        } else {
-            depositoNaoRealizado();
+            if ((movimento = ContaService.getInstance().realizarDeposito(conta, valor)) != null) {
+                movimentoService.registrarMovimento(movimento);
+                depositoRealizado();
+            }
+        } catch (Exception e) {
+            depositoNaoRealizado(e.getMessage());
+
         }
     }
 
@@ -134,9 +135,9 @@ public class DepositoController {
         retornarMenu().handle(null);
     }
 
-    private void depositoNaoRealizado() {
+    private void depositoNaoRealizado(String mensagem) {
         MainView.getAlert("Erro",
-                "Não foi possível realizar o depósito.", Alert.AlertType.INFORMATION).show();
+                mensagem, Alert.AlertType.INFORMATION).show();
         retornarMenu().handle(null);
     }
 

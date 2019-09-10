@@ -33,9 +33,9 @@ public class TecladoController {
         }
 
         if (tipo == Teclado.Tipo.INTEGER) {
-            tecladoComponent = IntegerTeclado.getInstance(field);
+            tecladoComponent = new IntegerTeclado(field);
         } else {
-            tecladoComponent = DoubleTeclado.getInstance(field);
+            tecladoComponent = new DoubleTeclado(field);
         }
 
         tecladoView.anexarEventos(this);
