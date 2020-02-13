@@ -3,13 +3,15 @@ package br.com.bancoms.dao;
 import br.com.bancoms.model.Cliente;
 import br.com.bancoms.vo.ClienteVO;
 
+import java.util.Optional;
+
 public class ClienteDAO {
     public ClienteDAO() {
     }
 
-    public Cliente realizarLogin(ClienteVO clienteVO) {
+    public Optional<Cliente> realizarLogin(ClienteVO clienteVO) {
         QueryControl query = null;
-        Cliente cliente = null;
+        Optional<Cliente> cliente = Optional.empty();
 
         try {
             String sql = "SELECT CLIENTE.NOME, CLIENTE.SOBRENOME "
@@ -23,7 +25,7 @@ public class ClienteDAO {
             query.executeQuery();
 
             if (query.next()) {
-                cliente = new Cliente(query.getString("CLIENTE.NOME"), query.getString("CLIENTE.SOBRENOME"));
+                cliente = Optional.of(new Cliente(query.getString("CLIENTE.NOME"), query.getString("CLIENTE.SOBRENOME")));
             }
 
         } catch (Exception e) {

@@ -3,7 +3,6 @@ package br.com.bancoms.view;
 import br.com.bancoms.controller.LoginController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -19,46 +18,64 @@ public class LoginView extends StackPane {
     private PasswordField fieldSenha;
 
     public LoginView(MainView mainView) {
+
+        double insets = CaixaView.METRICS.getPX(0.015);
+
+        setPickOnBounds(false);
+
         Group group = new Group();
         VBox loginBox = new VBox();
-        loginBox.setSpacing(CaixaView.METRICS.getPX(0.008));
+        loginBox.setSpacing(CaixaView.METRICS.getPX(0.015));
         loginBox.setAlignment(Pos.CENTER);
-
         loginBox.getStyleClass().add("loginBox");
 
-        double insets = CaixaView.METRICS.getPX(0.025);
         loginBox.setPadding(new Insets(insets, insets, insets, insets));
+        View.setSizeElemento(loginBox, 0.25, 0.60);
 
         Label labelLoginTitulo = new Label("Acesse sua Conta");
-        labelLoginTitulo.setFont(Font.font(CaixaView.METRICS.getPX(0.0090)));
-        labelLoginTitulo.getStyleClass().add("labelStyle");
+        labelLoginTitulo.setFont(Font.font(CaixaView.METRICS.getPX(0.012)));
+        labelLoginTitulo.getStyleClass().add("labelStyleDark");
 
         VBox hbox1 = new VBox();
-        Label labelNumeroConta = new Label("Número da Conta: ");
-        labelNumeroConta.getStyleClass().add("labelStyle");
-        labelNumeroConta.setFont(Font.font(CaixaView.METRICS.getPX(0.0055)));
+        Label labelNumeroConta = new Label("Número Conta");
+        labelNumeroConta.getStyleClass().add("labelStyleDark");
+        labelNumeroConta.setFont(Font.font(CaixaView.METRICS.getPX(0.007)));
+
+        Label labelSenhaConta = new Label("Senha");
+        labelSenhaConta.getStyleClass().add("labelStyleDark");
+        labelSenhaConta.setFont(Font.font(CaixaView.METRICS.getPX(0.007)));
+
         fieldNumeroConta = new TextField();
         fieldNumeroConta.getStyleClass().add("fieldStyle");
+        fieldNumeroConta.setFont(Font.font(CaixaView.METRICS.getPX(0.007)));
+
+
+        fieldSenha = new PasswordField();
+        fieldSenha.setFont(Font.font(CaixaView.METRICS.getPX(0.007)));
+        fieldSenha.getStyleClass().add("fieldStyle");
+
+        View.setSizeElemento(0.20, 0.05, fieldNumeroConta, fieldSenha);
+
 
         hbox1.getChildren().addAll(labelNumeroConta, fieldNumeroConta);
 
         VBox hbox2 = new VBox();
-        Label labelSenhaConta = new Label("Senha: ");
-        labelSenhaConta.getStyleClass().add("labelStyle");
-        labelSenhaConta.setFont(Font.font(CaixaView.METRICS.getPX(0.0055)));
-        fieldSenha = new PasswordField();
-        fieldSenha.getStyleClass().add("fieldStyle");
+
         hbox2.getChildren().addAll(labelSenhaConta, fieldSenha);
 
-        Button botaoEntrar = new Button("Acessar");
-        botaoEntrar.getStyleClass().add("buttonStyle");
-        botaoEntrar.setCursor(Cursor.CLOSED_HAND);
+        Button botaoEntrar = View.createButton(
+                "Acessar",
+                "buttonPrimary",
+                0.13,
+                0.05,
+                0.007);
 
-        mainView.labelTituloBar.setText("Sistema Banco MS - Login");
+        mainView.setTituloBarText("Login");
 
         loginBox.getChildren().addAll(labelLoginTitulo, hbox1, hbox2, botaoEntrar);
 
         botaoEntrar.setOnAction(new LoginController(mainView, this));
+
 
         group.getChildren().add(loginBox);
         getChildren().add(group);

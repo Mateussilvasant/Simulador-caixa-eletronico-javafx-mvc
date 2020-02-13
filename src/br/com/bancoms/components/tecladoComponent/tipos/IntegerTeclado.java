@@ -1,4 +1,4 @@
-package br.com.bancoms.components;
+package br.com.bancoms.components.tecladoComponent.tipos;
 
 
 import javafx.scene.control.Button;
@@ -9,10 +9,6 @@ import javafx.scene.control.TextField;
  * aceita somente numeros inteiros.
  */
 public class IntegerTeclado extends Teclado {
-
-    private static IntegerTeclado instance;
-
-    private int valor;
 
     public IntegerTeclado(TextField fieldAlvo) {
         setLimiteCaracteres(10);
@@ -29,7 +25,7 @@ public class IntegerTeclado extends Teclado {
     @Override
     protected void entrar() throws Exception {
         try {
-            valor = Integer.parseInt(getFieldVinculado().getText());
+            setTextoField(getFieldVinculado().getText());
         } catch (NumberFormatException e) {
             throw new Exception("Campo vazio!");
         }
@@ -41,17 +37,13 @@ public class IntegerTeclado extends Teclado {
     }
 
     @Override
-    protected void limpar() {
-        getFieldVinculado().setText("");
+    public boolean verificarValor() {
+        return Integer.parseInt(getTextoField()) != 0;
     }
 
     @Override
-    public boolean verificarValor() {
-        return valor != 0;
-    }
-
-    public int getValor() {
-        return valor;
+    protected void limpar() {
+        getFieldVinculado().setText("");
     }
 
 }

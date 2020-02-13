@@ -4,6 +4,8 @@ import br.com.bancoms.dao.ClienteDAO;
 import br.com.bancoms.model.Cliente;
 import br.com.bancoms.vo.ClienteVO;
 
+import java.util.Optional;
+
 public class ClienteService {
 
     private static ClienteService clienteService;
@@ -25,7 +27,7 @@ public class ClienteService {
 
     }
 
-    public Cliente realizarLogin(ClienteVO clienteVO) {
+    public Optional<Cliente> realizarLogin(ClienteVO clienteVO) {
         return clienteDAO.realizarLogin(clienteVO);
     }
 

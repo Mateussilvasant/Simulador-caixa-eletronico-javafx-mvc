@@ -6,13 +6,13 @@ public abstract class Conta {
     public static final int POUPANCA = 2;
     public static final int INVESTIMENTO = 0;
 
-    private int id;
-    private String descricao;
-    private int tipo;
-    private int numero;
-    double saldo;
+    protected int id;
+    protected String descricao;
+    protected int tipo;
+    protected int numero;
+    protected double saldo;
 
-    Conta(int id, String descricao, int tipo, int numero, double saldo) {
+    public Conta(int id, String descricao, int tipo, int numero, double saldo) {
         this.id = id;
         this.descricao = descricao;
         this.tipo = tipo;

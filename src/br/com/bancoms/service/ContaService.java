@@ -4,9 +4,9 @@ import br.com.bancoms.dao.ContaDAO;
 import br.com.bancoms.dto.MovimentoTO;
 import br.com.bancoms.model.Conta;
 import br.com.bancoms.model.Movimento;
-import br.com.bancoms.util.Validador;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class ContaService {
     private static ContaService contaService;
@@ -28,13 +28,14 @@ public class ContaService {
 
     }
 
-    public Conta consultarConta(int numeroConta) {
+    public Optional<Conta> consultarConta(int numeroConta) {
         return contaDAO.consultarConta(numeroConta);
     }
 
     private boolean atualizarSaldo(Conta conta) {
         return contaDAO.atualizarSaldo(conta);
     }
+
 
     private boolean sacar(Conta contaSessao, double valorOperacao) {
         return contaSessao.sacar(valorOperacao);
@@ -55,13 +56,15 @@ public class ContaService {
     }
 
     /*Realiza o depósito na conta do número informado e retorna como resultado os movimentos realizado.*/
-    public ArrayList<MovimentoTO> realizarDeposito(Conta contaOrigem, String numeroContaDestino, double valor) throws Exception {
+    public ArrayList<MovimentoTO> realizarDeposito(Conta contaOrigem, int numeroContaDestino, double valor) throws Exception {
 
         ArrayList<MovimentoTO> listaMovimentosRealizado = new ArrayList<>();
 
-        Conta contaDestino = consultarConta(validarDadosDeposito(numeroContaDestino));
+        Optional<Conta> contaDestinoOpt = consultarConta(numeroContaDestino);
 
-        if (contaDestino != null) {
+        if (contaDestinoOpt.isPresent()) {
+
+            Conta contaDestino = contaDestinoOpt.get();
 
             contaDestino.depositar(valor);
 
@@ -81,17 +84,6 @@ public class ContaService {
 
     }
 
-    /* realiza a validação do numero da conta */
-    private int validarDadosDeposito(String numeroConta) throws Exception {
-
-        Validador.Valor<Integer> valor;
-
-        if ((valor = Validador.validar(numeroConta)).resposta == Validador.CAMPO_VALIDO) {
-            return valor.valor;
-        } else {
-            throw new Exception("Número da Conta inválido");
-        }
-    }
 
     /*Realiza o saque de dinheiro na Conta e retorna o movimento realizado. */
     public MovimentoTO realizarSaque(Conta conta, double valor) throws Exception {
@@ -110,4 +102,34 @@ public class ContaService {
         }
 
     }
+
+    public ArrayList<MovimentoTO> realizarTransferencia(Conta contaOrigem, int numeroContaDestino, double valor) throws Exception {
+
+        ArrayList<MovimentoTO> movimentosRealizados = new ArrayList<>();
+        Optional<Conta> contaBeneficiadaOpt = consultarConta(numeroContaDestino);
+
+        if (contaBeneficiadaOpt.isPresent()) {
+
+            Conta contaBeneficiada = contaBeneficiadaOpt.get();
+
+            if (contaOrigem.transferir(valor, contaBeneficiada)) {
+
+                if (atualizarSaldo(contaOrigem)) {
+                    movimentosRealizados.add(new MovimentoTO(contaOrigem.getId(), valor, Movimento.TRANSFERENCIA, "TRANSFERÊNCIA", contaOrigem.getNumero(), contaBeneficiada.getNumero()));
+                }
+                if (atualizarSaldo(contaBeneficiada)) {
+                    movimentosRealizados.add(new MovimentoTO(contaBeneficiada.getId(), valor, Movimento.TRANSFERENCIA, "TRANSFERÊNCIA", contaOrigem.getNumero(), contaBeneficiada.getNumero()));
+                }
+
+            } else {
+                throw new Exception("Não foi possível realizar transferência..");
+            }
+
+        } else {
+            throw new Exception("Conta informada não existe.");
+        }
+
+        return movimentosRealizados;
+    }
+
 }

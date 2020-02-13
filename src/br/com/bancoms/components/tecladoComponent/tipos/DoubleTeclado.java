@@ -1,4 +1,4 @@
-package br.com.bancoms.components;
+package br.com.bancoms.components.tecladoComponent.tipos;
 
 
 import javafx.scene.control.Button;
@@ -9,9 +9,6 @@ import javafx.scene.control.TextField;
  * aceita somente numeros reais.
  */
 public class DoubleTeclado extends Teclado {
-
-    private static DoubleTeclado instance;
-    private double valor;
 
     public DoubleTeclado(TextField fieldAlvo) {
         setLimiteCaracteres(7);
@@ -32,17 +29,12 @@ public class DoubleTeclado extends Teclado {
 
         if (getFieldVinculado().getText().length() > 3) {
             try {
-                valor = Double.parseDouble(getFieldVinculado().getText().replace(",", "."));
+                setTextoField(getFieldVinculado().getText().replace(",", "."));
             } catch (NumberFormatException e) {
                 throw new Exception("Campo vazio!");
             }
         }
 
-    }
-
-    @Override
-    protected void limpar() {
-        getFieldVinculado().setText("0,00");
     }
 
     @Override
@@ -64,12 +56,13 @@ public class DoubleTeclado extends Teclado {
     }
 
     @Override
-    public boolean verificarValor() {
-        return valor != 0.0;
+    public boolean verificarValor() throws NumberFormatException {
+        return Double.parseDouble(getTextoField()) != 0.0;
     }
 
-    public double getValor() {
-        return valor;
+    @Override
+    protected void limpar() {
+        getFieldVinculado().setText("0,00");
     }
 
 }

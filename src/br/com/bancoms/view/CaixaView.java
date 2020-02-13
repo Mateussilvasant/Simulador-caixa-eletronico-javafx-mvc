@@ -15,15 +15,21 @@ public class CaixaView extends Application {
 
     public void start(Stage stage) {
 
-        METRICS = new Metrics(Screen.getPrimary().getVisualBounds().getWidth(),
-                Screen.getPrimary().getVisualBounds().getHeight());
+        System.setProperty("prism.lcdtext", "false");
+
+        Font.loadFont("/br/com/bancoms/assets/font/RobotoMedium.tff", 30);
+
+        METRICS = new Metrics(Screen.getPrimary().getVisualBounds().getWidth() * 0.98,
+                Screen.getPrimary().getVisualBounds().getHeight() * 0.85);
+        METRICS.setXWindow(stage.getX());
+        METRICS.setYWindow(stage.getY());
 
         Font applicationFont = new Font("sans-serif", 100);
 
         StackPane root = new StackPane();
         root.getChildren().add(new MainView());
 
-        Scene scene = new Scene(root, METRICS.getPX(0.50), METRICS.getPX(0.25));
+        Scene scene = new Scene(root, METRICS.getWidth(), METRICS.getHeight());
         scene.getStylesheets().add(getClass().getResource("/br/com/bancoms/assets/css/caixaView.css").toExternalForm());
 
         // stage.setAlwaysOnTop(true);
@@ -32,6 +38,8 @@ public class CaixaView extends Application {
         stage.setResizable(false);
         stage.setTitle("Caixa Eletronico - Banco MS");
         stage.show();
+
+
     }
 
     public static void main(String[] args) {

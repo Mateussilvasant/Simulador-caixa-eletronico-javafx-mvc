@@ -19,14 +19,19 @@ public class ClienteView extends StackPane {
     private Button botaoEncerrar;
 
     public ClienteView(ClienteController controller) {
-        controller.view.labelTituloBar.setText(
-                "Sistema Banco MS - Menu Principal - Seja Bem Vindo " + controller.clienteSessao.getNomeCompleto());
+
+        setPickOnBounds(false);
+
+
+        controller.view.setTituloBarText("Menu Principal");
 
         Group grupo = new Group();
 
         hboxView = new HBox();
+        hboxView.getStyleClass().add("boxView");
         hboxView.setAlignment(Pos.CENTER);
-        hboxView.setSpacing(CaixaView.METRICS.getPX(0.0008));
+        hboxView.setSpacing(CaixaView.METRICS.getPX(0.005));
+        View.setSizeElemento(hboxView, 0.50, 0.50);
 
         grupo.getChildren().add(hboxView);
         getChildren().add(grupo);
@@ -36,25 +41,27 @@ public class ClienteView extends StackPane {
 
     public void iniciarCorrenteView(ClienteController controller) {
         botaoDepositar = new Button();
-        botaoDepositar.getStyleClass().add("buttonBanco");
+        botaoDepositar.getStyleClass().add("buttonDark");
         botaoDepositar.setOnAction(controller.menuDepositoAction());
         botaoDepositar.setGraphic(new ImageView("depositar.png"));
 
+
         botaoSacar = new Button();
-        botaoSacar.getStyleClass().add("buttonBanco");
+        botaoSacar.getStyleClass().add("buttonDark");
         botaoSacar.setGraphic(new ImageView("sacar.png"));
         botaoSacar.setOnAction(controller.menuSaqueAction());
 
         botaoTransferencia = new Button();
-        botaoTransferencia.getStyleClass().add("buttonBanco");
+        botaoTransferencia.getStyleClass().add("buttonDark");
         botaoTransferencia.setGraphic(new ImageView("transferencia.png"));
+        botaoTransferencia.setOnAction(controller.menuTransferenciaAction());
 
         botaoEmprestimo = new Button();
-        botaoEmprestimo.getStyleClass().add("buttonBanco");
+        botaoEmprestimo.getStyleClass().add("buttonDark");
         botaoEmprestimo.setGraphic(new ImageView("emprestimo.png"));
 
         botaoExtrato = new Button();
-        botaoExtrato.getStyleClass().add("buttonBanco");
+        botaoExtrato.getStyleClass().add("buttonDark");
         botaoExtrato.setGraphic(new ImageView("saldos.png"));
 
         hboxView.getChildren().addAll(botaoDepositar, botaoSacar, botaoTransferencia, botaoExtrato);
@@ -66,9 +73,11 @@ public class ClienteView extends StackPane {
         botaoSacar = new Button("Saque");
         botaoTransferencia = new Button("Transferência");
         botaoExtrato = new Button("Extratos");
-        botaoEncerrar = new Button("Encerrar");
 
-        hboxView.getChildren().addAll(botaoDepositar, botaoSacar, botaoTransferencia, botaoExtrato, botaoEncerrar);
+
+        hboxView.getChildren().addAll(botaoDepositar, botaoSacar, botaoTransferencia, botaoExtrato);
     }
 
+    public void iniciarInvestimento(ClienteController controller) {
+    }
 }

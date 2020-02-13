@@ -1,16 +1,19 @@
 package br.com.bancoms.controller;
 
+import br.com.bancoms.components.dialogAlert.DialogAlert;
 import br.com.bancoms.model.Cliente;
 import br.com.bancoms.model.Conta;
 import br.com.bancoms.service.ClienteService;
 import br.com.bancoms.service.ContaService;
 import br.com.bancoms.util.Validador;
+import br.com.bancoms.view.ClienteViewFactory;
 import br.com.bancoms.view.LoginView;
 import br.com.bancoms.view.MainView;
 import br.com.bancoms.vo.ClienteVO;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Alert;
+
+import java.util.Optional;
 
 
 public class LoginController implements EventHandler<ActionEvent> {
@@ -23,7 +26,6 @@ public class LoginController implements EventHandler<ActionEvent> {
         this.loginView = loginView;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void handle(ActionEvent event) {
         String numero = "123456"; // loginView.fieldNumeroConta.getText();
@@ -35,37 +37,37 @@ public class LoginController implements EventHandler<ActionEvent> {
                 && Validador.validarCampoTexto(senha) == Validador.CAMPO_VALIDO) {
             realizarLogin(new ClienteVO(valor.valor, senha));
         } else {
-            view.labelTituloBar.setText("Banco M&S - Erro de Login: Senha ou número da Conta inválidos");
+            view.setTituloBarText("Banco M&S - Erro de Login: Senha ou número da Conta inválidos");
         }
 
     }
 
     private void realizarLogin(ClienteVO clienteVO) {
 
-        Cliente cliente = ClienteService.getInstance().realizarLogin(clienteVO);
-        Conta conta = ContaService.getInstance().consultarConta(clienteVO.getNumeroConta());
+        Optional<Cliente> clienteOpt = ClienteService.getInstance().realizarLogin(clienteVO);
+        Optional<Conta> contaOpt = ContaService.getInstance().consultarConta(clienteVO.getNumeroConta());
 
-        if (cliente != null && conta != null) {
+        if (clienteOpt.isPresent() && contaOpt.isPresent()) {
             removerLoginView();
-            iniciarClienteView(cliente, conta);
+            iniciarClienteView(clienteOpt.get(), contaOpt.get());
         } else {
-            MainView.getAlert("Banco MS - Login Informação",
-                    "Não foi possível realizar o Login, por favor verifique o número da conta ou senha.",
-                    Alert.AlertType.INFORMATION).showAndWait();
+
+            DialogAlert alert = view.onAlertView("Login - Informação",
+                    "Não foi possível realizar o Login, por favor verifique o número da conta ou senha.", DialogAlert.AlertType.INFORMATION, true);
+            alert.setEventInformation(e -> {
+                alert.fecharDialog();
+            });
+
         }
     }
 
     private void iniciarClienteView(Cliente clienteSessao, Conta contaSessao) {
+
         ClienteController controller = new ClienteController(clienteSessao, contaSessao, view);
 
-        if (contaSessao.getTipo() == Conta.CORRENTE) {
-            controller.viewClient.iniciarCorrenteView(controller);
-        }
-        if (contaSessao.getTipo() == Conta.POUPANCA) {
-            controller.viewClient.iniciarPoupancaView(controller);
-        }
-        if (contaSessao.getTipo() == Conta.INVESTIMENTO) {
-        }
+        controller.view.addSubMenuCliente(contaSessao, clienteSessao.getNomeCompleto());
+
+        ClienteViewFactory.values()[contaSessao.getTipo() - 1].iniciarView(controller);
 
     }
 

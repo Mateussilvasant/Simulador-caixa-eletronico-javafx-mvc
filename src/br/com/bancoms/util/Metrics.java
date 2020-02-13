@@ -2,16 +2,25 @@ package br.com.bancoms.util;
 
 public class Metrics {
 
-    private double originalWidth;
-    private double originalHeight;
+    public static int originalWidth;
+    public static int originalHeight;
+    public static double XWindow;
+    public static double YWindow;
 
     public Metrics(double originalWidth, double originalHeight) {
-        this.setOriginalHeight(originalHeight);
-        this.setOriginalWidth(originalWidth);
+        this.setOriginalHeight((int) originalHeight);
+        this.setOriginalWidth((int) originalWidth);
     }
 
-    public double getPX(double size) {
-        return (getHeight() + getWidth()) * size;
+    public int getPX(double size, boolean option) {
+        if (option) {
+            return (int) Math.round(getWidth() * size);
+        }
+        return (int) Math.round(getHeight() * size);
+    }
+
+    public int getPX(double size) {
+        return (int) Math.round((getHeight() + getWidth()) * size);
     }
 
     public double getX(double position) {
@@ -22,19 +31,35 @@ public class Metrics {
         return getHeight() * position;
     }
 
-    public double getWidth() {
+    public int getWidth() {
         return originalWidth;
     }
 
-    private void setOriginalWidth(double originalWidth) {
+    private void setOriginalWidth(int originalWidth) {
         this.originalWidth = originalWidth;
     }
 
-    private double getHeight() {
+    public int getHeight() {
         return originalHeight;
     }
 
-    private void setOriginalHeight(double originalHeight) {
+    private void setOriginalHeight(int originalHeight) {
         this.originalHeight = originalHeight;
+    }
+
+    public void setXWindow(double xWindow) {
+        this.XWindow = xWindow;
+    }
+
+    public double getXWindow() {
+        return XWindow;
+    }
+
+    public void setYWindow(double yWindow) {
+        this.YWindow = yWindow;
+    }
+
+    public double getYWindow() {
+        return YWindow;
     }
 }

@@ -4,10 +4,12 @@ import br.com.bancoms.dao.QueryControl.RESULT;
 import br.com.bancoms.model.Conta;
 import br.com.bancoms.model.Emprestimo;
 
+import java.util.Optional;
+
 public class EmprestimoDAO {
-    public Emprestimo consultarEmprestimo(Conta conta) {
+    public Optional<Emprestimo> consultarEmprestimo(Conta conta) {
         QueryControl control = new QueryControl();
-        Emprestimo emprestimo = null;
+        Optional<Emprestimo> emprestimo = Optional.empty();
         String sql = "SELECT EMPRESTIMO.VALOR_EMPRESTADO,EMPRESTIMO.VALOR_PARCELADO,EMPRESTIMO.QTD_PARCELAS "
                 + "FROM EMPRESTIMO JOIN MOVIMENTO " + "ON MOVIMENTO.ID_MOVIMENTO = EMPRESTIMO.ID_MOVIMENTO "
                 + "WHERE MOVIMENTO.ID_CONTA = (?) AND MOVIMENTO.TIPO_MOVIMENTO = 4";
@@ -21,7 +23,8 @@ public class EmprestimoDAO {
                 double valorMovimento = control.getDouble("EMPRESTIMO.VALOR_EMPRESTADO");
                 double valorParcelado = control.getDouble("EMPRESTIMO.VALOR_PARCELADO");
                 int quantidadeParcelas = control.getInt("EMPRESTIMO.QTD_PARCELAS");
-                emprestimo = new Emprestimo(valorMovimento, valorParcelado, quantidadeParcelas);
+                emprestimo = Optional.of(new Emprestimo(valorMovimento, valorParcelado, quantidadeParcelas));
+
             }
         } catch (Exception e) {
 

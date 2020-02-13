@@ -8,6 +8,7 @@ import br.com.bancoms.model.Movimento;
 import br.com.bancoms.util.BancoUtil;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class MovimentoDAO {
 
@@ -59,10 +60,12 @@ public class MovimentoDAO {
 
     }
 
-    public ArrayList<Movimento> listarMovimentos(Conta conta) {
+    public ArrayList<Optional<Movimento>> listarMovimentos(Conta conta) {
 
         QueryControl control = new QueryControl();
-        ArrayList<Movimento> listaMovimentos = new ArrayList<>();
+
+        ArrayList<Optional<Movimento>> listaMovimentos = new ArrayList<>();
+
         String sql = "SELECT ID_MOVIMENTO, DATA_MOVIMENTO,DESCRICAO_TIPO, TIPO_MOVIMENTO, VALOR_MOVIMENTO,NUMERO_CONTA_ORIGEM, NUMERO_CONTA_DESTINO\r\n"
                 + "FROM MOVIMENTO WHERE TIPO_MOVIMENTO in (1,2,3) AND ID_CONTA = (?) order by  DATA_MOVIMENTO desc limit 7";
 
@@ -81,7 +84,9 @@ public class MovimentoDAO {
                 int numeroContaOrigem = control.getInt("NUMERO_CONTA_ORIGEM");
                 int numeroContaDestino = control.getInt("NUMERO_CONTA_DESTINO");
 
-                listaMovimentos.add(new Movimento(idMovimento,valor,descricao,tipo,data,numeroContaOrigem,numeroContaDestino));
+                Optional<Movimento> movimento = Optional.ofNullable(new Movimento(idMovimento, valor, descricao, tipo, data, numeroContaOrigem, numeroContaDestino));
+
+                listaMovimentos.add(movimento);
             }
 
         } catch (Exception e) {

@@ -4,6 +4,8 @@ import br.com.bancoms.dao.QueryControl.RESULT;
 import br.com.bancoms.model.Conta;
 import br.com.bancoms.model.ContaFactory;
 
+import java.util.Optional;
+
 public class ContaDAO {
 
     public ContaDAO() {
@@ -39,8 +41,8 @@ public class ContaDAO {
         return false;
     }
 
-    public Conta consultarConta(int numeroConta) {
-        Conta conta = null;
+    public Optional<Conta> consultarConta(int numeroConta) {
+        Optional<Conta> contaOpt = Optional.empty();
         QueryControl control = new QueryControl();
         String sql = "SELECT ID_CONTA,TIPO_CONTA,DESCRICAO_CONTA,SALDO_TOTAL FROM CONTA WHERE NUMERO_CONTA = (?)";
 
@@ -52,13 +54,16 @@ public class ContaDAO {
             if (control.next()) {
 
                 int tipo = control.getInt("TIPO_CONTA");
-                conta = ContaFactory.values()[tipo - 1].getConta();
-                System.out.println("Conta: " + conta);
+
+                Conta conta = ContaFactory.values()[tipo - 1].getConta();
+
                 conta.setTipo(tipo);
                 conta.setId(control.getInt("ID_CONTA"));
                 conta.setNumero(numeroConta);
                 conta.setSaldo(control.getDouble("SALDO_TOTAL"));
                 conta.setDescricao(control.getString("DESCRICAO_CONTA"));
+
+                contaOpt = Optional.ofNullable(conta);
             }
 
         } catch (Exception e) {
@@ -75,7 +80,7 @@ public class ContaDAO {
             }
         }
 
-        return conta;
+        return contaOpt;
     }
 
 }

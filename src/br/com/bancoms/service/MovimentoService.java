@@ -6,6 +6,7 @@ import br.com.bancoms.model.Conta;
 import br.com.bancoms.model.Movimento;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class MovimentoService {
 
@@ -28,7 +29,7 @@ public class MovimentoService {
 
     }
 
-    public ArrayList<Movimento> listarMovimentos(Conta conta) {
+    public ArrayList<Optional<Movimento>> listarMovimentos(Conta conta) {
         return movimentoDAO.listarMovimentos(conta);
     }
 
@@ -37,8 +38,8 @@ public class MovimentoService {
     }
 
     public void registrarMovimentos(ArrayList<MovimentoTO> movimentos) {
-
-        movimentos.forEach(movimentoTO -> movimentoDAO.registrarMovimento(movimentoTO));
-
+        if (!movimentos.isEmpty()) {
+            movimentos.forEach(movimentoTO -> movimentoDAO.registrarMovimento(movimentoTO));
+        }
     }
 }

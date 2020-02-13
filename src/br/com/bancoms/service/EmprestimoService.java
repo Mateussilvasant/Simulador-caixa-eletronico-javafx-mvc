@@ -4,6 +4,8 @@ import br.com.bancoms.dao.EmprestimoDAO;
 import br.com.bancoms.model.Conta;
 import br.com.bancoms.model.Emprestimo;
 
+import java.util.Optional;
+
 public class EmprestimoService {
     private static EmprestimoService emprestimoService;
     private EmprestimoDAO emprestimoDAO;
@@ -16,7 +18,7 @@ public class EmprestimoService {
         return emprestimoDAO.cadastrarEmprestimo(emprestimo, idMovimento);
     }
 
-    public Emprestimo consultarEmprestimo(Conta conta) {
+    public Optional<Emprestimo> consultarEmprestimo(Conta conta) {
         return emprestimoDAO.consultarEmprestimo(conta);
     }
 
