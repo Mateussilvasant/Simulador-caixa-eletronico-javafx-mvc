@@ -1,7 +1,7 @@
 package br.com.bancoms.controller;
 
 import br.com.bancoms.model.Cliente;
-import br.com.bancoms.model.Conta;
+import br.com.bancoms.model.contas.Conta;
 import br.com.bancoms.view.ClienteView;
 import br.com.bancoms.view.MainView;
 import javafx.event.ActionEvent;
@@ -17,6 +17,7 @@ public class ClienteController {
     private TransferenciaController transferenciaController;
     private DepositoController depositoController;
     private SaqueController saqueController;
+    private ExtratoController extratoController;
 
     public Cliente clienteSessao;
     private Conta contaSessao;
@@ -29,6 +30,7 @@ public class ClienteController {
         this.depositoController = new DepositoController(this);
         this.saqueController = new SaqueController(this);
         this.transferenciaController = new TransferenciaController(this);
+        this.extratoController = new ExtratoController(this);
     }
 
     public EventHandler<ActionEvent> menuDepositoAction() {
@@ -50,6 +52,13 @@ public class ClienteController {
         return event -> {
             view.getChildren().remove(viewClient);
             saqueController.iniciarSaque(view);
+        };
+    }
+
+    public EventHandler<ActionEvent> menuExtratos() {
+        return event -> {
+            view.getChildren().remove(viewClient);
+            extratoController.iniciarExtratos();
         };
     }
 

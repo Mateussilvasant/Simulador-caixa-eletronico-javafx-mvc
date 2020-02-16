@@ -2,7 +2,6 @@ package br.com.bancoms.service;
 
 import br.com.bancoms.dao.MovimentoDAO;
 import br.com.bancoms.dto.MovimentoTO;
-import br.com.bancoms.model.Conta;
 import br.com.bancoms.model.Movimento;
 
 import java.util.ArrayList;
@@ -29,8 +28,12 @@ public class MovimentoService {
 
     }
 
-    public ArrayList<Optional<Movimento>> listarMovimentos(Conta conta) {
-        return movimentoDAO.listarMovimentos(conta);
+    public ArrayList<Optional<Movimento>> listarMovimentosPorTipo(int numeroConta, int tipoMovimento, String dataInicio, String dataFim) {
+        return movimentoDAO.listarMovimentosPorTipo(numeroConta, tipoMovimento, dataInicio, dataFim);
+    }
+
+    public ArrayList<Optional<Movimento>> listarTodosMovimentos(int numeroConta, String dataInicio, String dataFim) {
+        return movimentoDAO.listarTodosMovimentos(numeroConta, dataInicio, dataFim);
     }
 
     public void registrarMovimento(MovimentoTO movimentoTO) {

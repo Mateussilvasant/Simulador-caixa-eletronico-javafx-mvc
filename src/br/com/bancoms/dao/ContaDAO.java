@@ -1,8 +1,8 @@
 package br.com.bancoms.dao;
 
 import br.com.bancoms.dao.QueryControl.RESULT;
-import br.com.bancoms.model.Conta;
-import br.com.bancoms.model.ContaFactory;
+import br.com.bancoms.model.contas.Conta;
+import br.com.bancoms.model.contas.ContaFactory;
 
 import java.util.Optional;
 

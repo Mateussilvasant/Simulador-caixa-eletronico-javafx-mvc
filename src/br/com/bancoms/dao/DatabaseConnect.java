@@ -26,7 +26,7 @@ public class DatabaseConnect {
             prepared = conexao.prepareStatement(sql);
         } catch (Exception e) {
             throw new Exception(
-                    "DatabaseConnect -> getPreparedSQL() -> 32 - Não foi possível preparar a Query -> Erro: " + "\n"
+                    "DatabaseConnect -> getPreparedSQL() -> 32 - Nï¿½o foi possï¿½vel preparar a Query -> Erro: " + "\n"
                             + e.getLocalizedMessage());
         }
         return prepared;
@@ -51,7 +51,7 @@ public class DatabaseConnect {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (Exception e) {
-            throw new Exception("DatabaseConnect -> carregarJDBC() -> 45 - Não foi possivel carregar o JDBC -> Erro: "
+            throw new Exception("DatabaseConnect -> carregarJDBC() -> 45 - Nï¿½o foi possivel carregar o JDBC -> Erro: "
                     + "\n" + e.getLocalizedMessage());
         }
     }
@@ -82,7 +82,7 @@ public class DatabaseConnect {
 
         } catch (SQLException e) {
             throw new Exception(
-                    "DatabaseConnect -> closeConnection() -> 95 - Não foi possivel fechar a conexão JDBC -> Erro: "
+                    "DatabaseConnect -> closeConnection() -> 95 - Nï¿½o foi possivel fechar a conexï¿½o JDBC -> Erro: "
                             + "\n" + e.getLocalizedMessage());
         }
     }
@@ -97,7 +97,7 @@ public class DatabaseConnect {
 
         } catch (SQLException e) {
             throw new Exception(
-                    "DatabaseConnect -> closeConnection() -> 95 - Não foi possivel fechar a conexão JDBC -> Erro: "
+                    "DatabaseConnect -> closeConnection() -> 95 - Nï¿½o foi possivel fechar a conexï¿½o JDBC -> Erro: "
                             + "\n" + e.getLocalizedMessage());
         }
     }
@@ -106,7 +106,7 @@ public class DatabaseConnect {
         try {
             conexao.rollback();
         } catch (SQLException e) {
-            throw new Exception("DatabaseConnect -> rollBack() -> 126 - Não foi possivel realizar o rollback -> Erro: "
+            throw new Exception("DatabaseConnect -> rollBack() -> 126 - Nï¿½o foi possivel realizar o rollback -> Erro: "
                     + "\n" + e.getLocalizedMessage());
         }
     }
@@ -118,7 +118,7 @@ public class DatabaseConnect {
             prepared = conexao.prepareStatement(sql, returnGeneratedKeys);
         } catch (Exception e) {
             throw new Exception(
-                    "DatabaseConnect -> getPreparedSQL() -> 32 - Não foi possível preparar a Query -> Erro: " + "\n"
+                    "DatabaseConnect -> getPreparedSQL() -> 32 - Nï¿½o foi possï¿½vel preparar a Query -> Erro: " + "\n"
                             + e.getLocalizedMessage());
         }
         return prepared;

@@ -4,7 +4,7 @@ import br.com.bancoms.components.dialogAlert.DialogAlert;
 import br.com.bancoms.components.tecladoComponent.TecladoAdapter;
 import br.com.bancoms.components.tecladoComponent.tipos.Teclado;
 import br.com.bancoms.dto.MovimentoTO;
-import br.com.bancoms.model.Conta;
+import br.com.bancoms.model.contas.Conta;
 import br.com.bancoms.service.ContaService;
 import br.com.bancoms.service.MovimentoService;
 import br.com.bancoms.view.DepositoView;

@@ -4,6 +4,9 @@ import java.sql.*;
 
 public class QueryControl {
 
+
+
+
     enum RESULT {
         SUCCESS, FAILED
     }
@@ -29,6 +32,10 @@ public class QueryControl {
             ps = DatabaseConnect.getInstance().getPreparedSQL(sql, Statement.RETURN_GENERATED_KEYS);
         }
 
+    }
+
+    public void setTimestamp(int index, Timestamp timestamp) throws SQLException {
+        ps.setTimestamp(index,timestamp);
     }
 
     public void setInt(int index, int value) throws SQLException {
@@ -105,6 +112,14 @@ public class QueryControl {
 
         if (rs != null) {
             return rs.getDate(index);
+        }
+
+        return null;
+    }
+
+    public Timestamp getTimestamp(String index) throws SQLException {
+        if (rs != null) {
+            return rs.getTimestamp(index);
         }
 
         return null;

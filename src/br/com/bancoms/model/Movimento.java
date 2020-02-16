@@ -15,8 +15,7 @@ public class Movimento {
     private int numeroContaOrigem;
     private int numeroContaDestino;
 
-    public Movimento(int idMovimento, double valor, String descricao, int tipo, String data, int numeroContaOrigem, int numeroContaDestino) {
-        this.idMovimento = idMovimento;
+    public Movimento(double valor, String descricao, int tipo, String data, int numeroContaOrigem, int numeroContaDestino) {
         this.valor = valor;
         this.tipo = tipo;
         this.descricao = descricao;
@@ -79,5 +78,17 @@ public class Movimento {
 
     public void setIdMovimento(int idMovimento) {
         this.idMovimento = idMovimento;
+    }
+
+    @Override
+    public String toString() {
+        return "Movimento{" +
+                "valor=" + valor +
+                ", tipo=" + tipo +
+                ", descricao='" + descricao + '\'' +
+                ", data='" + data + '\'' +
+                ", numeroContaOrigem=" + numeroContaOrigem +
+                ", numeroContaDestino=" + numeroContaDestino +
+                '}';
     }
 }

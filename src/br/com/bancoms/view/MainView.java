@@ -2,7 +2,7 @@ package br.com.bancoms.view;
 
 
 import br.com.bancoms.components.dialogAlert.DialogAlert;
-import br.com.bancoms.model.Conta;
+import br.com.bancoms.model.contas.Conta;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Group;

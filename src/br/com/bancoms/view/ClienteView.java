@@ -63,6 +63,7 @@ public class ClienteView extends StackPane {
         botaoExtrato = new Button();
         botaoExtrato.getStyleClass().add("buttonDark");
         botaoExtrato.setGraphic(new ImageView("saldos.png"));
+        botaoExtrato.setOnAction(controller.menuExtratos());
 
         hboxView.getChildren().addAll(botaoDepositar, botaoSacar, botaoTransferencia, botaoExtrato);
     }

@@ -2,7 +2,7 @@ package br.com.bancoms.service;
 
 import br.com.bancoms.dao.ContaDAO;
 import br.com.bancoms.dto.MovimentoTO;
-import br.com.bancoms.model.Conta;
+import br.com.bancoms.model.contas.Conta;
 import br.com.bancoms.model.Movimento;
 
 import java.util.ArrayList;

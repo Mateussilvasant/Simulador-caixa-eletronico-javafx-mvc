@@ -2,7 +2,7 @@ package br.com.bancoms.controller;
 
 import br.com.bancoms.components.dialogAlert.DialogAlert;
 import br.com.bancoms.model.Cliente;
-import br.com.bancoms.model.Conta;
+import br.com.bancoms.model.contas.Conta;
 import br.com.bancoms.service.ClienteService;
 import br.com.bancoms.service.ContaService;
 import br.com.bancoms.util.Validador;

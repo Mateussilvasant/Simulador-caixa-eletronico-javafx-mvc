@@ -1,7 +1,7 @@
 package br.com.bancoms.service;
 
 import br.com.bancoms.dao.EmprestimoDAO;
-import br.com.bancoms.model.Conta;
+import br.com.bancoms.model.contas.Conta;
 import br.com.bancoms.model.Emprestimo;
 
 import java.util.Optional;
