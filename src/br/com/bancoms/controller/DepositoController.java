@@ -3,7 +3,8 @@ package br.com.bancoms.controller;
 import br.com.bancoms.components.dialogAlert.DialogAlert;
 import br.com.bancoms.components.tecladoComponent.TecladoAdapter;
 import br.com.bancoms.components.tecladoComponent.tipos.Teclado;
-import br.com.bancoms.dto.MovimentoTO;
+import br.com.bancoms.dto.TransacaoDTO;
+import br.com.bancoms.model.Movimento;
 import br.com.bancoms.model.contas.Conta;
 import br.com.bancoms.service.ContaService;
 import br.com.bancoms.service.MovimentoService;
@@ -100,10 +101,11 @@ public class DepositoController {
     private void realizarDeposito(Conta contaOrigem, int numeroConta, double valor) {
         try {
 
+            TransacaoDTO transacaoDTO = new TransacaoDTO(contaOrigem, numeroConta, valor);
             MovimentoService movimentoService = MovimentoService.getInstance();
-            ArrayList<MovimentoTO> movimentosRealizado;
+            ArrayList<Movimento> movimentosRealizado;
 
-            if (!((movimentosRealizado = ContaService.getInstance().realizarDeposito(contaOrigem, numeroConta, valor)).isEmpty())) {
+            if (!((movimentosRealizado = ContaService.getInstance().realizarDeposito(transacaoDTO)).isEmpty())) {
                 movimentoService.registrarMovimentos(movimentosRealizado);
                 depositoRealizado();
             }
@@ -117,10 +119,11 @@ public class DepositoController {
     private void realizarDeposito(Conta conta, double valor) {
         try {
 
+            TransacaoDTO transacaoDTO = new TransacaoDTO(conta, valor);
             MovimentoService movimentoService = MovimentoService.getInstance();
-            MovimentoTO movimento;
+            Movimento movimento;
 
-            if ((movimento = ContaService.getInstance().realizarDeposito(conta, valor)) != null) {
+            if ((movimento = ContaService.getInstance().realizarDepositoPropria(transacaoDTO)) != null) {
                 movimentoService.registrarMovimento(movimento);
                 depositoRealizado();
             }
@@ -154,9 +157,7 @@ public class DepositoController {
     private void validacaoErro(String mensagem) {
         DialogAlert alert = clienteController.view.onAlertView("Validação - Informação",
                 mensagem, DialogAlert.AlertType.INFORMATION, false);
-        alert.setEventInformation(e -> {
-            alert.fecharDialog();
-        });
+        alert.setEventInformation(e -> alert.fecharDialog());
 
     }
 }

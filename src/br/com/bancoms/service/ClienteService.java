@@ -2,7 +2,7 @@ package br.com.bancoms.service;
 
 import br.com.bancoms.dao.ClienteDAO;
 import br.com.bancoms.model.Cliente;
-import br.com.bancoms.vo.ClienteVO;
+import br.com.bancoms.dto.LoginDTO;
 
 import java.util.Optional;
 
@@ -27,8 +27,8 @@ public class ClienteService {
 
     }
 
-    public Optional<Cliente> realizarLogin(ClienteVO clienteVO) {
-        return clienteDAO.realizarLogin(clienteVO);
+    public Optional<Cliente> realizarLogin(LoginDTO loginDTO) {
+        return clienteDAO.realizarLogin(loginDTO);
     }
 
 }

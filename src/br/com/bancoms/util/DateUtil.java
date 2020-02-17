@@ -25,7 +25,7 @@ public class DateUtil {
     private static Calendar parseInCalendar(int ano, int mes, int dia) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeZone(TimeZone.getTimeZone("America/Sao_Paulo"));
-        calendar.set(ano, mes, dia, 00, 00, 0);
+        calendar.set(ano, mes, dia, 0, 0, 0);
         return calendar;
     }
 

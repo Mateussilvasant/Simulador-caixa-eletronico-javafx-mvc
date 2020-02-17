@@ -1,7 +1,7 @@
 package br.com.bancoms.service;
 
 import br.com.bancoms.dao.MovimentoDAO;
-import br.com.bancoms.dto.MovimentoTO;
+import br.com.bancoms.dto.MovimentoBuscaDTO;
 import br.com.bancoms.model.Movimento;
 
 import java.util.ArrayList;
@@ -28,21 +28,21 @@ public class MovimentoService {
 
     }
 
-    public ArrayList<Optional<Movimento>> listarMovimentosPorTipo(int numeroConta, int tipoMovimento, String dataInicio, String dataFim) {
-        return movimentoDAO.listarMovimentosPorTipo(numeroConta, tipoMovimento, dataInicio, dataFim);
+    public ArrayList<Optional<Movimento>> listarMovimentosPorTipo(MovimentoBuscaDTO movimentoBuscaDTO) {
+        return movimentoDAO.listarMovimentosPorTipo(movimentoBuscaDTO);
     }
 
-    public ArrayList<Optional<Movimento>> listarTodosMovimentos(int numeroConta, String dataInicio, String dataFim) {
-        return movimentoDAO.listarTodosMovimentos(numeroConta, dataInicio, dataFim);
+    public ArrayList<Optional<Movimento>> listarTodosMovimentos(MovimentoBuscaDTO movimentoBuscaDTO) {
+        return movimentoDAO.listarTodosMovimentos(movimentoBuscaDTO);
     }
 
-    public void registrarMovimento(MovimentoTO movimentoTO) {
-        movimentoDAO.registrarMovimento(movimentoTO);
+    public void registrarMovimento(Movimento movimento) {
+        movimentoDAO.registrarMovimento(movimento);
     }
 
-    public void registrarMovimentos(ArrayList<MovimentoTO> movimentos) {
+    public void registrarMovimentos(ArrayList<Movimento> movimentos) {
         if (!movimentos.isEmpty()) {
-            movimentos.forEach(movimentoTO -> movimentoDAO.registrarMovimento(movimentoTO));
+            movimentos.forEach(movimento -> movimentoDAO.registrarMovimento(movimento));
         }
     }
 }

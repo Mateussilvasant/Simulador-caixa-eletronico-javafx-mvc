@@ -1,9 +1,9 @@
 package br.com.bancoms.service;
 
 import br.com.bancoms.dao.ContaDAO;
-import br.com.bancoms.dto.MovimentoTO;
-import br.com.bancoms.model.contas.Conta;
+import br.com.bancoms.dto.TransacaoDTO;
 import br.com.bancoms.model.Movimento;
+import br.com.bancoms.model.contas.Conta;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -36,18 +36,16 @@ public class ContaService {
         return contaDAO.atualizarSaldo(conta);
     }
 
-
-    private boolean sacar(Conta contaSessao, double valorOperacao) {
-        return contaSessao.sacar(valorOperacao);
-    }
-
     /*Realiza o depósito na conta informada e retorna com resultado o Movimento realizado*/
-    public MovimentoTO realizarDeposito(Conta conta, double valor) throws Exception {
+    public Movimento realizarDepositoPropria(TransacaoDTO transacao) throws Exception {
+
+        Conta conta = transacao.getContaOrigem();
+        double valor = transacao.getValorTransacao();
 
         conta.depositar(valor);
 
         if (atualizarSaldo(conta)) {
-            return new MovimentoTO(conta.getId(), valor, MovimentoTO.DEPOSITO, "DEPÓSITO CONTA-PRÓPRIA", conta.getNumero(), conta.getNumero());
+            return new Movimento(conta.getId(), valor, Movimento.DEPOSITO, "DEPÓSITO CONTA-PRÓPRIA", conta.getNumero(), conta.getNumero());
         } else {
             conta.sacar(valor);
             throw new Exception("Não foi possível realizar o depósito");
@@ -56,11 +54,14 @@ public class ContaService {
     }
 
     /*Realiza o depósito na conta do número informado e retorna como resultado os movimentos realizado.*/
-    public ArrayList<MovimentoTO> realizarDeposito(Conta contaOrigem, int numeroContaDestino, double valor) throws Exception {
+    public ArrayList<Movimento> realizarDeposito(TransacaoDTO transacao) throws Exception {
 
-        ArrayList<MovimentoTO> listaMovimentosRealizado = new ArrayList<>();
+        ArrayList<Movimento> listaMovimentosRealizado = new ArrayList<>();
 
-        Optional<Conta> contaDestinoOpt = consultarConta(numeroContaDestino);
+        Optional<Conta> contaDestinoOpt = consultarConta(transacao.getNumeroContaDestino());
+
+        Conta contaOrigem = transacao.getContaOrigem();
+        double valor = transacao.getValorTransacao();
 
         if (contaDestinoOpt.isPresent()) {
 
@@ -69,8 +70,8 @@ public class ContaService {
             contaDestino.depositar(valor);
 
             if (atualizarSaldo(contaDestino)) {
-                listaMovimentosRealizado.add(new MovimentoTO(contaOrigem.getId(), valor, MovimentoTO.DEPOSITO, "DEPÓSITO OUTRA-CONTA", contaOrigem.getNumero(), contaDestino.getNumero()));
-                listaMovimentosRealizado.add(new MovimentoTO(contaDestino.getId(), valor, MovimentoTO.DEPOSITO, "DEPÓSITO OUTRA-CONTA", contaOrigem.getNumero(), contaDestino.getNumero()));
+                listaMovimentosRealizado.add(new Movimento(contaOrigem.getId(), valor, Movimento.DEPOSITO, "DEPÓSITO OUTRA-CONTA", contaOrigem.getNumero(), contaDestino.getNumero()));
+                listaMovimentosRealizado.add(new Movimento(contaDestino.getId(), valor, Movimento.DEPOSITO, "DEPÓSITO OUTRA-CONTA", contaOrigem.getNumero(), contaDestino.getNumero()));
             } else {
                 contaDestino.sacar(valor); //Retira o dinheiro da conta
                 throw new Exception("Não foi possível realizar o depósito.");
@@ -86,12 +87,15 @@ public class ContaService {
 
 
     /*Realiza o saque de dinheiro na Conta e retorna o movimento realizado. */
-    public MovimentoTO realizarSaque(Conta conta, double valor) throws Exception {
+    public Movimento realizarSaque(TransacaoDTO transacao) throws Exception {
+
+        Conta conta = transacao.getContaOrigem();
+        double valor = transacao.getValorTransacao();
 
         if (conta.sacar(valor)) {
 
             if (atualizarSaldo(conta)) {
-                return new MovimentoTO(conta.getId(), valor, Movimento.SAQUE, "SAQUE-NORMAL", conta.getNumero(), conta.getNumero());
+                return new Movimento(conta.getId(), valor, Movimento.SAQUE, "SAQUE-NORMAL", conta.getNumero(), conta.getNumero());
             } else {
                 conta.depositar(valor); //devolve o dinheiro para conta
                 throw new Exception("Não foi possível realizar o saque.");
@@ -103,10 +107,14 @@ public class ContaService {
 
     }
 
-    public ArrayList<MovimentoTO> realizarTransferencia(Conta contaOrigem, int numeroContaDestino, double valor) throws Exception {
+    public ArrayList<Movimento> realizarTransferencia(TransacaoDTO transacao) throws Exception {
 
-        ArrayList<MovimentoTO> movimentosRealizados = new ArrayList<>();
-        Optional<Conta> contaBeneficiadaOpt = consultarConta(numeroContaDestino);
+        ArrayList<Movimento> movimentosRealizados = new ArrayList<>();
+        Optional<Conta> contaBeneficiadaOpt = consultarConta(transacao.getNumeroContaDestino());
+
+        double valor = transacao.getValorTransacao();
+        Conta contaOrigem = transacao.getContaOrigem();
+
 
         if (contaBeneficiadaOpt.isPresent()) {
 
@@ -115,10 +123,10 @@ public class ContaService {
             if (contaOrigem.transferir(valor, contaBeneficiada)) {
 
                 if (atualizarSaldo(contaOrigem)) {
-                    movimentosRealizados.add(new MovimentoTO(contaOrigem.getId(), valor, Movimento.TRANSFERENCIA, "TRANSFERÊNCIA", contaOrigem.getNumero(), contaBeneficiada.getNumero()));
+                    movimentosRealizados.add(new Movimento(contaOrigem.getId(), valor, Movimento.TRANSFERENCIA, "TRANSFERÊNCIA", contaOrigem.getNumero(), contaBeneficiada.getNumero()));
                 }
                 if (atualizarSaldo(contaBeneficiada)) {
-                    movimentosRealizados.add(new MovimentoTO(contaBeneficiada.getId(), valor, Movimento.TRANSFERENCIA, "TRANSFERÊNCIA", contaOrigem.getNumero(), contaBeneficiada.getNumero()));
+                    movimentosRealizados.add(new Movimento(contaBeneficiada.getId(), valor, Movimento.TRANSFERENCIA, "TRANSFERÊNCIA", contaOrigem.getNumero(), contaBeneficiada.getNumero()));
                 }
 
             } else {

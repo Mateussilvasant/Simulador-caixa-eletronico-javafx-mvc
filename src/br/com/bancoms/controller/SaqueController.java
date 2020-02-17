@@ -3,7 +3,8 @@ package br.com.bancoms.controller;
 import br.com.bancoms.components.dialogAlert.DialogAlert;
 import br.com.bancoms.components.tecladoComponent.TecladoAdapter;
 import br.com.bancoms.components.tecladoComponent.tipos.Teclado;
-import br.com.bancoms.dto.MovimentoTO;
+import br.com.bancoms.dto.TransacaoDTO;
+import br.com.bancoms.model.Movimento;
 import br.com.bancoms.service.ContaService;
 import br.com.bancoms.service.MovimentoService;
 import br.com.bancoms.view.MainView;
@@ -33,18 +34,20 @@ public class SaqueController {
             if (tecladoAdapter.getTeclado().verificarValor()) {
                 realizarSaque(Double.parseDouble(tecladoAdapter.getTeclado().getTextoField()));
             } else {
-                validacaoErro("Informe um valor.");
+                validacaoErro();
             }
         };
     }
 
     private void realizarSaque(double valor) {
         try {
-            MovimentoService movimentoService = MovimentoService.getInstance();
-            MovimentoTO movimentoTO;
 
-            if ((movimentoTO = ContaService.getInstance().realizarSaque(clienteController.getContaSessao(), valor)) != null) {
-                movimentoService.registrarMovimento(movimentoTO);
+            TransacaoDTO transacaoDTO = new TransacaoDTO(clienteController.getContaSessao(), valor);
+            MovimentoService movimentoService = MovimentoService.getInstance();
+            Movimento movimento;
+
+            if ((movimento = ContaService.getInstance().realizarSaque(transacaoDTO)) != null) {
+                movimentoService.registrarMovimento(movimento);
                 saqueRealizado();
             }
 
@@ -78,12 +81,10 @@ public class SaqueController {
         });
     }
 
-    private void validacaoErro(String mensagem) {
+    private void validacaoErro() {
         DialogAlert alert = clienteController.view.onAlertView("Validação - Informação",
-                mensagem, DialogAlert.AlertType.INFORMATION, false);
-        alert.setEventInformation(e -> {
-            alert.fecharDialog();
-        });
+                "Informe um valor.", DialogAlert.AlertType.INFORMATION, false);
+        alert.setEventInformation(e -> alert.fecharDialog());
 
     }
 

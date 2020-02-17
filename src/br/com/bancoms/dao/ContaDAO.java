@@ -63,7 +63,7 @@ public class ContaDAO {
                 conta.setSaldo(control.getDouble("SALDO_TOTAL"));
                 conta.setDescricao(control.getString("DESCRICAO_CONTA"));
 
-                contaOpt = Optional.ofNullable(conta);
+                contaOpt = Optional.of(conta);
             }
 
         } catch (Exception e) {

@@ -33,9 +33,7 @@ public class View {
 
 
     public static void setSizeElemento(double width, double height, Region... regions) {
-        Arrays.asList(regions).forEach(region -> {
-            setSizeElemento(region, width, height);
-        });
+        Arrays.asList(regions).forEach(region -> setSizeElemento(region, width, height));
     }
 
     public static void setSizeElemento(Region region, double width, double height) {

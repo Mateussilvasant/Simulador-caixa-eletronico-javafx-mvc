@@ -36,7 +36,7 @@ public class Metrics {
     }
 
     private void setOriginalWidth(int originalWidth) {
-        this.originalWidth = originalWidth;
+        Metrics.originalWidth = originalWidth;
     }
 
     public int getHeight() {
@@ -44,11 +44,11 @@ public class Metrics {
     }
 
     private void setOriginalHeight(int originalHeight) {
-        this.originalHeight = originalHeight;
+        Metrics.originalHeight = originalHeight;
     }
 
     public void setXWindow(double xWindow) {
-        this.XWindow = xWindow;
+        XWindow = xWindow;
     }
 
     public double getXWindow() {
@@ -56,7 +56,7 @@ public class Metrics {
     }
 
     public void setYWindow(double yWindow) {
-        this.YWindow = yWindow;
+        YWindow = yWindow;
     }
 
     public double getYWindow() {

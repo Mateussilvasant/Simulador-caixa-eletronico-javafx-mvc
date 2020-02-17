@@ -1,7 +1,7 @@
 package br.com.bancoms.dao;
 
 import br.com.bancoms.model.Cliente;
-import br.com.bancoms.vo.ClienteVO;
+import br.com.bancoms.dto.LoginDTO;
 
 import java.util.Optional;
 
@@ -9,7 +9,7 @@ public class ClienteDAO {
     public ClienteDAO() {
     }
 
-    public Optional<Cliente> realizarLogin(ClienteVO clienteVO) {
+    public Optional<Cliente> realizarLogin(LoginDTO loginDTO) {
         QueryControl query = null;
         Optional<Cliente> cliente = Optional.empty();
 
@@ -20,8 +20,8 @@ public class ClienteDAO {
 
             query = new QueryControl();
             query.setSQL(sql);
-            query.setInt(1, clienteVO.getNumeroConta());
-            query.setString(2, clienteVO.getSenha());
+            query.setInt(1, loginDTO.getNumeroConta());
+            query.setString(2, loginDTO.getSenha());
             query.executeQuery();
 
             if (query.next()) {

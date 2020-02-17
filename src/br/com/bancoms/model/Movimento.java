@@ -7,7 +7,8 @@ public class Movimento {
     public static int TRANSFERENCIA = 3;
     public static int EMPRESTIMO = 4;
 
-    private int idMovimento;
+
+    private int idConta;
     private double valor;
     private int tipo;
     private String descricao;
@@ -15,13 +16,22 @@ public class Movimento {
     private int numeroContaOrigem;
     private int numeroContaDestino;
 
+    public Movimento(int idConta, double valor, int tipo, String descricao, int numeroContaOrigem, int numeroContaDestino) {
+        this.idConta = idConta;
+        this.valor = valor;
+        this.tipo = tipo;
+        this.descricao = descricao;
+        this.numeroContaOrigem = numeroContaOrigem;
+        this.numeroContaDestino = numeroContaDestino;
+    }
+
     public Movimento(double valor, String descricao, int tipo, String data, int numeroContaOrigem, int numeroContaDestino) {
         this.valor = valor;
         this.tipo = tipo;
         this.descricao = descricao;
-        this.data = data;
         this.numeroContaOrigem = numeroContaOrigem;
         this.numeroContaDestino = numeroContaDestino;
+        this.data = data;
     }
 
     public int getTipo() {
@@ -72,18 +82,19 @@ public class Movimento {
         this.numeroContaDestino = numeroContaDestino;
     }
 
-    public int getIdMovimento() {
-        return idMovimento;
+    public int getIdConta() {
+        return this.idConta;
     }
 
-    public void setIdMovimento(int idMovimento) {
-        this.idMovimento = idMovimento;
+    public void setIdConta(int idConta) {
+        this.idConta = idConta;
     }
 
     @Override
     public String toString() {
         return "Movimento{" +
-                "valor=" + valor +
+                "idConta=" + idConta +
+                ", valor=" + valor +
                 ", tipo=" + tipo +
                 ", descricao='" + descricao + '\'' +
                 ", data='" + data + '\'' +

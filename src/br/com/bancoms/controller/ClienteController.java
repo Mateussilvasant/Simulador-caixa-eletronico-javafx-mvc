@@ -63,9 +63,7 @@ public class ClienteController {
     }
 
     public EventHandler<ActionEvent> cancelarAction(Pane pane) {
-        return (event) -> {
-            retornarMenuAction(pane);
-        };
+        return (event) -> retornarMenuAction(pane);
     }
 
     public void retornarMenuAction(Pane viewAtual) {

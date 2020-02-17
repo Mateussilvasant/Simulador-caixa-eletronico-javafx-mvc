@@ -184,8 +184,7 @@ public class MainView extends StackPane {
     }
 
     public DialogAlert onAlertView(String titulo, String conteudo, DialogAlert.AlertType tipo, boolean backgroundVisible) {
-        DialogAlert alert = new DialogAlert(tipo, titulo, conteudo, this, backgroundVisible);
-        return alert;
+        return new DialogAlert(tipo, titulo, conteudo, this, backgroundVisible);
     }
 
 }

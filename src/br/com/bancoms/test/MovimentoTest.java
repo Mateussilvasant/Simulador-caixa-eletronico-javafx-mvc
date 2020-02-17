@@ -1,5 +1,6 @@
 package br.com.bancoms.test;
 
+import br.com.bancoms.dto.MovimentoBuscaDTO;
 import br.com.bancoms.model.Movimento;
 import br.com.bancoms.service.MovimentoService;
 import br.com.bancoms.util.DateUtil;
@@ -12,11 +13,14 @@ class MovimentoServiceTest {
     @Test
     void listarMovimentosPorTipoTest() {
 
-        MovimentoService.getInstance().listarMovimentosPorTipo(
+        MovimentoBuscaDTO movimento = new MovimentoBuscaDTO(
                 123456,
                 Movimento.DEPOSITO,
                 DateUtil.getDate(2020, Calendar.FEBRUARY, 14),
-                DateUtil.getDate(2020, Calendar.FEBRUARY, 16)
+                DateUtil.getDate(2020, Calendar.FEBRUARY, 17)
+        );
+
+        MovimentoService.getInstance().listarMovimentosPorTipo(movimento
         ).forEach(System.out::println);
 
     }
@@ -24,10 +28,14 @@ class MovimentoServiceTest {
     @Test
     void listarTodosMovimentosTest() {
 
-        MovimentoService.getInstance().listarTodosMovimentos(
+        MovimentoBuscaDTO movimento = new MovimentoBuscaDTO(
                 123456,
                 DateUtil.getDate(2020, Calendar.FEBRUARY, 14),
-                DateUtil.getDate(2020, Calendar.FEBRUARY, 16)
+                DateUtil.getDate(2020, Calendar.FEBRUARY, 17)
+        );
+
+        MovimentoService.getInstance().listarTodosMovimentos(
+                movimento
         ).forEach(System.out::println);
 
     }

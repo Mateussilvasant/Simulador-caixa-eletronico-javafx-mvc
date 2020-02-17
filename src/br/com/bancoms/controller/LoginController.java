@@ -1,6 +1,7 @@
 package br.com.bancoms.controller;
 
 import br.com.bancoms.components.dialogAlert.DialogAlert;
+import br.com.bancoms.dto.LoginDTO;
 import br.com.bancoms.model.Cliente;
 import br.com.bancoms.model.contas.Conta;
 import br.com.bancoms.service.ClienteService;
@@ -9,7 +10,6 @@ import br.com.bancoms.util.Validador;
 import br.com.bancoms.view.ClienteViewFactory;
 import br.com.bancoms.view.LoginView;
 import br.com.bancoms.view.MainView;
-import br.com.bancoms.vo.ClienteVO;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
@@ -35,28 +35,26 @@ public class LoginController implements EventHandler<ActionEvent> {
 
         if (valor.resposta == Validador.CAMPO_VALIDO
                 && Validador.validarCampoTexto(senha) == Validador.CAMPO_VALIDO) {
-            realizarLogin(new ClienteVO(valor.valor, senha));
+            realizarLogin(new LoginDTO(valor.valor, senha));
         } else {
-            view.setTituloBarText("Banco M&S - Erro de Login: Senha ou número da Conta inválidos");
+            view.setTituloBarText("Banco M&S - Erro de LoginDTO: Senha ou número da Conta inválidos");
         }
 
     }
 
-    private void realizarLogin(ClienteVO clienteVO) {
+    private void realizarLogin(LoginDTO loginDTO) {
 
-        Optional<Cliente> clienteOpt = ClienteService.getInstance().realizarLogin(clienteVO);
-        Optional<Conta> contaOpt = ContaService.getInstance().consultarConta(clienteVO.getNumeroConta());
+        Optional<Cliente> clienteOpt = ClienteService.getInstance().realizarLogin(loginDTO);
+        Optional<Conta> contaOpt = ContaService.getInstance().consultarConta(loginDTO.getNumeroConta());
 
         if (clienteOpt.isPresent() && contaOpt.isPresent()) {
             removerLoginView();
             iniciarClienteView(clienteOpt.get(), contaOpt.get());
         } else {
 
-            DialogAlert alert = view.onAlertView("Login - Informação",
-                    "Não foi possível realizar o Login, por favor verifique o número da conta ou senha.", DialogAlert.AlertType.INFORMATION, true);
-            alert.setEventInformation(e -> {
-                alert.fecharDialog();
-            });
+            DialogAlert alert = view.onAlertView("LoginDTO - Informação",
+                    "Não foi possível realizar o LoginDTO, por favor verifique o número da conta ou senha.", DialogAlert.AlertType.INFORMATION, true);
+            alert.setEventInformation(e -> alert.fecharDialog());
 
         }
     }

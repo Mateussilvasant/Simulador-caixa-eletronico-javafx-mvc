@@ -3,7 +3,8 @@ package br.com.bancoms.controller;
 import br.com.bancoms.components.dialogAlert.DialogAlert;
 import br.com.bancoms.components.tecladoComponent.TecladoAdapter;
 import br.com.bancoms.components.tecladoComponent.tipos.Teclado;
-import br.com.bancoms.dto.MovimentoTO;
+import br.com.bancoms.dto.TransacaoDTO;
+import br.com.bancoms.model.Movimento;
 import br.com.bancoms.service.ContaService;
 import br.com.bancoms.service.MovimentoService;
 import br.com.bancoms.view.TransferenciaView;
@@ -66,12 +67,13 @@ public class TransferenciaController {
 
         try {
 
+            TransacaoDTO transacaoDTO = new TransacaoDTO(clienteController.getContaSessao(), numeroContaDestino, valor);
             ContaService contaService = ContaService.getInstance();
             MovimentoService movimentoService = MovimentoService.getInstance();
 
-            ArrayList<MovimentoTO> movimentos;
+            ArrayList<Movimento> movimentos;
 
-            if (!((movimentos = contaService.realizarTransferencia(clienteController.getContaSessao(), numeroContaDestino, valor)).isEmpty())) {
+            if (!((movimentos = contaService.realizarTransferencia(transacaoDTO)).isEmpty())) {
                 movimentoService.registrarMovimentos(movimentos);
                 transferenciaRealizada();
             }
@@ -87,9 +89,7 @@ public class TransferenciaController {
     private void validacaoErro(String mensagem) {
         DialogAlert alert = clienteController.view.onAlertView("Validação - Informação",
                 mensagem, DialogAlert.AlertType.INFORMATION, false);
-        alert.setEventInformation(e -> {
-            alert.fecharDialog();
-        });
+        alert.setEventInformation(e -> alert.fecharDialog());
 
     }
 
