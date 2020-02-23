@@ -15,7 +15,7 @@ class MovimentoServiceTest {
 
         MovimentoBuscaDTO movimento = new MovimentoBuscaDTO(
                 123456,
-                Movimento.DEPOSITO,
+                Movimento.EMovimento.DEPOSITO.getValue(),
                 DateUtil.getDate(2020, Calendar.FEBRUARY, 14),
                 DateUtil.getDate(2020, Calendar.FEBRUARY, 17)
         );

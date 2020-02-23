@@ -20,7 +20,7 @@ public class CaixaView extends Application {
         Font.loadFont("/br/com/bancoms/assets/font/RobotoMedium.tff", 30);
 
         METRICS = new Metrics(Screen.getPrimary().getVisualBounds().getWidth() * 0.98,
-                Screen.getPrimary().getVisualBounds().getHeight() * 0.85);
+                Screen.getPrimary().getVisualBounds().getHeight() * 0.90);
         METRICS.setXWindow(stage.getX());
         METRICS.setYWindow(stage.getY());
 

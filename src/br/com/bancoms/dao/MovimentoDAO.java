@@ -123,7 +123,7 @@ public class MovimentoDAO {
         String sql = "SELECT TIPO_MOVIMENTO,DESCRICAO_TIPO,VALOR_MOVIMENTO,DATA_MOVIMENTO, NUMERO_CONTA_ORIGEM, " +
                 "NUMERO_CONTA_DESTINO " +
                 "from movimento  where TIPO_MOVIMENTO = " +
-                "(?) IN (1,2,3)" +
+                "(?)" +
                 "AND NUMERO_CONTA_ORIGEM = (?)" +
                 "AND DATA_MOVIMENTO between (?) AND (?);";
 

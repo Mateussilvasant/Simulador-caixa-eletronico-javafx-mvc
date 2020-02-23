@@ -46,12 +46,23 @@
 	-fx-font-family: "Roboto Regular";
 }
 
+.labelLink{
+	-fx-text-fill:  #4A148C;
+	-fx-font-family: "Raleway SemiBold";
+}
+
 .labelStyle2{
 	-fx-text-fill:  #f2f2f2;
 	-fx-font-weight: bolder;
 }
 
 .labelStyleDark{
+	-fx-text-fill:  #1a1a1a;
+	-fx-font-family: "Roboto Regular";
+}
+
+.labelStyleDarkBold{
+    -fx-font-weight: bold;
 	-fx-text-fill:  #1a1a1a;
 	-fx-font-family: "Roboto Regular";
 }
@@ -232,6 +243,12 @@
     	-fx-background-radius: 4.0 4.0 4.0 4.0;
     	-fx-effect: dropshadow(gaussian,#4f4f4f , 5.0, 0.0, 0.0, 0.5);
 }
+
+.boxViewCinza{
+		-fx-background-color: #EEEEEE;
+    	-fx-background-radius: 4.0 4.0 4.0 4.0;
+}
+
 
 
 .boxViewDark{

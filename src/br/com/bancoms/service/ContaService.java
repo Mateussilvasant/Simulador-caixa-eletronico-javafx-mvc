@@ -45,7 +45,7 @@ public class ContaService {
         conta.depositar(valor);
 
         if (atualizarSaldo(conta)) {
-            return new Movimento(conta.getId(), valor, Movimento.DEPOSITO, "DEPÓSITO CONTA-PRÓPRIA", conta.getNumero(), conta.getNumero());
+            return new Movimento(conta.getId(), valor, Movimento.EMovimento.DEPOSITO.getValue(), "DEPÓSITO CONTA-PRÓPRIA", conta.getNumero(), conta.getNumero());
         } else {
             conta.sacar(valor);
             throw new Exception("Não foi possível realizar o depósito");
@@ -70,8 +70,8 @@ public class ContaService {
             contaDestino.depositar(valor);
 
             if (atualizarSaldo(contaDestino)) {
-                listaMovimentosRealizado.add(new Movimento(contaOrigem.getId(), valor, Movimento.DEPOSITO, "DEPÓSITO OUTRA-CONTA", contaOrigem.getNumero(), contaDestino.getNumero()));
-                listaMovimentosRealizado.add(new Movimento(contaDestino.getId(), valor, Movimento.DEPOSITO, "DEPÓSITO OUTRA-CONTA", contaOrigem.getNumero(), contaDestino.getNumero()));
+                listaMovimentosRealizado.add(new Movimento(contaOrigem.getId(), valor, Movimento.EMovimento.DEPOSITO.getValue(), "DEPÓSITO OUTRA-CONTA", contaOrigem.getNumero(), contaDestino.getNumero()));
+                listaMovimentosRealizado.add(new Movimento(contaDestino.getId(), valor, Movimento.EMovimento.DEPOSITO.getValue(), "DEPÓSITO OUTRA-CONTA", contaOrigem.getNumero(), contaDestino.getNumero()));
             } else {
                 contaDestino.sacar(valor); //Retira o dinheiro da conta
                 throw new Exception("Não foi possível realizar o depósito.");
@@ -95,7 +95,7 @@ public class ContaService {
         if (conta.sacar(valor)) {
 
             if (atualizarSaldo(conta)) {
-                return new Movimento(conta.getId(), valor, Movimento.SAQUE, "SAQUE-NORMAL", conta.getNumero(), conta.getNumero());
+                return new Movimento(conta.getId(), valor, Movimento.EMovimento.SAQUE.getValue(), "SAQUE-NORMAL", conta.getNumero(), conta.getNumero());
             } else {
                 conta.depositar(valor); //devolve o dinheiro para conta
                 throw new Exception("Não foi possível realizar o saque.");
@@ -123,10 +123,10 @@ public class ContaService {
             if (contaOrigem.transferir(valor, contaBeneficiada)) {
 
                 if (atualizarSaldo(contaOrigem)) {
-                    movimentosRealizados.add(new Movimento(contaOrigem.getId(), valor, Movimento.TRANSFERENCIA, "TRANSFERÊNCIA", contaOrigem.getNumero(), contaBeneficiada.getNumero()));
+                    movimentosRealizados.add(new Movimento(contaOrigem.getId(), valor, Movimento.EMovimento.TRANSFERENCIA.getValue(), "TRANSFERÊNCIA", contaOrigem.getNumero(), contaBeneficiada.getNumero()));
                 }
                 if (atualizarSaldo(contaBeneficiada)) {
-                    movimentosRealizados.add(new Movimento(contaBeneficiada.getId(), valor, Movimento.TRANSFERENCIA, "TRANSFERÊNCIA", contaOrigem.getNumero(), contaBeneficiada.getNumero()));
+                    movimentosRealizados.add(new Movimento(contaBeneficiada.getId(), valor,Movimento.EMovimento.TRANSFERENCIA.getValue(), "TRANSFERÊNCIA", contaOrigem.getNumero(), contaBeneficiada.getNumero()));
                 }
 
             } else {

@@ -3,6 +3,7 @@ package br.com.bancoms.util;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -18,7 +19,19 @@ public class DateUtil {
         return new Timestamp(Calendar.getInstance(TimeZone.getTimeZone("America/Sao_Paulo")).getTime().getTime());
     }
 
-    private static String parseDefaultUSA(Calendar calendar) {
+    public static Calendar getCurrentCalendar() {
+        return Calendar.getInstance(TimeZone.getTimeZone("America/Sao_Paulo"));
+    }
+
+    public static String getCurrentDateString() {
+        return parseDefaultUSA(Calendar.getInstance(TimeZone.getTimeZone("America/Sao_Paulo")));
+    }
+
+    public static String currentDate() {
+        return new SimpleDateFormat("dd/MM/yyyy", local).format(new Date().getTime());
+    }
+
+    public static String parseDefaultUSA(Calendar calendar) {
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", local).format(calendar.getTime().getTime());
     }
 
