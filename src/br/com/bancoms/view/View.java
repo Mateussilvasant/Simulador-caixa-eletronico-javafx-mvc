@@ -20,14 +20,11 @@ public class View {
         return button;
     }
 
-    public static Button createButton(String nome, String style, String imgURL, double width, double height, double size) {
-        Button button = new Button(nome);
+    public static Button createButton(String style, double width, double height, String imgURL) {
+        Button button = new Button();
         button.getStyleClass().add(style);
         button.setGraphic(new ImageView(imgURL));
-        button.setFont(Font.font(CaixaView.METRICS.getPX(size)));
-        button.setStyle("-fx-font-size: " + CaixaView.METRICS.getPX(size) + ";");
         setSizeElemento(button, width, height);
-
         return button;
     }
 

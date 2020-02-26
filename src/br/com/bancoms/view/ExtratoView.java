@@ -18,7 +18,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -36,8 +35,11 @@ public class ExtratoView extends VBox {
     private VBox boxLabelCentral;
     private HashMap<String, Integer> tiposMovimentos;
 
+    private ExtratoController extratoController;
+
     public ExtratoView(ExtratoController extratoController) {
 
+        this.extratoController = extratoController;
         double paddingBox = CaixaView.METRICS.getPX(0.0050);
 
         setSpacing(CaixaView.METRICS.getPX(0.005));
@@ -154,7 +156,7 @@ public class ExtratoView extends VBox {
 
         tipoMovimentoOpcao.getItems().add(index.get(), "Selecione");
 
-        tiposMovimentos.keySet().forEach(k -> tipoMovimentoOpcao.getItems().add(index.getAndIncrement(), k.toString()));
+        tiposMovimentos.keySet().forEach(k -> tipoMovimentoOpcao.getItems().add(index.getAndIncrement(), k));
 
         tipoMovimentoOpcao.getItems().add(index.get(), "Todos");
     }
@@ -196,7 +198,7 @@ public class ExtratoView extends VBox {
     }
 
     public void adicionarMovimentoItem(Movimento movimento, int index) {
-        MovimentoItemView itemView = new MovimentoItemView(movimento, index);
+        MovimentoItemView itemView = new MovimentoItemView(extratoController, movimento, index);
         movimentosListPane.getChildren().add(itemView);
     }
 

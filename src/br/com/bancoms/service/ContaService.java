@@ -71,7 +71,7 @@ public class ContaService {
 
             if (atualizarSaldo(contaDestino)) {
                 listaMovimentosRealizado.add(new Movimento(contaOrigem.getId(), valor, Movimento.EMovimento.DEPOSITO.getValue(), "DEPÓSITO OUTRA-CONTA", contaOrigem.getNumero(), contaDestino.getNumero()));
-                listaMovimentosRealizado.add(new Movimento(contaDestino.getId(), valor, Movimento.EMovimento.DEPOSITO.getValue(), "DEPÓSITO OUTRA-CONTA", contaOrigem.getNumero(), contaDestino.getNumero()));
+                listaMovimentosRealizado.add(new Movimento(contaDestino.getId(), valor, Movimento.EMovimento.DEPOSITO.getValue(), "DEPÓSITO OUTRA-CONTA", contaDestino.getNumero(), contaOrigem.getNumero()));
             } else {
                 contaDestino.sacar(valor); //Retira o dinheiro da conta
                 throw new Exception("Não foi possível realizar o depósito.");
@@ -120,18 +120,22 @@ public class ContaService {
 
             Conta contaBeneficiada = contaBeneficiadaOpt.get();
 
-            if (contaOrigem.transferir(valor, contaBeneficiada)) {
+            try {
+
+                contaOrigem.transferir(valor, contaBeneficiada);
 
                 if (atualizarSaldo(contaOrigem)) {
                     movimentosRealizados.add(new Movimento(contaOrigem.getId(), valor, Movimento.EMovimento.TRANSFERENCIA.getValue(), "TRANSFERÊNCIA", contaOrigem.getNumero(), contaBeneficiada.getNumero()));
                 }
                 if (atualizarSaldo(contaBeneficiada)) {
-                    movimentosRealizados.add(new Movimento(contaBeneficiada.getId(), valor,Movimento.EMovimento.TRANSFERENCIA.getValue(), "TRANSFERÊNCIA", contaOrigem.getNumero(), contaBeneficiada.getNumero()));
+                    movimentosRealizados.add(new Movimento(contaBeneficiada.getId(), valor, Movimento.EMovimento.TRANSFERENCIA.getValue(), "TRANSFERÊNCIA", contaBeneficiada.getNumero(), contaOrigem.getNumero()));
                 }
 
-            } else {
-                throw new Exception("Não foi possível realizar transferência..");
+
+            } catch (Exception e) {
+                throw new Exception(e.getMessage());
             }
+
 
         } else {
             throw new Exception("Conta informada não existe.");

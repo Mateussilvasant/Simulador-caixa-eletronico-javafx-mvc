@@ -28,8 +28,8 @@ public class LoginController implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent event) {
-        String numero = "123456"; // loginView.fieldNumeroConta.getText();
-        String senha = "123a"; // loginView.fieldSenha.getText();
+        String numero = loginView.fieldNumeroConta.getText();
+        String senha =  loginView.fieldSenha.getText();
 
         Validador.Valor<Integer> valor = Validador.validar(numero);
 

@@ -24,7 +24,11 @@ public abstract class Conta {
         saldo = saldo + valor;
     }
 
-    public boolean sacar(double valor) {
+    public boolean sacar(double valor) throws Exception {
+        return sacarConta(valor);
+    }
+
+    private boolean sacarConta(double valor) {
         if (valor < saldo) {
             saldo = saldo - valor;
             return true;
@@ -32,17 +36,25 @@ public abstract class Conta {
         return false;
     }
 
-    public boolean transferir(double valor, Conta contaBeneficiada) {
-        boolean retirou = sacar(valor);
+    public void transferir(double valor, Conta contaBeneficiada) throws Exception {
+        boolean retirou = sacarConta(valor);
 
         if (retirou) {
             contaBeneficiada.setSaldo(contaBeneficiada.getSaldo() + valor);
-            return true;
+        } else {
+            throw new Exception("Não foi possível fazer a transferência, valor maior que o saldo...");
         }
-        return false;
     }
 
-    public abstract void gerarTaxas();
+    protected abstract double aplicarTaxas(double valor, double taxa);
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getDescricao() {
         return descricao;
@@ -75,13 +87,4 @@ public abstract class Conta {
     public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
 }

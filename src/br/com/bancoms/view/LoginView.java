@@ -14,8 +14,8 @@ import javafx.scene.text.Font;
 
 
 public class LoginView extends StackPane {
-    private TextField fieldNumeroConta;
-    private PasswordField fieldSenha;
+    public TextField fieldNumeroConta;
+    public PasswordField fieldSenha;
 
     public LoginView(MainView mainView) {
 
