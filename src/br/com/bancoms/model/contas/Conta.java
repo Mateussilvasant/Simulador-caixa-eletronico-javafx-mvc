@@ -20,30 +20,45 @@ public abstract class Conta {
         this.saldo = saldo;
     }
 
-    public void depositar(double valor) {
+    public double depositar(double valor) {
+        depositarConta(valor);
+        return 0.0;
+    }
+
+    public void depositarConta(double valor) {
         saldo = saldo + valor;
     }
 
-    public boolean sacar(double valor) throws Exception {
-        return sacarConta(valor);
+    public double depositar(double valor, Conta contaBeneficiada) throws Exception {
+        contaBeneficiada.depositarConta(valor);
+        return 0.0;
     }
 
-    private boolean sacarConta(double valor) {
-        if (valor < saldo) {
+    protected abstract double getTaxa(double valor, double taxa);
+
+    public double sacar(double valor) throws Exception {
+        sacarConta(valor);
+        return 0.0;
+    }
+
+    public void sacarConta(double valor) throws Exception {
+        if (valor <= saldo) {
             saldo = saldo - valor;
-            return true;
+        } else {
+            throw new Exception("Não foi possível realizar o saque, valor maior que o saldo...");
         }
-        return false;
     }
 
-    public void transferir(double valor, Conta contaBeneficiada) throws Exception {
-        boolean retirou = sacarConta(valor);
+    public double transferir(double valor, Conta contaBeneficiada) throws Exception {
 
-        if (retirou) {
+        try {
+            sacarConta(valor);
             contaBeneficiada.setSaldo(contaBeneficiada.getSaldo() + valor);
-        } else {
+        } catch (Exception e) {
             throw new Exception("Não foi possível fazer a transferência, valor maior que o saldo...");
         }
+
+        return 0.0;
     }
 
     protected abstract double aplicarTaxas(double valor, double taxa);

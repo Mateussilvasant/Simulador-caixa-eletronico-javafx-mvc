@@ -98,7 +98,7 @@ public class MovimentoItemView extends VBox {
         labelValor.getStyleClass().add("labelStyleDarkBold");
         labelValor.setFont(Font.font(CaixaView.METRICS.getPX(0.008)));
 
-        Label valor = new Label(String.valueOf(formatarReal.format(movimento.getValor())));
+        Label valor = new Label(String.valueOf(formatarReal.format(movimento.getValorTransacao())));
         valor.getStyleClass().add("labelStyleDark");
         valor.setFont(Font.font(CaixaView.METRICS.getPX(0.007)));
 

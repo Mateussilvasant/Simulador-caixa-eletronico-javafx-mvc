@@ -10,11 +10,18 @@ public class ContaPoupanca extends Conta {
 
     @Override
     protected double aplicarTaxas(double valor, double rendimento) {
-        return ((valor * rendimento) / 100) + valor;
+        return rendimento + valor;
     }
 
     @Override
-    public void depositar(double valor) {
-        super.depositar(aplicarTaxas(valor, rendimentoPoupanca));
+    public double depositar(double valor) {
+        double rendimento = getTaxa(valor, rendimentoPoupanca);
+        super.depositar(aplicarTaxas(valor, rendimento));
+        return rendimento;
+    }
+
+    @Override
+    protected double getTaxa(double valor, double rendimento) {
+        return ((valor * rendimento) / 100);
     }
 }

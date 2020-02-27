@@ -16,7 +16,7 @@ public class MovimentoDAO {
 
     public void registrarMovimento(Movimento movimento) {
         QueryControl control = new QueryControl();
-        String sql = "INSERT INTO MOVIMENTO (ID_CONTA,TIPO_MOVIMENTO,DESCRICAO_TIPO,VALOR_MOVIMENTO,DATA_MOVIMENTO,NUMERO_CONTA_ORIGEM,NUMERO_CONTA_DESTINO) VALUES((?),(?),(?),(?),(?),(?),(?))";
+        String sql = "INSERT INTO MOVIMENTO (ID_CONTA,TIPO_MOVIMENTO,DESCRICAO_TIPO,VALOR_MOVIMENTO,DATA_MOVIMENTO,NUMERO_CONTA_ORIGEM,NUMERO_CONTA_DESTINO,VALOR_DIFERENCIAL) VALUES((?),(?),(?),(?),(?),(?),(?),(?))";
 
         try {
 
@@ -25,10 +25,11 @@ public class MovimentoDAO {
             control.setInt(1, movimento.getIdConta());
             control.setInt(2, movimento.getTipo());
             control.setString(3, movimento.getDescricao());
-            control.setDouble(4, movimento.getValor());
+            control.setDouble(4, movimento.getValorTransacao());
             control.setTimestamp(5, DateUtil.getCurrentDate());
             control.setInt(6, movimento.getNumeroContaOrigem());
             control.setInt(7, movimento.getNumeroContaDestino());
+            control.setDouble(8, movimento.getValorDiferencial());
 
             if (control.executeUpdate() == RESULT.SUCCESS) {
                 control.setGeneratedKeys();
@@ -67,7 +68,7 @@ public class MovimentoDAO {
 
 
         String sql = "SELECT TIPO_MOVIMENTO,DESCRICAO_TIPO,VALOR_MOVIMENTO,DATA_MOVIMENTO, NUMERO_CONTA_ORIGEM, " +
-                "NUMERO_CONTA_DESTINO " +
+                "NUMERO_CONTA_DESTINO,VALOR_DIFERENCIAL " +
                 "from movimento  where  NUMERO_CONTA_ORIGEM = (?)" +
                 "AND DATA_MOVIMENTO between (?) AND (?);";
 
@@ -86,8 +87,9 @@ public class MovimentoDAO {
                 double valor = control.getDouble("VALOR_MOVIMENTO");
                 int numeroContaOrigem = control.getInt("NUMERO_CONTA_ORIGEM");
                 int numeroContaDestino = control.getInt("NUMERO_CONTA_DESTINO");
+                double valorDiferencial = control.getDouble("VALOR_DIFERENCIAL");
 
-                Optional<Movimento> movimento = Optional.of(new Movimento(valor, descricao, tipo, data, numeroContaOrigem, numeroContaDestino));
+                Optional<Movimento> movimento = Optional.of(new Movimento(valor, descricao, tipo, data, numeroContaOrigem, numeroContaDestino, valorDiferencial));
 
                 listaMovimentos.add(movimento);
             }
@@ -121,7 +123,7 @@ public class MovimentoDAO {
         ArrayList<Optional<Movimento>> listaMovimentos = new ArrayList<>();
 
         String sql = "SELECT TIPO_MOVIMENTO,DESCRICAO_TIPO,VALOR_MOVIMENTO,DATA_MOVIMENTO, NUMERO_CONTA_ORIGEM, " +
-                "NUMERO_CONTA_DESTINO " +
+                "NUMERO_CONTA_DESTINO,VALOR_DIFERENCIAL " +
                 "from movimento  where TIPO_MOVIMENTO = " +
                 "(?)" +
                 "AND NUMERO_CONTA_ORIGEM = (?)" +
@@ -143,8 +145,9 @@ public class MovimentoDAO {
                 double valor = control.getDouble("VALOR_MOVIMENTO");
                 int numeroContaOrigem = control.getInt("NUMERO_CONTA_ORIGEM");
                 int numeroContaDestino = control.getInt("NUMERO_CONTA_DESTINO");
+                double valorDiferencial = control.getDouble("VALOR_DIFERENCIAL");
 
-                Optional<Movimento> movimento = Optional.of(new Movimento(valor, descricao, tipo, data, numeroContaOrigem, numeroContaDestino));
+                Optional<Movimento> movimento = Optional.of(new Movimento(valor, descricao, tipo, data, numeroContaOrigem, numeroContaDestino, valorDiferencial));
 
                 listaMovimentos.add(movimento);
             }
@@ -168,6 +171,46 @@ public class MovimentoDAO {
         }
 
         return listaMovimentos;
+
+    }
+
+    public double getSaldoDiferencial(MovimentoBuscaDTO movimento) {
+
+        QueryControl control = new QueryControl();
+
+        try {
+            control.setSQL("SELECT SUM(VALOR_DIFERENCIAL) as 'total' from movimento  where  NUMERO_CONTA_ORIGEM = (?)\n" +
+                    "AND DATA_MOVIMENTO (?) AND (?);");
+
+            control.setInt(1, movimento.getNumeroConta());
+            control.setString(2, movimento.getDataInicio());
+            control.setString(3, movimento.getDataFim());
+            control.executeQuery();
+
+            if (control.next()) {
+                return control.getDouble("total");
+            }
+
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            try {
+                DatabaseConnect.getInstance().rollBack();
+            } catch (Exception rollbackException) {
+                rollbackException.printStackTrace();
+            }
+
+        } finally {
+            try {
+                DatabaseConnect.getInstance().closeConnection(control);
+            } catch (Exception closeException) {
+                closeException.printStackTrace();
+            }
+        }
+
+        return 0.0;
 
     }
 
