@@ -157,6 +157,29 @@
 }
 
 
+.buttonSolid{
+	-fx-background-color: #4A148C;
+	-fx-font-family: "Raleway SemiBold";
+	-fx-background-radius: 7.0 7.0 7.0 7.0;
+	-fx-text-fill:  #f2f2f2;
+	-fx-cursor: hand;
+}
+
+.buttonSolid:hover{
+	-fx-background-color: #00007e;
+	-fx-font-family: "Raleway SemiBold";
+	-fx-background-radius: 7.0 7.0 7.0 7.0;
+	-fx-text-fill:  #f2f2f2;
+}
+
+.buttonSolid:pressed{
+	-fx-font-family: "Raleway SemiBold";
+	-fx-background-radius: 7.0 7.0 7.0 7.0;
+    -fx-background-color: #4500af;
+	-fx-text-fill:  #f2f2f2;
+}
+
+
 .background{
 	-fx-background-color:linear-gradient(to bottom, #651FFF, #7E57C2);
 }

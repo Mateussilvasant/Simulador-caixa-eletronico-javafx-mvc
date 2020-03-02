@@ -70,7 +70,7 @@ public class LoginView extends StackPane {
                 0.05,
                 0.007);
 
-        mainView.setTituloBarText("LoginDTO");
+        mainView.setTituloBarText("Login");
 
         loginBox.getChildren().addAll(labelLoginTitulo, hbox1, hbox2, botaoEntrar);
 

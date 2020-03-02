@@ -1,7 +1,6 @@
 package br.com.bancoms.controller;
 
 import br.com.bancoms.dto.MovimentoBuscaDTO;
-import br.com.bancoms.model.Cliente;
 import br.com.bancoms.model.Movimento;
 import br.com.bancoms.service.ClienteService;
 import br.com.bancoms.service.MovimentoService;
@@ -19,7 +18,6 @@ public class ExtratoController {
 
     public ClienteController clienteController;
     private ExtratoView extratoView;
-    private MovimentoItemView movimentoItemViewAtual;
 
     public ExtratoController(ClienteController clienteController) {
         this.clienteController = clienteController;
@@ -36,42 +34,29 @@ public class ExtratoController {
     }
 
     public EventHandler<ActionEvent> detalhesMovimentoAction(MovimentoItemView itemView) {
-        return (event) -> {
-
-            if (movimentoItemViewAtual != null) {
-                movimentoItemViewAtual.removerDetalhesView();
-            }
-
-            Optional<Cliente> clienteOrigem = ClienteService.getInstance().consultarCliente(itemView.getMovimento().getNumeroContaDestino());
-
-            clienteOrigem.ifPresent(cliente -> itemView.detalhesView(cliente, clienteController.clienteSessao));
-
-            movimentoItemViewAtual = itemView;
-
-        };
+        return (event) -> ClienteService.getInstance().consultarCliente(itemView.getMovimento().getNumeroContaDestino())
+                .ifPresent(cliente -> {
+                    extratoView.trocarDetalhes(itemView);
+                    itemView.detalhesView(cliente, clienteController.clienteSessao);
+                });
     }
 
+
     public EventHandler<ActionEvent> consultarExtratoAction() {
-        return (event) -> {
+        return (event) -> consultarExtratos(getMovimentoDTO())
+                .ifPresent(lista -> {
+                    extratoView.limparMovimentosView();
+                    adicionarMovimentosView(lista);
+                });
+    }
 
-            extratoView.limparMovimentosView();
+    public double getSaldoDiferencial() {
+        return MovimentoService.getInstance().getSaldoDiferencial(getMovimentoDTOSaldo());
+    }
 
-            ArrayList<Optional<Movimento>> lista = consultarExtratos(new MovimentoBuscaDTO
-                    (
-                            clienteController.getContaSessao().getNumero(),
-                            0,
-                            "",
-                            ""
-                    ));
-
-            System.out.println(lista.toString());
-
-            if (!lista.isEmpty()) {
-                adicionarMovimentosView(lista);
-            }
-
-
-        };
+    public double getSaldoSemDiferencial() {
+        double diferencialTotal = getSaldoDiferencial();
+        return clienteController.getContaSessao().getSaldoSemDiferencial(diferencialTotal);
     }
 
     private void adicionarMovimentosView(ArrayList<Optional<Movimento>> lista) {
@@ -84,30 +69,53 @@ public class ExtratoController {
     }
 
     /* Retorna uma lista  de movimentos de acordo com opção selecionada na view*/
-    private ArrayList<Optional<Movimento>> consultarExtratos(MovimentoBuscaDTO busca) {
-
-        setMovimentoDataPeriodo(busca);
+    private Optional<ArrayList<Optional<Movimento>>> consultarExtratos(MovimentoBuscaDTO busca) {
 
         if (extratoView.getTipoAtual().equals("Todos")) {
             return MovimentoService.getInstance().listarTodosMovimentos(busca);
         } else {
             busca.setTipoMovimento(extratoView.getTipoAtualValor());
-
-            System.out.println(busca.toString());
-
             return MovimentoService.getInstance().listarMovimentosPorTipo(busca);
         }
 
     }
 
-    private void setMovimentoDataPeriodo(MovimentoBuscaDTO busca) {
-        busca.setDataFim(DateUtil.getCurrentDateString());
+
+    private MovimentoBuscaDTO getMovimentoDTO() {
+
+        MovimentoBuscaDTO dto = new MovimentoBuscaDTO();
 
         Calendar dateInicio = DateUtil.getCurrentCalendar();
         dateInicio.add(Calendar.DAY_OF_MONTH, -extratoView.getPeriodo());
 
-        busca.setDataInicio(DateUtil.parseDefaultUSA(dateInicio));
+        dto.setDataInicio(DateUtil.parseDefaultUSA(dateInicio));
+        dto.setDataFim(DateUtil.getCurrentDateString());
+        dto.setNumeroConta(clienteController.getContaSessao().getNumero());
+
+        return dto;
     }
 
+
+    private MovimentoBuscaDTO getMovimentoDTOSaldo() {
+        MovimentoBuscaDTO dto = new MovimentoBuscaDTO();
+
+        Calendar dataInicio = DateUtil.getCurrentCalendar();
+        dataInicio.set(Calendar.DAY_OF_MONTH, dataInicio.getActualMinimum(Calendar.DAY_OF_MONTH));
+        dataInicio.set(Calendar.HOUR_OF_DAY, 0);
+        dataInicio.set(Calendar.MINUTE, 0);
+        dataInicio.set(Calendar.SECOND, 0);
+
+        Calendar dataFim = DateUtil.getCurrentCalendar();
+        dataFim.set(Calendar.DAY_OF_MONTH, dataFim.getActualMaximum(Calendar.DAY_OF_MONTH));
+        dataFim.set(Calendar.HOUR_OF_DAY, 23);
+        dataFim.set(Calendar.MINUTE, 59);
+        dataFim.set(Calendar.SECOND, 59);
+        
+        dto.setDataInicio(DateUtil.parseDefaultUSA(dataInicio));
+        dto.setDataFim(DateUtil.parseDefaultUSA(dataFim));
+        dto.setNumeroConta(clienteController.getContaSessao().getNumero());
+
+        return dto;
+    }
 
 }

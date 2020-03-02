@@ -133,6 +133,7 @@ public class MainView extends StackPane {
                     event -> System.exit(0),
                     event -> alert.fecharDialog()
             );
+
         });
 
 

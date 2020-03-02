@@ -20,6 +20,10 @@ public class MovimentoBuscaDTO {
         this.dataFim = dataFim;
     }
 
+    public MovimentoBuscaDTO() {
+        this(0, 0, "","");
+    }
+
     public int getNumeroConta() {
         return numeroConta;
     }

@@ -28,12 +28,16 @@ public class MovimentoService {
 
     }
 
-    public ArrayList<Optional<Movimento>> listarMovimentosPorTipo(MovimentoBuscaDTO movimentoBuscaDTO) {
+    public Optional<ArrayList<Optional<Movimento>>> listarMovimentosPorTipo(MovimentoBuscaDTO movimentoBuscaDTO) {
         return movimentoDAO.listarMovimentosPorTipo(movimentoBuscaDTO);
     }
 
-    public ArrayList<Optional<Movimento>> listarTodosMovimentos(MovimentoBuscaDTO movimentoBuscaDTO) {
+    public Optional<ArrayList<Optional<Movimento>>> listarTodosMovimentos(MovimentoBuscaDTO movimentoBuscaDTO) {
         return movimentoDAO.listarTodosMovimentos(movimentoBuscaDTO);
+    }
+
+    public double getSaldoDiferencial(MovimentoBuscaDTO busca) {
+        return movimentoDAO.getSaldoDiferencial(busca);
     }
 
     public void registrarMovimento(Movimento movimento) {

@@ -9,8 +9,10 @@ public class ContaCorrente extends Conta {
     }
 
     @Override
-    protected double aplicarTaxas(double valor, double taxa) {
-        return taxa - valor;
+    protected double aplicarTaxas(double valor, double taxa) throws Exception {
+        double diferencial = getTaxa(valor, taxa);
+        super.sacarConta(diferencial);
+        return diferencial;
     }
 
     @Override
@@ -21,25 +23,27 @@ public class ContaCorrente extends Conta {
     @Override
     public double depositar(double valor, Conta contaBeneficiada) throws Exception {
 
-        double taxa = getTaxa(valor, taxaCorrente * 0.6);
-        super.sacar(taxa);
+        double taxaGerada = aplicarTaxas(valor, taxaCorrente * 0.6);
         contaBeneficiada.depositarConta(valor);
 
-        return -taxa;
+        return -taxaGerada;
     }
 
     @Override
     public double sacar(double valor) throws Exception {
-        double taxa = getTaxa(valor, taxaCorrente);
-        super.sacar(aplicarTaxas(valor, taxa));
-        return -taxa;
+        double taxaGerada = aplicarTaxas(valor, taxaCorrente);
+        super.sacar(valor);
+
+        return -taxaGerada;
     }
 
     @Override
     public double transferir(double valor, Conta contaBeneficiada) throws Exception {
-        double taxa = getTaxa(valor, taxaCorrente * 0.5);
-        super.transferir(aplicarTaxas(valor, taxa), contaBeneficiada);
-        return -taxa;
+
+        double taxaGerada = aplicarTaxas(valor, taxaCorrente);
+        super.transferir(valor, contaBeneficiada);
+
+        return -taxaGerada;
     }
 
 }

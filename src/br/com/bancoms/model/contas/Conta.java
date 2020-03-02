@@ -2,10 +2,6 @@ package br.com.bancoms.model.contas;
 
 public abstract class Conta {
 
-    public static final int CORRENTE = 1;
-    public static final int POUPANCA = 2;
-    public static final int INVESTIMENTO = 0;
-
     protected int id;
     protected String descricao;
     protected int tipo;
@@ -18,6 +14,10 @@ public abstract class Conta {
         this.tipo = tipo;
         this.numero = numero;
         this.saldo = saldo;
+    }
+
+    public double getSaldoSemDiferencial(double totalDiferencial) {
+        return saldo - totalDiferencial;
     }
 
     public double depositar(double valor) {
@@ -61,7 +61,7 @@ public abstract class Conta {
         return 0.0;
     }
 
-    protected abstract double aplicarTaxas(double valor, double taxa);
+    protected abstract double aplicarTaxas(double valor, double taxa) throws Exception;
 
     public int getId() {
         return id;

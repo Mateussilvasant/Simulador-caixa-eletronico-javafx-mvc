@@ -60,12 +60,10 @@ public class MovimentoDAO {
 
     }
 
-    public ArrayList<Optional<Movimento>> listarTodosMovimentos(MovimentoBuscaDTO movimentoBuscaDTO) {
+    public Optional<ArrayList<Optional<Movimento>>> listarTodosMovimentos(MovimentoBuscaDTO movimentoBuscaDTO) {
 
         QueryControl control = new QueryControl();
-
-        ArrayList<Optional<Movimento>> listaMovimentos = new ArrayList<>();
-
+        Optional<ArrayList<Optional<Movimento>>> listaMovimentos = Optional.of(new ArrayList<>());
 
         String sql = "SELECT TIPO_MOVIMENTO,DESCRICAO_TIPO,VALOR_MOVIMENTO,DATA_MOVIMENTO, NUMERO_CONTA_ORIGEM, " +
                 "NUMERO_CONTA_DESTINO,VALOR_DIFERENCIAL " +
@@ -91,7 +89,7 @@ public class MovimentoDAO {
 
                 Optional<Movimento> movimento = Optional.of(new Movimento(valor, descricao, tipo, data, numeroContaOrigem, numeroContaDestino, valorDiferencial));
 
-                listaMovimentos.add(movimento);
+                listaMovimentos.get().add(movimento);
             }
 
         } catch (Exception e) {
@@ -113,14 +111,13 @@ public class MovimentoDAO {
         }
 
         return listaMovimentos;
-
     }
 
-    public ArrayList<Optional<Movimento>> listarMovimentosPorTipo(MovimentoBuscaDTO movimentoBuscaDTO) {
+    public Optional<ArrayList<Optional<Movimento>>> listarMovimentosPorTipo(MovimentoBuscaDTO movimentoBuscaDTO) {
 
         QueryControl control = new QueryControl();
 
-        ArrayList<Optional<Movimento>> listaMovimentos = new ArrayList<>();
+        Optional<ArrayList<Optional<Movimento>>> listaMovimentos = Optional.of(new ArrayList<>());
 
         String sql = "SELECT TIPO_MOVIMENTO,DESCRICAO_TIPO,VALOR_MOVIMENTO,DATA_MOVIMENTO, NUMERO_CONTA_ORIGEM, " +
                 "NUMERO_CONTA_DESTINO,VALOR_DIFERENCIAL " +
@@ -149,7 +146,7 @@ public class MovimentoDAO {
 
                 Optional<Movimento> movimento = Optional.of(new Movimento(valor, descricao, tipo, data, numeroContaOrigem, numeroContaDestino, valorDiferencial));
 
-                listaMovimentos.add(movimento);
+                listaMovimentos.get().add(movimento);
             }
 
         } catch (Exception e) {
@@ -179,8 +176,8 @@ public class MovimentoDAO {
         QueryControl control = new QueryControl();
 
         try {
-            control.setSQL("SELECT SUM(VALOR_DIFERENCIAL) as 'total' from movimento  where  NUMERO_CONTA_ORIGEM = (?)\n" +
-                    "AND DATA_MOVIMENTO (?) AND (?);");
+            control.setSQL("SELECT SUM(VALOR_DIFERENCIAL) as 'total' from movimento  where  NUMERO_CONTA_ORIGEM = (?)" +
+                    "AND DATA_MOVIMENTO between (?) AND (?);");
 
             control.setInt(1, movimento.getNumeroConta());
             control.setString(2, movimento.getDataInicio());

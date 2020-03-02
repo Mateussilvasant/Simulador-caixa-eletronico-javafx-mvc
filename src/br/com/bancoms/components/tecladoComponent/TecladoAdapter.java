@@ -7,8 +7,8 @@ import javafx.scene.control.TextField;
 
 
 /**
- * @author Mateussilvasant - Classe que faz a ponte entre a l�gica do teclado
- * at� a sua visualiza��o na UI.
+ * @author Mateussilvasant - Classe que faz a ponte entre a logica do teclado
+ * ate a sua visualizacao na UI.
  */
 public class TecladoAdapter {
 

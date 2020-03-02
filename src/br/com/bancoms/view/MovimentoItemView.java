@@ -2,6 +2,7 @@ package br.com.bancoms.view;
 
 import br.com.bancoms.controller.ExtratoController;
 import br.com.bancoms.model.Cliente;
+import br.com.bancoms.model.EMovimento;
 import br.com.bancoms.model.Movimento;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -57,7 +58,7 @@ public class MovimentoItemView extends VBox {
         labelDescricao.getStyleClass().add("labelStyleDarkBold");
         labelDescricao.setFont(Font.font(CaixaView.METRICS.getPX(0.008)));
 
-        Label descricao = new Label(Movimento.EMovimento.values()[movimento.getTipo() - 1].getKey());
+        Label descricao = new Label(EMovimento.values()[movimento.getTipo() - 1].getKey());
         descricao.getStyleClass().add("labelStyleDark");
         descricao.setFont(Font.font(CaixaView.METRICS.getPX(0.007)));
 

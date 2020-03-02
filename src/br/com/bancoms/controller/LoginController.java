@@ -37,7 +37,7 @@ public class LoginController implements EventHandler<ActionEvent> {
                 && Validador.validarCampoTexto(senha) == Validador.CAMPO_VALIDO) {
             realizarLogin(new LoginDTO(valor.valor, senha));
         } else {
-            view.setTituloBarText("Banco M&S - Erro de LoginDTO: Senha ou número da Conta inválidos");
+            view.setTituloBarText("Banco M&S - Erro de Login: Senha ou número da Conta inválidos");
         }
 
     }
@@ -52,8 +52,8 @@ public class LoginController implements EventHandler<ActionEvent> {
             iniciarClienteView(clienteOpt.get(), contaOpt.get());
         } else {
 
-            DialogAlert alert = view.onAlertView("LoginDTO - Informação",
-                    "Não foi possível realizar o LoginDTO, por favor verifique o número da conta ou senha.", DialogAlert.AlertType.INFORMATION, true);
+            DialogAlert alert = view.onAlertView("Login - Informação",
+                    "Não foi possível realizar o Login, por favor verifique o número da conta ou senha.", DialogAlert.AlertType.INFORMATION, true);
             alert.setEventInformation(e -> alert.fecharDialog());
 
         }
