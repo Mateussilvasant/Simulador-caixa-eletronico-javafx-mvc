@@ -1,0 +1,294 @@
+@font-face {
+    -fx-font-family: 'Roboto Medium';
+    src: url('RobotoMedium.ttf');
+}
+
+@font-face{
+    -fx-font-family: 'Roboto Regular';
+    src: url('RobotoRegular.ttf');
+}
+
+@font-face{
+    -fx-font-family: 'Raleway SemiBold';
+    src: url('RalewaySemiBold.ttf');
+}
+
+.backgroundDialog{
+	-fx-background-color: #ffffff;
+	-fx-opacity: 0.8;
+}
+
+.fieldStyle{
+	-fx-background-radius: 10.0 10.0 10.0 10.0 ;
+	-fx-background-color: #fcfcfc;
+	-fx-border-width: 2.0;
+	-fx-border-color: #d4d4d4;
+	-fx-border-radius: 10.0 10.0 10.0 10.0;
+}
+
+.barBackground{
+	-fx-fill: #311B92;
+	-fx-effect: dropshadow(gaussian, #424242, 20.0, 0.0, 0.0, 0.0);
+}
+
+.fieldStyle:focused{
+	-fx-border-width: 3.0;
+}
+
+.loginBox{
+	-fx-background-color: #fcfcfc;
+	-fx-background-radius: 5.0 5.0 5.0 5.0;
+	-fx-effect: dropshadow(gaussian,#404040 , 10.0, 0.0, 0.0, 2.0);
+}
+
+.labelStyle{
+	-fx-text-fill:  #f2f2f2;
+	-fx-font-family: "Roboto Regular";
+}
+
+.labelLink{
+	-fx-text-fill:  #4A148C;
+	-fx-font-family: "Raleway SemiBold";
+}
+
+.labelStyle2{
+	-fx-text-fill:  #f2f2f2;
+	-fx-font-weight: bolder;
+}
+
+.labelStyleDark{
+	-fx-text-fill:  #1a1a1a;
+	-fx-font-family: "Roboto Regular";
+}
+
+.labelStyleDarkBold{
+    -fx-font-weight: bold;
+	-fx-text-fill:  #1a1a1a;
+	-fx-font-family: "Roboto Regular";
+}
+
+.labelStyleDarkSemi{
+	-fx-text-fill:  #1a1a1a;
+	-fx-font-family: 'Raleway SemiBold';
+}
+
+.labelBar{
+	-fx-font-weight: bolder;
+	-fx-text-fill:  #EEEEEE;
+}
+
+
+
+.buttonStyle{
+	-fx-background-color: #f2f2f2;
+	-fx-font-family: "Raleway SemiBold";
+	-fx-background-radius: 5.0 5.0 5.0 5.0;
+	-fx-effect: dropshadow(gaussian,#404040 , 5.0, 0.0, 0.0, 1.0);
+	-fx-text-fill:  #303030;
+	-fx-cursor: hand;
+}
+
+.buttonStyle:hover{
+	-fx-background-color: #f2f2f2;
+	-fx-font-family: "Raleway SemiBold";
+	-fx-background-radius: 5.0 5.0 5.0 5.0;
+	-fx-effect: dropshadow(gaussian,#404040 , 10.0, 0.0, 0.0, 2.0);
+	-fx-text-fill:  #303030;
+}
+
+.buttonStyle:pressed{
+	-fx-font-family: "Raleway SemiBold";
+	-fx-background-radius: 5.0 5.0 5.0 5.0;
+    -fx-background-color: #ffffff;
+	-fx-effect: dropshadow(gaussian,#404040 , 20.0, 0.0, 0.0, 3.0);
+	-fx-text-fill:  #303030;
+}
+
+
+.buttonDark{
+	-fx-background-color: #1a1a1a;
+	-fx-font-family: "Raleway SemiBold";
+	-fx-background-radius: 5.0 5.0 5.0 5.0;
+	-fx-effect: dropshadow(gaussian,#404040 , 5.0, 0.0, 0.0, 1.0);
+	-fx-text-fill:  #f2f2f2;
+	-fx-cursor: hand;
+}
+
+.buttonDark:hover{
+	-fx-background-color: #1a1a1a;
+	-fx-font-family: "Raleway SemiBold";
+	-fx-background-radius: 5.0 5.0 5.0 5.0;
+	-fx-effect: dropshadow(gaussian,#404040 , 10.0, 0.0, 0.0, 2.0);
+	-fx-text-fill:  #f2f2f2;
+}
+
+.buttonDark:pressed{
+	-fx-font-family: "Raleway SemiBold";
+	-fx-background-radius: 5.0 5.0 5.0 5.0;
+    -fx-background-color: #333232;
+	-fx-effect: dropshadow(gaussian,#404040 , 20.0, 0.0, 0.0, 3.0);
+	-fx-text-fill:  #f2f2f2;
+}
+
+
+.buttonPrimary{
+	-fx-background-color: #4A148C;
+	-fx-font-family: "Raleway SemiBold";
+	-fx-background-radius: 5.0 5.0 5.0 5.0;
+	-fx-effect: dropshadow(gaussian,#404040 , 5.0, 0.0, 0.0, 1.0);
+	-fx-text-fill:  #f2f2f2;
+	-fx-cursor: hand;
+}
+
+.buttonPrimary:hover{
+	-fx-background-color: #00007e;
+	-fx-font-family: "Raleway SemiBold";
+	-fx-background-radius: 5.0 5.0 5.0 5.0;
+	-fx-effect: dropshadow(gaussian,#404040 , 10.0, 0.0, 0.0, 2.0);
+	-fx-text-fill:  #f2f2f2;
+}
+
+.buttonPrimary:pressed{
+	-fx-font-family: "Raleway SemiBold";
+	-fx-background-radius: 5.0 5.0 5.0 5.0;
+    -fx-background-color: #4500af;
+	-fx-effect: dropshadow(gaussian,#404040 , 20.0, 0.0, 0.0, 3.0);
+	-fx-text-fill:  #f2f2f2;
+}
+
+
+.buttonSolid{
+	-fx-background-color: #4A148C;
+	-fx-font-family: "Raleway SemiBold";
+	-fx-background-radius: 7.0 7.0 7.0 7.0;
+	-fx-text-fill:  #f2f2f2;
+	-fx-cursor: hand;
+}
+
+.buttonSolid:hover{
+	-fx-background-color: #00007e;
+	-fx-font-family: "Raleway SemiBold";
+	-fx-background-radius: 7.0 7.0 7.0 7.0;
+	-fx-text-fill:  #f2f2f2;
+}
+
+.buttonSolid:pressed{
+	-fx-font-family: "Raleway SemiBold";
+	-fx-background-radius: 7.0 7.0 7.0 7.0;
+    -fx-background-color: #4500af;
+	-fx-text-fill:  #f2f2f2;
+}
+
+
+.background{
+	-fx-background-color:linear-gradient(to bottom, #651FFF, #7E57C2);
+}
+
+.buttonBanco{
+	-fx-background-color: #000000;
+	-fx-effect: dropshadow(gaussian,#404040 , 20.0, 0.0, 0.0, 0.0);
+}
+
+.buttonBanco:hover{
+	-fx-effect: dropshadow(gaussian, #2c2c2c, 50.0, 0.0, 0.0, 0.0);
+}
+
+.buttonTeclado{
+	-fx-text-fill: #000000;
+	-fx-background-color: #ffffff;
+	-fx-border-color: #7E57C2;
+	-fx-border-radius: 10.0 10.0 10.0 10.0;
+	-fx-background-radius: 10.0 10.0 10.0 10.0;
+}
+
+.buttonTeclado:hover{
+	-fx-background-color: #4A148C;
+	-fx-text-fill: #ffffff;
+}
+
+.buttonTeclado:focused{
+	-fx-border-width: 2.0;
+}
+
+.buttonLimpar{
+	-fx-background-color: #1e1e29;
+	-fx-text-fill:  #ede6e6;
+	-fx-background-radius: 10.0 10.0 10.0 10.0;
+	-fx-border-color: #171616;
+	-fx-border-radius: 10.0 10.0 10.0 10.0;
+}
+
+.buttonLimpar:hover{
+	-fx-background-color:#404052;
+}
+
+.buttonLimpar:focused{
+	-fx-border-color: #404052;
+	-fx-border-radius: 10.0 10.0 10.0 10.0;
+	-fx-border-width: 2.0;
+}
+
+
+.buttonConfirmar{
+	-fx-background-color: #1e1e29;
+	-fx-background-radius: 10.0 10.0 10.0 10.0;
+	-fx-text-fill:  #ede6e6;
+	-fx-border-color:#171616;
+	-fx-border-radius: 10.0 10.0 10.0 10.0;
+}
+
+.buttonConfirmar:hover{
+	-fx-background-color: #404052;
+}
+
+.buttonConfirmar:focused{
+	-fx-border-color: #404052;
+	-fx-border-radius: 10.0 10.0 10.0 10.0;
+	-fx-border-width: 2.0;
+}
+
+.numeroField{
+	-fx-background-radius: 10.0 10.0 10.0 10.0 ;
+	-fx-background-color: #ffffff;	
+	-fx-border-width: 1.0;
+	-fx-border-color: #e6e6e6;
+	-fx-border-radius: 10.0 10.0 10.0 10.0;
+}
+
+.boxView{
+		-fx-background-color:  #ffffff;
+    	-fx-background-radius: 5.0 5.0 5.0 5.0;
+    	-fx-effect: dropshadow(gaussian,#404040 , 10.0, 0.0, 0.0, 2.0);
+}
+
+.boxViewSecundary{
+		-fx-background-color: #7E57C2;
+    	-fx-background-radius: 4.0 4.0 4.0 4.0;
+    	-fx-effect: dropshadow(gaussian,#4f4f4f , 5.0, 0.0, 0.0, 0.5);
+}
+
+.boxViewCinza{
+		-fx-background-color: #EEEEEE;
+    	-fx-background-radius: 4.0 4.0 4.0 4.0;
+}
+
+
+
+.boxViewDark{
+		-fx-background-color: #2e2d2d;
+    	-fx-background-radius: 5.0 5.0 5.0 5.0;
+    	-fx-effect: dropshadow(gaussian,#404040 , 10.0, 0.0, 0.0, 2.0);
+}
+
+.logoRect{
+    -fx-fill: #311B92;
+}
+
+.clienteSubMenu{
+    -fx-fill: #311B92;
+}
+
+
+
+
+
