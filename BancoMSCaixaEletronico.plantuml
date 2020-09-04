@@ -1,0 +1,364 @@
+@startuml
+
+title __SIMULADORCAIXAELETRONICO's Class Diagram__\n
+
+  namespace br.com.bancoms.components.dialogAlert {
+    class br.com.bancoms.components.dialogAlert.DialogAlert {
+    }
+  }
+  
+
+  namespace br.com.bancoms.components.tecladoComponent {
+    class br.com.bancoms.components.tecladoComponent.TecladoAdapter {
+    }
+  }
+  
+
+  namespace br.com.bancoms.components.tecladoComponent {
+    class br.com.bancoms.components.tecladoComponent.TecladoView {
+    }
+  }
+  
+
+  namespace br.com.bancoms.components.tecladoComponent {
+    namespace tipos {
+      class br.com.bancoms.components.tecladoComponent.tipos.DoubleTeclado {
+      }
+    }
+  }
+  
+
+  namespace br.com.bancoms.components.tecladoComponent {
+    namespace tipos {
+      class br.com.bancoms.components.tecladoComponent.tipos.IntegerTeclado {
+      }
+    }
+  }
+  
+
+  namespace br.com.bancoms.components.tecladoComponent {
+    namespace tipos {
+      abstract class br.com.bancoms.components.tecladoComponent.tipos.Teclado {
+      }
+    }
+  }
+  
+
+  namespace br.com.bancoms.controller {
+    class br.com.bancoms.controller.ClienteController {
+    }
+  }
+  
+
+  namespace br.com.bancoms.controller {
+    class br.com.bancoms.controller.DepositoController {
+    }
+  }
+  
+
+  namespace br.com.bancoms.controller {
+    class br.com.bancoms.controller.ExtratoController {
+    }
+  }
+  
+
+  namespace br.com.bancoms.controller {
+    class br.com.bancoms.controller.LoginController {
+    }
+  }
+  
+
+  namespace br.com.bancoms.controller {
+    class br.com.bancoms.controller.SaqueController {
+    }
+  }
+  
+
+  namespace br.com.bancoms.controller {
+    class br.com.bancoms.controller.TransferenciaController {
+    }
+  }
+  
+
+  namespace br.com.bancoms.dao {
+    class br.com.bancoms.dao.ClienteDAO {
+    }
+  }
+  
+
+  namespace br.com.bancoms.dao {
+    class br.com.bancoms.dao.ContaDAO {
+    }
+  }
+  
+
+  namespace br.com.bancoms.dao {
+    class br.com.bancoms.dao.DatabaseConnect {
+    }
+  }
+  
+
+  namespace br.com.bancoms.dao {
+    class br.com.bancoms.dao.MovimentoDAO {
+    }
+  }
+  
+
+  namespace br.com.bancoms.dao {
+    class br.com.bancoms.dao.QueryControl {
+    }
+  }
+  
+
+  namespace br.com.bancoms.dto {
+    class br.com.bancoms.dto.LoginDTO {
+    }
+  }
+  
+
+  namespace br.com.bancoms.dto {
+    class br.com.bancoms.dto.MovimentoBuscaDTO {
+    }
+  }
+  
+
+  namespace br.com.bancoms.dto {
+    class br.com.bancoms.dto.TransacaoDTO {
+    }
+  }
+  
+
+  namespace br.com.bancoms.model {
+    class br.com.bancoms.model.Cliente {
+    }
+  }
+  
+
+  namespace br.com.bancoms.model {
+    enum EMovimento {
+    }
+  }
+  
+
+  namespace br.com.bancoms.model {
+    class br.com.bancoms.model.Movimento {
+    }
+  }
+  
+
+  namespace br.com.bancoms.model {
+    namespace contas {
+      abstract class br.com.bancoms.model.contas.Conta {
+      }
+    }
+  }
+  
+
+  namespace br.com.bancoms.model {
+    namespace contas {
+      class br.com.bancoms.model.contas.ContaCorrente {
+      }
+    }
+  }
+  
+
+  namespace br.com.bancoms.model {
+    namespace contas {
+      enum ContaFactory {
+      }
+    }
+  }
+  
+
+  namespace br.com.bancoms.model {
+    namespace contas {
+      class br.com.bancoms.model.contas.ContaInvestimento {
+      }
+    }
+  }
+  
+
+  namespace br.com.bancoms.model {
+    namespace contas {
+      class br.com.bancoms.model.contas.ContaPoupanca {
+      }
+    }
+  }
+  
+
+  namespace br.com.bancoms.model {
+    namespace contas {
+      enum EConta {
+      }
+    }
+  }
+  
+
+  namespace br.com.bancoms.service {
+    class br.com.bancoms.service.ClienteService {
+    }
+  }
+  
+
+  namespace br.com.bancoms.service {
+    class br.com.bancoms.service.ContaService {
+    }
+  }
+  
+
+  namespace br.com.bancoms.service {
+    class br.com.bancoms.service.MovimentoService {
+    }
+  }
+  
+
+  namespace br.com.bancoms.test {
+    class br.com.bancoms.test.MovimentoServiceTest {
+    }
+  }
+  
+
+  namespace br.com.bancoms.util {
+    class br.com.bancoms.util.DateUtil {
+    }
+  }
+  
+
+  namespace br.com.bancoms.util {
+    class br.com.bancoms.util.Metrics {
+    }
+  }
+  
+
+  namespace br.com.bancoms.util {
+    class br.com.bancoms.util.Validador {
+    }
+  }
+  
+
+  namespace br.com.bancoms.view {
+    class br.com.bancoms.view.CaixaView {
+    }
+  }
+  
+
+  namespace br.com.bancoms.view {
+    class br.com.bancoms.view.ClienteView {
+    }
+  }
+  
+
+  namespace br.com.bancoms.view {
+    enum ClienteViewFactory {
+    }
+  }
+  
+
+  namespace br.com.bancoms.view {
+    class br.com.bancoms.view.DepositoView {
+    }
+  }
+  
+
+  namespace br.com.bancoms.view {
+    class br.com.bancoms.view.ExtratoView {
+    }
+  }
+  
+
+  namespace br.com.bancoms.view {
+    class br.com.bancoms.view.LoginView {
+    }
+  }
+  
+
+  namespace br.com.bancoms.view {
+    class br.com.bancoms.view.MainView {
+    }
+  }
+  
+
+  namespace br.com.bancoms.view {
+    class br.com.bancoms.view.MovimentoItemView {
+    }
+  }
+  
+
+  namespace br.com.bancoms.view {
+    class br.com.bancoms.view.SaqueView {
+    }
+  }
+  
+
+  namespace br.com.bancoms.view {
+    class br.com.bancoms.view.TransferenciaView {
+    }
+  }
+  
+
+  namespace br.com.bancoms.view {
+    class br.com.bancoms.view.View {
+    }
+  }
+  
+
+  br.com.bancoms.components.dialogAlert.DialogAlert -up-|> javafx.scene.layout.VBox
+  br.com.bancoms.components.dialogAlert.DialogAlert o-- br.com.bancoms.components.dialogAlert.DialogAlert.AlertType : tipoDialog
+  br.com.bancoms.components.tecladoComponent.TecladoAdapter o-- br.com.bancoms.components.tecladoComponent.TecladoView : tecladoView
+  br.com.bancoms.components.tecladoComponent.TecladoAdapter o-- br.com.bancoms.components.tecladoComponent.tipos.Teclado : tecladoComponent
+  br.com.bancoms.components.tecladoComponent.TecladoView -up-|> javafx.scene.Group
+  br.com.bancoms.components.tecladoComponent.tipos.DoubleTeclado -up-|> br.com.bancoms.components.tecladoComponent.tipos.Teclado
+  br.com.bancoms.components.tecladoComponent.tipos.IntegerTeclado -up-|> br.com.bancoms.components.tecladoComponent.tipos.Teclado
+  br.com.bancoms.components.tecladoComponent.tipos.Teclado .up.|> javafx.event.EventHandler
+  br.com.bancoms.controller.ClienteController o-- br.com.bancoms.model.Cliente : clienteSessao
+  br.com.bancoms.controller.ClienteController o-- br.com.bancoms.view.MainView : view
+  br.com.bancoms.controller.ClienteController o-- br.com.bancoms.view.ClienteView : viewClient
+  br.com.bancoms.controller.ClienteController o-- br.com.bancoms.model.contas.Conta : contaSessao
+  br.com.bancoms.controller.ClienteController o-- br.com.bancoms.controller.DepositoController : depositoController
+  br.com.bancoms.controller.ClienteController o-- br.com.bancoms.controller.ExtratoController : extratoController
+  br.com.bancoms.controller.ClienteController o-- br.com.bancoms.controller.SaqueController : saqueController
+  br.com.bancoms.controller.ClienteController o-- br.com.bancoms.controller.TransferenciaController : transferenciaController
+  br.com.bancoms.controller.DepositoController o-- br.com.bancoms.controller.ClienteController : clienteController
+  br.com.bancoms.controller.DepositoController o-- br.com.bancoms.view.DepositoView : depositoView
+  br.com.bancoms.controller.DepositoController o-- br.com.bancoms.controller.DepositoController.EDepositoController : opcaoTipoDepositoEscolhido
+  br.com.bancoms.controller.DepositoController o-- br.com.bancoms.components.tecladoComponent.TecladoAdapter : tecladoAdapter
+  br.com.bancoms.controller.ExtratoController o-- br.com.bancoms.controller.ClienteController : clienteController
+  br.com.bancoms.controller.ExtratoController o-- br.com.bancoms.view.ExtratoView : extratoView
+  br.com.bancoms.controller.LoginController .up.|> javafx.event.EventHandler
+  br.com.bancoms.controller.LoginController o-- br.com.bancoms.view.LoginView : loginView
+  br.com.bancoms.controller.LoginController o-- br.com.bancoms.view.MainView : view
+  br.com.bancoms.controller.SaqueController o-- br.com.bancoms.controller.ClienteController : clienteController
+  br.com.bancoms.controller.SaqueController o-- br.com.bancoms.view.SaqueView : saqueView
+  br.com.bancoms.controller.SaqueController o-- br.com.bancoms.components.tecladoComponent.TecladoAdapter : tecladoAdapter
+  br.com.bancoms.controller.TransferenciaController o-- br.com.bancoms.controller.ClienteController : clienteController
+  br.com.bancoms.controller.TransferenciaController o-- br.com.bancoms.components.tecladoComponent.TecladoAdapter : tecladoAdapter
+  br.com.bancoms.controller.TransferenciaController o-- br.com.bancoms.view.TransferenciaView : transferenciaView
+  br.com.bancoms.dto.TransacaoDTO o-- br.com.bancoms.model.contas.Conta : contaOrigem
+  br.com.bancoms.model.contas.ContaCorrente -up-|> br.com.bancoms.model.contas.Conta
+  br.com.bancoms.model.contas.ContaInvestimento -up-|> br.com.bancoms.model.contas.Conta
+  br.com.bancoms.model.contas.ContaPoupanca -up-|> br.com.bancoms.model.contas.Conta
+  br.com.bancoms.service.ClienteService o-- br.com.bancoms.dao.ClienteDAO : clienteDAO
+  br.com.bancoms.service.ContaService o-- br.com.bancoms.dao.ContaDAO : contaDAO
+  br.com.bancoms.service.MovimentoService o-- br.com.bancoms.dao.MovimentoDAO : movimentoDAO
+  br.com.bancoms.view.CaixaView -up-|> javafx.application.Application
+  br.com.bancoms.view.ClienteView -up-|> javafx.scene.layout.StackPane
+  br.com.bancoms.view.DepositoView -up-|> javafx.scene.layout.VBox
+  br.com.bancoms.view.ExtratoView -up-|> javafx.scene.layout.VBox
+  br.com.bancoms.view.ExtratoView o-- br.com.bancoms.controller.ExtratoController : extratoController
+  br.com.bancoms.view.ExtratoView o-- br.com.bancoms.view.MovimentoItemView : movimentoItemViewAtual
+  br.com.bancoms.view.LoginView -up-|> javafx.scene.layout.StackPane
+  br.com.bancoms.view.MainView -up-|> javafx.scene.layout.StackPane
+  br.com.bancoms.view.MovimentoItemView -up-|> javafx.scene.layout.VBox
+  br.com.bancoms.view.MovimentoItemView o-- br.com.bancoms.model.Movimento : movimento
+  br.com.bancoms.view.SaqueView -up-|> javafx.scene.layout.VBox
+  br.com.bancoms.view.TransferenciaView -up-|> javafx.scene.layout.VBox
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml
